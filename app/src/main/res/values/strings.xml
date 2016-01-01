@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Movie DataBase App</string>
+    <string name="app_back_pressed_toast">Press Back again to Exit App</string>
+    <string name="title_activity_splash">Movie DataBase</string>
+    <string name="title_acttivity_home">Movie DataBase</string>
+
+    <!-- Error Messages Strings -->
+    <string name="error_no_internet_connection">No internet Connection</string>
+    <string name="error_server_failure">Internal Server Error</string>
+    <string name="error_unexpected_error">Un Expected Error</string>
+    <string name="error_auth_failure">Authorization failed</string>
+    <string name="error_refresh_button">Refresh</string>
+
+    <!-- Language Selection Screen -->
+    <string name="language_selection_title">Movie DataBase </string>
+    <string name="langauge_selection_title">Choose Your App Language \n We strive to give
+        accurate Movie/Tv Show Results</string>
+
+    <string-array name="language_display_titles">
+        <item>English (USA)</item>
+        <item>German</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Portuguese</item>
+        <item>Hungarian</item>
+        <item>Chinese</item>
+        <item>Czech</item>
+    </string-array>
+
+    <string-array name="language_display_codes">
+        <item>en</item>
+        <item>de</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>pt</item>
+        <item>hu</item>
+        <item>zh</item>
+        <item>cs</item>
+    </string-array>
+
+    <!-- Strings for the Home Screen -->
+    <string name="home_menu_language">App Language</string>
+    <string name="home_menu_aboutUs">About Us</string>
+    <string name="home_movie_store_name">Movies</string>
+    <string name="home_tv_store_name">TV Shows</string>
+    <string name="home_people_store_name">People</string>
+
+</resources>

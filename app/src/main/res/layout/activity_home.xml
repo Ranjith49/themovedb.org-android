@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Error Layout (Need to add Generic View) -->
+    <LinearLayout
+        android:id="@+id/home_error_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"/>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/home_screen_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <!--- Content Layout -->
+    <LinearLayout
+        android:id="@+id/home_screen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:weightSum="3">
+
+        <!-- Add the Movie Store Banner -->
+        <include
+            android:id="@+id/home_movie_banner"
+            layout="@layout/banner_home_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <!-- Add the Tv/Show Banner -->
+        <include
+            android:id="@+id/home_tv_banner"
+            layout="@layout/banner_home_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <!-- Add the Persons Banner -->
+        <include
+            android:id="@+id/home_people_poster"
+            layout="@layout/poster_home_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</FrameLayout>

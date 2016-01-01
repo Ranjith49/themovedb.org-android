@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Dimens for the Splash Screen -->
+    <dimen name="splash_screen_bottom_progress_margin">20dp</dimen>
+
+    <!--DImen for the Error message -->
+    <dimen name="error_image_message_margin">20dp</dimen>
+
+    <!-- Dimen for the Language Screen-->
+    <dimen name="language_screen_top_container_height">180dp</dimen>
+    <dimen name="language_screen_top_margin">40dp</dimen>
+    <dimen name="language_screen_top_image_margin">20dp</dimen>
+    <dimen name="language_list_item_padding_sides">16dp</dimen>
+    <dimen name="language_list_item_height">48dp</dimen>
+    <dimen name="language_list_item_image_dimen">24dp</dimen>
+    <dimen name="language_list_item_text_margin">32dp</dimen>
+    <dimen name="language_list_item_status_margin">16dp</dimen>
+
+    <!-- Dimens for the Home Screen -->
+    <dimen name="home_banner_bottom_container_height">40dp</dimen>
+    <dimen name="home_banner_bottom_side_left">16dp</dimen>
+    <dimen name="home_banner_bottom_side_right">8dp</dimen>
+    <dimen name="home_poster_bottom_container_height">40dp</dimen>
+    <dimen name="home_poster_bottom_side_left">16dp</dimen>
+    <dimen name="home_poster_bottom_side_right">8dp</dimen>
+
+</resources>

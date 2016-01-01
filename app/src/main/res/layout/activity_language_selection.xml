@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ran.themoviedb.activities.LanguageSelectionActivity">
+
+    <!-- Top level Container -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/language_screen_top_container_height"
+        android:background="@color/list_language_top_container">
+
+        <TextView
+            android:id="@+id/language_top_container_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/language_screen_top_margin"
+            android:text="@string/langauge_selection_title"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/language_top_container_title"
+            android:layout_marginTop="@dimen/language_screen_top_image_margin"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_action"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_picture"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_video"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- List of languages -->
+    <ListView
+        android:id="@+id/language_screen_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+</LinearLayout>

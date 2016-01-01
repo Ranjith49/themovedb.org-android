@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/language_list_item_height"
+                android:paddingLeft="@dimen/language_list_item_padding_sides"
+                android:paddingRight="@dimen/language_list_item_padding_sides">
+
+    <ImageView
+        android:id="@+id/language_list_item_image"
+        android:layout_width="@dimen/language_list_item_image_dimen"
+        android:layout_height="@dimen/language_list_item_image_dimen"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/usa"/>
+
+    <TextView
+        android:id="@+id/language_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/language_list_item_text_margin"
+        android:layout_toRightOf="@id/language_list_item_image"
+        android:gravity="center_vertical"
+        android:textAppearance="@android:style/TextAppearance.Large"/>
+
+    <ImageView
+        android:id="@+id/language_list_item_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/language_list_item_status_margin"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:src="@mipmap/ic_correct"/>
+
+</RelativeLayout>

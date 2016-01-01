@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ran.themoviedb.customviews.HomePosterView xmlns:android="http://schemas.android.com/apk/res/android"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="match_parent">
+
+    <!-- Posters layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageView
+            android:id="@+id/home_poster_image_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/home_poster_image_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/home_poster_image_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- Bottom container Layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_poster_bottom_container_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_bottom_color"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/home_poster_bottom_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/home_poster_bottom_side_left"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/color_text_home"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/home_poster_bottom_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/home_poster_bottom_side_right"
+            android:src="@mipmap/ic_right"/>
+    </RelativeLayout>
+
+
+</com.ran.themoviedb.customviews.HomePosterView>

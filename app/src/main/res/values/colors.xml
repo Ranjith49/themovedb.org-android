@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#9E9E9E</color>
+    <color name="colorPrimaryDark">#616161</color>
+    <color name="colorAccent">#29B6F6</color>
+    <color name="colorTextPrimary">#000000</color>
+
+    <color name="error_refresh_message_color">#ffffff</color>
+    <color name="error_refresh_button_color">#4CAF50</color>
+
+    <color name="list_language_top_container">#F5F5F5</color>
+    <color name="color_tool_bar_title">#FFFFFF</color>
+    <color name="color_bottom_color">#48BDBDBD</color>
+    <color name="color_text_home">#ffffff</color>
+</resources>
