@@ -8,7 +8,8 @@
     <color name="colorAccent">#29B6F6</color>
     <!-- For the Primary text color -->
     <color name="colorTextPrimary">#000000</color>
-
+    <color name="color_Red_Accent">#ef5350</color>
+    <color name="color_Green_Accent">#66bb6a</color>
 
     <color name="error_refresh_message_color">#ffffff</color>
     <color name="error_refresh_button_color">#4CAF50</color>

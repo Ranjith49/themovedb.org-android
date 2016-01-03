@@ -84,6 +84,8 @@ public class CustomRecyclerView extends RelativeLayout {
     recyclerView.addOnScrollListener(scrollListener);
 
     swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_refresh_layout);
+    swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.color_Red_Accent, R
+        .color.color_Green_Accent);
     swipeRefreshLayout.setOnRefreshListener(new RefreshListener(this));
 
     bottom_error_message = (TextView) root.findViewById(R.id.recycler_error_textView);
