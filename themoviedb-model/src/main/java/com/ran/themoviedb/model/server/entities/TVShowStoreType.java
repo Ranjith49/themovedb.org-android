@@ -14,4 +14,34 @@ public enum TVShowStoreType {
   TVShowStoreType(String name) {
     this.name = name;
   }
+
+  /**
+   * Method to get the Store Type based on Name passed
+   *
+   * @param name -- Name of the store
+   * @return -- StoreType
+   */
+  public static TVShowStoreType getStoreType(String name) {
+    for (TVShowStoreType storeType : values()) {
+      if (storeType.name.equalsIgnoreCase(name)) {
+        return storeType;
+      }
+    }
+    return TV_POPULAR;
+  }
+
+  /**
+   * Method to get the Store Name based on StoreType Passed
+   *
+   * @param storeType --StoreType
+   * @return -- Name
+   */
+  public static String getStoreName(TVShowStoreType storeType) {
+    for (TVShowStoreType displayStoreType : values()) {
+      if (storeType == displayStoreType) {
+        return displayStoreType.name;
+      }
+    }
+    return TV_POPULAR.name;
+  }
 }

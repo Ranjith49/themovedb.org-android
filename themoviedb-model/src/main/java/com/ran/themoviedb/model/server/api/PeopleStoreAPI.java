@@ -17,9 +17,11 @@ public interface PeopleStoreAPI {
    *
    * @param key   -- API key
    * @param index -- Index of page
+   * @param lang  -- Language Attribute
    * @return -- Json of format {@link PeopleStoreResponse}
    */
   @GET("person/popular")
   Call<PeopleStoreResponse> getPeopleStoreList(@Query("api_key") String key,
-                                               @Query("page") int index);
+                                               @Query("page") int index,
+                                               @Query("language") String lang);
 }

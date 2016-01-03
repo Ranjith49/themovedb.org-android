@@ -35,13 +35,26 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <!-- Home Activity [Movies ,Tv /Shows and People UI ]  ,Single Top [Handle the newIntent]-->
+        <!-- Home Activity [Movies ,Tv /Shows and People UI ]  ,Single Top [Handle the newIntent] -->
         <activity
             android:name=".activities.HomeActivity"
             android:configChanges="fontScale|keyboard"
             android:label="@string/title_acttivity_home"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
+        </activity>
+
+        <!-- Store Activity [Movies ,TV Shows , People] Store related . -->
+        <activity
+            android:name=".activities.StoreActivity"
+            android:configChanges="fontScale|navigation"
+            android:label="@string/title_activity_movie_store"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.HomeActivity"/>
+
         </activity>
     </application>
 

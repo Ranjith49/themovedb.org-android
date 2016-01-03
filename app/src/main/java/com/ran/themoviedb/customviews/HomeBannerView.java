@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
 
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/1/2016.
+ *
+ * Home Banner Custom View , loading the Images with Delay .
  */
 public class HomeBannerView extends RelativeLayout {
 
@@ -30,7 +33,6 @@ public class HomeBannerView extends RelativeLayout {
   private Handler imageHandler;
   private ArrayList<String> bannerUrls;
 
-  private final int TIME_IN_MILLIS_DIFF = 5000;
   private final int MESSAGE_IMAGE_LOAD = 100;
   private final int INDEX_BACK_DROP_SIZE = 0;
   private int MAX_BAN = 5;
@@ -49,7 +51,8 @@ public class HomeBannerView extends RelativeLayout {
               R.drawable.image_error_placeholder);
 
           //Send to load again
-          imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD, TIME_IN_MILLIS_DIFF);
+          imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
+              TheMovieDbConstants.HOME_BANNER_MILLS_SECS);
           break;
       }
     }
@@ -123,7 +126,8 @@ public class HomeBannerView extends RelativeLayout {
 
     //Initialize the Handler here for the Change in banner for every 5 seconds ..
     imageHandler = new ImageHandler();
-    imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD, TIME_IN_MILLIS_DIFF);
+    imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
+        TheMovieDbConstants.HOME_BANNER_MILLS_SECS);
   }
 
   /**
@@ -134,7 +138,8 @@ public class HomeBannerView extends RelativeLayout {
       if (imageHandler.hasMessages(MESSAGE_IMAGE_LOAD)) {
         imageHandler.removeMessages(MESSAGE_IMAGE_LOAD);
       }
-      imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD, TIME_IN_MILLIS_DIFF);
+      imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
+          TheMovieDbConstants.HOME_BANNER_MILLS_SECS);
     }
   }
 
@@ -147,4 +152,9 @@ public class HomeBannerView extends RelativeLayout {
     }
   }
 
+  public void resetHandler() {
+    if (imageHandler != null) {
+      imageHandler = null;
+    }
+  }
 }

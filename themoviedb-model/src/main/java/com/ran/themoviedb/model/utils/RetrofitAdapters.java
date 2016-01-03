@@ -41,7 +41,7 @@ public class RetrofitAdapters {
         .build();
   }
 
-  private static OkHttpClient buildOkHttpClient() {
+  private OkHttpClient buildOkHttpClient() {
     OkHttpClient okHttpClient = new OkHttpClient();
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     if (DEBUG) {

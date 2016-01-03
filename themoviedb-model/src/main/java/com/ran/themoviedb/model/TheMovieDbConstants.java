@@ -38,4 +38,39 @@ public interface TheMovieDbConstants {
    * Null String
    */
   String NULL_STRING = "null";
+
+  /**
+   * Home Banner Millis Seconds Delay
+   */
+  int HOME_BANNER_MILLS_SECS = 5000;
+
+  /**
+   * Home Posters Millis Seconds Delay
+   */
+  int HOME_POSTER_MILLS_SECS = 5000;
+
+  /**
+   * Key for Store Type Navigation
+   */
+  String STORE_TYPE_KEY = "store_type";
+
+  /**
+   * Key for the MovieStore Fragment Type
+   */
+  String MOVIE_STORE_TYPE_KEY = "movie_store_type";
+
+  /**
+   * Key for the Tv Store Fragment Type
+   */
+  String TV_STORE_TYPE_KEY = "tv_store_type";
+
+  /**
+   * Key for the People Store Fragment Type
+   */
+  String PEOPLE_STORE_TYPE_KEY = "people_store_type";
+
+  /**
+   * Span Count of the GRID LAYOUT Manager
+   */
+  int GRID_SPAN_COUNT = 2;
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <!-- Recycler View [Content View ] with help of the Swipe from Top -->
+    <LinearLayout
+        android:id="@+id/recycler_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+    <!-- Bottom Error Layout -->
+    <RelativeLayout
+        android:id="@+id/recycler_error_bottom_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/recycler_bottom_error_layout_sideMargins"
+        android:layout_marginRight="@dimen/recycler_bottom_error_layout_sideMargins"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/recycler_error_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/error_textView"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_refresh"/>
+
+        <TextView
+            android:id="@+id/recycler_error_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/recycler_bottom_error_layout_imageMargin"
+            android:layout_toRightOf="@id/recycler_error_image_view"
+            android:text="@string/error_unexpected_error"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+        <Button
+            android:id="@+id/recycler_error_button_view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/recycler_bottom_error_layout_buttonHeight"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/error_refresh_button_color"
+            android:text="@string/error_refresh_button"
+            android:textAllCaps="true"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="@color/error_refresh_message_color"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+    <!-- Bottom Progress Bar -->
+    <ProgressBar
+        android:id="@+id/recycler_footer_progress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recycler_bottom_progressBar_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+    <!-- Go Up Indicator Shown on Bottom -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/recycler_top_go_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/floating_button_margin_side_down"
+        android:layout_marginRight="@dimen/floating_button_margin_side_down"
+        android:src="@mipmap/ic_action_up"
+        android:visibility="gone"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
+
+</RelativeLayout>

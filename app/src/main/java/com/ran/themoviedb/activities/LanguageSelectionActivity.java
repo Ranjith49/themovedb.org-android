@@ -51,8 +51,8 @@ public class LanguageSelectionActivity extends AppCompatActivity implements
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     AppSharedPreferences.getInstance(this).setAppLanguageData(langCodes[position]);
-    Navigator.navigateToAppHome(this);
     finish();
+    Navigator.navigateToAppHome(this);
   }
 
   @Override

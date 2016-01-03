@@ -16,4 +16,34 @@ public enum MovieStoreType {
     this.name = name;
   }
 
+  /**
+   * Method to get the Store Type based on Name passed
+   *
+   * @param name -- Name of the store
+   * @return -- StoreType
+   */
+  public static MovieStoreType getStoreType(String name) {
+    for (MovieStoreType storeType : values()) {
+      if (storeType.name.equalsIgnoreCase(name)) {
+        return storeType;
+      }
+    }
+    return MOVIE_POPULAR;
+  }
+
+  /**
+   * Method to get the Store Name based on StoreType Passed
+   *
+   * @param storeType --StoreType
+   * @return -- Name
+   */
+  public static String getStoreName(MovieStoreType storeType) {
+    for (MovieStoreType displayStoreType : values()) {
+      if (storeType == displayStoreType) {
+        return displayStoreType.name;
+      }
+    }
+    return MOVIE_POPULAR.name;
+  }
+
 }

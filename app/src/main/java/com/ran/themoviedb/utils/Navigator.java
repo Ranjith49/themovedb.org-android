@@ -5,6 +5,9 @@ import android.content.Intent;
 
 import com.ran.themoviedb.activities.HomeActivity;
 import com.ran.themoviedb.activities.LanguageSelectionActivity;
+import com.ran.themoviedb.activities.StoreActivity;
+import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
@@ -30,6 +33,13 @@ public class Navigator {
    */
   public static void navigateToAppHome(Context context) {
     Intent intent = new Intent(context, HomeActivity.class);
+    context.startActivity(intent);
+  }
+
+
+  public static void navigateToStore(Context context, DisplayStoreType storeType) {
+    Intent intent = new Intent(context, StoreActivity.class);
+    intent.putExtra(TheMovieDbConstants.STORE_TYPE_KEY, DisplayStoreType.getStoreName(storeType));
     context.startActivity(intent);
   }
 }

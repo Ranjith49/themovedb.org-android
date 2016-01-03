@@ -19,11 +19,14 @@ public class MovieStoreServiceImpl extends BaseRetrofitService<MovieStoreRespons
   private Handler handler;
   private MovieStoreType movieStoreType;
   private int pageIndex;
+  private String language;
 
-  public MovieStoreServiceImpl(Handler handler, MovieStoreType storeType, int page) {
+  public MovieStoreServiceImpl(Handler handler, MovieStoreType storeType, int page,
+                               String language) {
     this.handler = handler;
     this.movieStoreType = storeType;
     this.pageIndex = page;
+    this.language = language;
   }
 
   @Override
@@ -42,15 +45,15 @@ public class MovieStoreServiceImpl extends BaseRetrofitService<MovieStoreRespons
         RetrofitAdapters.getAppRestAdapter().create(MovieStoreAPI.class);
     switch (movieStoreType) {
       case MOVIE_POPULAR:
-        return service.getPopularMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getPopularMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
       case MOVIE_NOW_PLAYING:
-        return service.getNowShowingMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getNowShowingMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
       case MOVIE_TOP_RATED:
-        return service.getTopRatedMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getTopRatedMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
       case MOVIE_UPCOMING:
-        return service.getUpComingMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getUpComingMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
       default:
-        return service.getPopularMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getPopularMovieList(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
     }
   }
 

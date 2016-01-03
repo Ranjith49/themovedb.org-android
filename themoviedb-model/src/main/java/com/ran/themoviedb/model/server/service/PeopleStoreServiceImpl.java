@@ -17,11 +17,13 @@ public class PeopleStoreServiceImpl extends BaseRetrofitService<PeopleStoreRespo
   private Handler handler;
   private PeopleStoreType peopleStoreType;
   private int pageIndex;
+  private String language;
 
-  public PeopleStoreServiceImpl(Handler handler, PeopleStoreType storeType, int page) {
+  public PeopleStoreServiceImpl(Handler handler, PeopleStoreType storeType, int page, String lang) {
     this.handler = handler;
     this.peopleStoreType = storeType;
     this.pageIndex = page;
+    this.language = lang;
   }
 
   @Override
@@ -43,7 +45,8 @@ public class PeopleStoreServiceImpl extends BaseRetrofitService<PeopleStoreRespo
     switch (peopleStoreType) {
       case PEOPLE_POPULAR:
       default:
-        return peopleStoreAPI.getPeopleStoreList(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return peopleStoreAPI.getPeopleStoreList(TheMovieDbConstants.APP_API_KEY, pageIndex,
+            language);
     }
   }
 

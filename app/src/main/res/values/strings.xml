@@ -3,6 +3,10 @@
     <string name="app_back_pressed_toast">Press Back again to Exit App</string>
     <string name="title_activity_splash">Movie DataBase</string>
     <string name="title_acttivity_home">Movie DataBase</string>
+    <string name="title_activity_movie_store">Movies Store</string>
+    <string name="title_activity_tv_store">Tv Shows Store</string>
+    <string name="title_activity_people_store">People Store</string>
+
 
     <!-- Error Messages Strings -->
     <string name="error_no_internet_connection">No internet Connection</string>
@@ -48,5 +52,23 @@
     <string name="home_movie_store_name">Movies</string>
     <string name="home_tv_store_name">TV Shows</string>
     <string name="home_people_store_name">People</string>
+
+    <!--- Strings for the Store -->
+    <string-array name="movie_store_names">
+        <item>Popular</item>
+        <item>Top Rated</item>
+        <item>UpComing</item>
+        <item>Now Playing</item>
+    </string-array>
+
+    <string-array name="tv_store_names">
+        <item>Popular</item>
+        <item>Top Rated</item>
+        <item>On the Air</item>
+    </string-array>
+
+    <string-array name="people_store_names">
+        <item>Popular</item>
+    </string-array>
 
 </resources>

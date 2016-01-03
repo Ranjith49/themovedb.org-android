@@ -17,11 +17,13 @@ public interface TVShowStoreAPI {
    *
    * @param api_key   -- API Key
    * @param pageIndex -- Index of the Page
+   * @param lang      -- Language Attribute
    * @return -- Json of format {@link TVShowStoreResponse}
    */
   @GET("tv/popular")
   Call<TVShowStoreResponse> getPopularTVShows(@Query("api_key") String api_key,
-                                              @Query("page") int pageIndex);
+                                              @Query("page") int pageIndex,
+                                              @Query("language") String lang);
 
   /**
    * Method to get the Top Rated tv Shows List
@@ -29,11 +31,13 @@ public interface TVShowStoreAPI {
    *
    * @param api_key   -- API Key
    * @param pageIndex -- Index of the Page
+   * @param lang      -- Language Attribute
    * @return -- Json of format {@link TVShowStoreResponse}
    */
   @GET("tv/top_rated")
   Call<TVShowStoreResponse> getTopRatedTVShows(@Query("api_key") String api_key,
-                                               @Query("page") int pageIndex);
+                                               @Query("page") int pageIndex,
+                                               @Query("language") String lang);
 
   /**
    * Method to get the On The Air Tv Shows
@@ -41,9 +45,11 @@ public interface TVShowStoreAPI {
    *
    * @param api_key   -- API Key
    * @param pageIndex -- index of the Page
+   * @param lang      -- Language Attribute
    * @return -- Json of format {@link TVShowStoreResponse}
    */
   @GET("tv/on_the_air")
   Call<TVShowStoreResponse> getOnAirTVShows(@Query("api_key") String api_key,
-                                            @Query("page") int pageIndex);
+                                            @Query("page") int pageIndex,
+                                            @Query("language") String lang);
 }

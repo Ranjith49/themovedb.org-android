@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
 
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/1/2016.
+ * <p/>
+ * Home Poster Custom View , loading the Images with Delay .
  */
 public class HomePosterView extends RelativeLayout {
 
@@ -33,7 +36,6 @@ public class HomePosterView extends RelativeLayout {
   private Handler imageHandler;
   private ArrayList<String> posterUrls;
 
-  private final int TIME_IN_MILLIS_DIFF = 8000;
   private final int MESSAGE_IMAGE_LOAD = 100;
   private final int INDEX_POSTER_SIZE = 0;
   private int MAX_POSTERS = 3 * 3; //columns * Each for column
@@ -48,7 +50,8 @@ public class HomePosterView extends RelativeLayout {
         case MESSAGE_IMAGE_LOAD:
           loadImages();
           //Send to load again
-          imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD, TIME_IN_MILLIS_DIFF);
+          imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
+              TheMovieDbConstants.HOME_POSTER_MILLS_SECS);
           break;
       }
     }
@@ -121,7 +124,8 @@ public class HomePosterView extends RelativeLayout {
 
     //Initialize the Handler here for the Change in banner for every 5 seconds ..
     imageHandler = new ImageHandler();
-    imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD, TIME_IN_MILLIS_DIFF);
+    imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
+        TheMovieDbConstants.HOME_POSTER_MILLS_SECS);
   }
 
   private void loadImages() {
@@ -153,7 +157,8 @@ public class HomePosterView extends RelativeLayout {
       if (imageHandler.hasMessages(MESSAGE_IMAGE_LOAD)) {
         imageHandler.removeMessages(MESSAGE_IMAGE_LOAD);
       }
-      imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD, TIME_IN_MILLIS_DIFF);
+      imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
+          TheMovieDbConstants.HOME_POSTER_MILLS_SECS);
     }
   }
 
@@ -163,6 +168,12 @@ public class HomePosterView extends RelativeLayout {
   public void onViewHidden() {
     if (imageHandler != null && imageHandler.hasMessages(MESSAGE_IMAGE_LOAD)) {
       imageHandler.removeMessages(MESSAGE_IMAGE_LOAD);
+    }
+  }
+
+  public void resetHandler() {
+    if (imageHandler != null) {
+      imageHandler = null;
     }
   }
 }

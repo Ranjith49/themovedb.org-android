@@ -10,12 +10,12 @@ import java.util.ArrayList;
  */
 public class MovieStoreResponse implements Serializable {
 
-  String page;
+  int page;
   ArrayList<MovieStoreResults> results;
   int total_results;
   int total_pages;
 
-  public String getPage() {
+  public int getPage() {
     return page;
   }
 

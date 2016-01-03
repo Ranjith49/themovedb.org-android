@@ -1,5 +1,6 @@
 package com.ran.themoviedb.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,12 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
 import com.ran.themoviedb.customviews.HomeBannerView;
 import com.ran.themoviedb.customviews.HomePosterView;
+import com.ran.themoviedb.entities.DisplayStoreType;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.PeopleStoreType;
 import com.ran.themoviedb.model.server.entities.TVShowStoreType;
@@ -25,7 +29,7 @@ import com.ran.themoviedb.view_pres_med.HomeScreenView;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity
-    implements HomeScreenView, GenericErrorBuilder.Handler {
+    implements HomeScreenView, GenericErrorBuilder.Handler, View.OnClickListener {
 
   private final String TAG = HomeActivity.class.getSimpleName();
   LinearLayout errorLayout;
@@ -34,26 +38,29 @@ public class HomeActivity extends AppCompatActivity
 
   HomeScreenDataPresenter dataPresenter;
   private GenericErrorBuilder genericErrorBuilder;
+  private long mBackPressedTime;
 
-  HomeBannerView movieBanner;
-  HomeBannerView tvBanner;
-  HomePosterView peoplePoster;
+  HomeBannerView movieBannerView;
+  HomeBannerView tvBannerView;
+  HomePosterView peoplePosterView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
-
     initView();
   }
 
   /**
-   * Initialize the View ..
+   * Initialize the View and Start Presenters ,Error Handler Stuff ..
    */
   private void initView() {
     errorLayout = (LinearLayout) findViewById(R.id.home_error_layout_container);
+    errorLayout.setVisibility(View.GONE);
     progressBar = (ProgressBar) findViewById(R.id.home_screen_progress);
+    progressBar.setVisibility(View.GONE);
     contentLayout = (LinearLayout) findViewById(R.id.home_screen_content);
+    contentLayout.setVisibility(View.GONE);
 
     dataPresenter =
         new HomeScreenDataPresenter(HomeActivity.this, this, HomeActivity.class.hashCode(),
@@ -63,12 +70,23 @@ public class HomeActivity extends AppCompatActivity
     genericErrorBuilder = new GenericErrorBuilder(HomeActivity.this, GenericUIErrorLayoutType
         .CENTER, errorLayout, this);
 
-    movieBanner = (HomeBannerView) findViewById(R.id.home_movie_banner);
-    tvBanner = (HomeBannerView) findViewById(R.id.home_tv_banner);
-    peoplePoster = (HomePosterView) findViewById(R.id.home_people_poster);
+    movieBannerView = (HomeBannerView) findViewById(R.id.home_movie_banner);
+    movieBannerView.resetHandler();
+    movieBannerView.setOnClickListener(this);
+    tvBannerView = (HomeBannerView) findViewById(R.id.home_tv_banner);
+    tvBannerView.resetHandler();
+    tvBannerView.setOnClickListener(this);
+    peoplePosterView = (HomePosterView) findViewById(R.id.home_people_poster);
+    peoplePosterView.resetHandler();
+    peoplePosterView.setOnClickListener(this);
 
-    //Start the Presenter [New Intent handling may be required ]
     dataPresenter.start();
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    initView();
   }
 
   @Override
@@ -94,17 +112,17 @@ public class HomeActivity extends AppCompatActivity
   @Override
   protected void onStart() {
     super.onStart();
-    movieBanner.onViewVisible();
-    tvBanner.onViewVisible();
-    peoplePoster.onViewVisible();
+    movieBannerView.onViewVisible();
+    tvBannerView.onViewVisible();
+    peoplePosterView.onViewVisible();
   }
 
   @Override
   protected void onStop() {
     super.onStop();
-    movieBanner.onViewHidden();
-    tvBanner.onViewHidden();
-    peoplePoster.onViewHidden();
+    movieBannerView.onViewHidden();
+    tvBannerView.onViewHidden();
+    peoplePosterView.onViewHidden();
   }
 
   @Override
@@ -129,16 +147,16 @@ public class HomeActivity extends AppCompatActivity
     Log.d(TAG, "Content is retrieved");
     contentLayout.setVisibility(View.VISIBLE);
 
-    movieBanner.setBottomText(getResources().getString(R.string.home_movie_store_name));
-    tvBanner.setBottomText(getResources().getString(R.string.home_tv_store_name));
-    peoplePoster.setBottomText(getResources().getString(R.string.home_people_store_name));
+    movieBannerView.setBottomText(getResources().getString(R.string.home_movie_store_name));
+    tvBannerView.setBottomText(getResources().getString(R.string.home_tv_store_name));
+    peoplePosterView.setBottomText(getResources().getString(R.string.home_people_store_name));
 
     //Set Banners ..
-    movieBanner.setBannerUrls(movieBanners);
-    tvBanner.setBannerUrls(tvBanners);
+    movieBannerView.setBannerUrls(movieBanners);
+    tvBannerView.setBannerUrls(tvBanners);
 
     //Set Posters ..
-    peoplePoster.setPosterUrls(peoplePosters);
+    peoplePosterView.setPosterUrls(peoplePosters);
   }
 
   @Override
@@ -150,5 +168,41 @@ public class HomeActivity extends AppCompatActivity
   public void onRefreshClicked() {
     Log.d(TAG, "error Handling Refresh click");
     dataPresenter.start();
+  }
+
+  @Override
+  public void onBackPressed() {
+    if (mBackPressedTime + TheMovieDbConstants.TIME_INTERVAL_APP_EXIT >
+        System.currentTimeMillis()) {
+      super.onBackPressed();
+    } else {
+      Toast.makeText(this, getResources().getString(R.string.app_back_pressed_toast),
+          Toast.LENGTH_SHORT).show();
+    }
+    mBackPressedTime = System.currentTimeMillis();
+  }
+
+  @Override
+  public void onClick(View v) {
+
+    switch (v.getId()) {
+      case R.id.home_movie_banner:
+        Navigator.navigateToStore(this, DisplayStoreType.MOVIE_STORE);
+        overridePendingTransition(R.anim.activity_right_left_enter,
+            R.anim.activity_right_left_exit);
+        break;
+
+      case R.id.home_tv_banner:
+        Navigator.navigateToStore(this, DisplayStoreType.TV_STORE);
+        overridePendingTransition(R.anim.activity_right_left_enter,
+            R.anim.activity_right_left_exit);
+        break;
+
+      case R.id.home_people_poster:
+        Navigator.navigateToStore(this, DisplayStoreType.PEOPLE_STORE);
+        overridePendingTransition(R.anim.activity_right_left_enter,
+            R.anim.activity_right_left_exit);
+        break;
+    }
   }
 }

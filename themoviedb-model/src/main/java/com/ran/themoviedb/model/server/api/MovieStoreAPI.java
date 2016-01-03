@@ -17,11 +17,13 @@ public interface MovieStoreAPI {
    *
    * @param api_key -- API Key
    * @param page    -- Page Index
+   * @param lang    -- Language Attribute
    * @return -- Json of format {@Link MovieStoreResponse}
    */
   @GET("movie/popular")
   Call<MovieStoreResponse> getPopularMovieList(@Query("api_key") String api_key,
-                                               @Query("page") int page);
+                                               @Query("page") int page,
+                                               @Query("language") String lang);
 
   /**
    * Method to get the Top Rated Movie List
@@ -29,11 +31,13 @@ public interface MovieStoreAPI {
    *
    * @param api_key -- API Key
    * @param page    -- Page Index
+   * @param lang    -- Language Attribute
    * @return -- Json of Format {@Link MovieStoreResponse}
    */
   @GET("movie/top_rated")
   Call<MovieStoreResponse> getTopRatedMovieList(@Query("api_key") String api_key,
-                                                @Query("page") int page);
+                                                @Query("page") int page,
+                                                @Query("language") String lang);
 
   /**
    * Method to get the Upcoming Movie List
@@ -41,11 +45,13 @@ public interface MovieStoreAPI {
    *
    * @param api_key -- API Key
    * @param page    -- Page Index
+   * @param lang    -- Language Attribute
    * @return -- Json of Format {@Link MovieStoreResponse}
    */
   @GET("movie/upcoming")
   Call<MovieStoreResponse> getUpComingMovieList(@Query("api_key") String api_key,
-                                                @Query("page") int page);
+                                                @Query("page") int page,
+                                                @Query("language") String lang);
 
   /**
    * Method to get the Now Showing Movie List
@@ -53,9 +59,11 @@ public interface MovieStoreAPI {
    *
    * @param api_key -- API Key
    * @param page    -- page Index
+   * @param lang    -- Language Attribute
    * @return -- Json of format {@Link MovieStoreResponse}
    */
   @GET("movie/now_playing")
   Call<MovieStoreResponse> getNowShowingMovieList(@Query("api_key") String api_key,
-                                                  @Query("page") int page);
+                                                  @Query("page") int page,
+                                                  @Query("language") String lang);
 }

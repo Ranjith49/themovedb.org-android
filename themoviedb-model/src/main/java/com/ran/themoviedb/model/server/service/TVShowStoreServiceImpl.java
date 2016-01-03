@@ -19,11 +19,14 @@ public class TVShowStoreServiceImpl extends BaseRetrofitService<TVShowStoreRespo
   private Handler handler;
   private TVShowStoreType tvShowStoreType;
   private int pageIndex;
+  private String language;
 
-  public TVShowStoreServiceImpl(Handler handler, TVShowStoreType storeType, int page) {
+  public TVShowStoreServiceImpl(Handler handler, TVShowStoreType storeType, int page,
+                                String language) {
     this.handler = handler;
     this.tvShowStoreType = storeType;
     this.pageIndex = page;
+    this.language = language;
   }
 
   @Override
@@ -44,13 +47,13 @@ public class TVShowStoreServiceImpl extends BaseRetrofitService<TVShowStoreRespo
 
     switch (tvShowStoreType) {
       case TV_AIR:
-        return service.getOnAirTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getOnAirTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
       case TV_POPULAR:
-        return service.getPopularTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getPopularTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
       case TV_TOP_RATED:
-        return service.getTopRatedTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getTopRatedTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
       default:
-        return service.getPopularTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex);
+        return service.getPopularTVShows(TheMovieDbConstants.APP_API_KEY, pageIndex, language);
     }
   }
 
