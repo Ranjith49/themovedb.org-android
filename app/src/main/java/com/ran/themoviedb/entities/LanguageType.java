@@ -2,6 +2,8 @@ package com.ran.themoviedb.entities;
 
 /**
  * Created by ranjith.suda on 12/31/2015.
+ *
+ * Different Language Options Available in the App
  */
 public enum LanguageType {
 

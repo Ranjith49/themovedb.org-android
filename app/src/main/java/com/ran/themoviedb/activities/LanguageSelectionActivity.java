@@ -16,7 +16,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.utils.Navigator;
 
 /**
- * Activity responsible for showing the langauges supported by the APp [Movies and TV shows ]
+ * Activity responsible for showing the languages supported by the APp [Movies and TV shows ]
  */
 public class LanguageSelectionActivity extends AppCompatActivity implements
     AdapterView.OnItemClickListener {

@@ -59,6 +59,7 @@
         <item>Top Rated</item>
         <item>UpComing</item>
         <item>Now Playing</item>
+        <item>Movie Genre</item>
     </string-array>
 
     <string-array name="tv_store_names">
@@ -70,5 +71,8 @@
     <string-array name="people_store_names">
         <item>Popular</item>
     </string-array>
+
+    <string name="linear_recycler_moreInfo">More Info </string>
+    <string name="linear_recycler_knownFor">Known For :</string>
 
 </resources>

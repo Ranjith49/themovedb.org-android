@@ -12,7 +12,7 @@ import retrofit.http.Query;
  * API to retrieve the List of Genre's across the Application..
  * https://api.themoviedb.org/3/genre/movie/list?api_key=57a2fe1fb88623756080330e465f20f7
  */
-public interface AllMovieGenreListAPI {
+public interface AllGenreListAPI {
 
   @GET("genre/movie/list")
   Call<AllMovieGenreListResponse> getMovieGenreList(@Query("api_key") String api_key);

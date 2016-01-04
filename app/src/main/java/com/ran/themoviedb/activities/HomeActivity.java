@@ -28,6 +28,10 @@ import com.ran.themoviedb.view_pres_med.HomeScreenView;
 
 import java.util.ArrayList;
 
+/**
+ * Home Activity of the App, Giving different options possible through the App
+ * i.e Movies , Tv Store , People Store
+ */
 public class HomeActivity extends AppCompatActivity
     implements HomeScreenView, GenericErrorBuilder.Handler, View.OnClickListener {
 

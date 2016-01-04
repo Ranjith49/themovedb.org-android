@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by ranjith.suda on 12/29/2015.
  * <p/>
- * Internal Bean Model for the AllMovieGenreListAPI
+ * Internal Bean Model for the AllGenreListAPI
  */
 public class MovieGenre implements Serializable {
 

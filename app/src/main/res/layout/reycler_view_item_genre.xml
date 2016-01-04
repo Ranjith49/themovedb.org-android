@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="@dimen/recycler_genre_item_width"
+              android:layout_height="@dimen/recycler_genre_item_height"
+              android:layout_marginBottom="@dimen/recycler_genre_item_margin_vertical"
+              android:layout_marginLeft="@dimen/recycler_genre_item_margin_side"
+              android:layout_marginRight="@dimen/recycler_genre_item_margin_side"
+              android:layout_marginTop="@dimen/recycler_genre_item_margin_vertical"
+              android:orientation="vertical">
+
+    <Button
+        android:id="@+id/recycler_genre_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/genre_border_rectangle"
+        android:padding="@dimen/recycler_genre_item_padding"
+        android:singleLine="true"
+        android:text="genreName"
+        android:textAllCaps="true"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/colorTextPrimary"
+        android:textStyle="bold"/>
+
+</LinearLayout>

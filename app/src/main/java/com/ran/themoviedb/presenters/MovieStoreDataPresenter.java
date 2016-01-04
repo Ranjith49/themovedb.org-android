@@ -12,6 +12,8 @@ import com.ran.themoviedb.view_pres_med.MovieStoreView;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
+ * <p/>
+ * Movie Store Presenter between View and the Service Impl
  */
 public class MovieStoreDataPresenter extends BasePresenter
     implements MovieStoreServiceImpl.Handler {

@@ -8,6 +8,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.fragments.MovieGenreStoreFragment;
 import com.ran.themoviedb.fragments.MovieStoreFragment;
 import com.ran.themoviedb.fragments.PeopleStoreFragment;
 import com.ran.themoviedb.fragments.TvStoreFragment;
@@ -61,6 +62,8 @@ public class StoreFragmentPagerAdapter extends FragmentStatePagerAdapter {
             bundle.putString(TheMovieDbConstants.MOVIE_STORE_TYPE_KEY, MovieStoreType
                 .getStoreName(MovieStoreType.MOVIE_NOW_PLAYING));
             break;
+          case 4:
+            return new MovieGenreStoreFragment(); //Special case..
         }
         movieFragment.setArguments(bundle);
         return movieFragment;

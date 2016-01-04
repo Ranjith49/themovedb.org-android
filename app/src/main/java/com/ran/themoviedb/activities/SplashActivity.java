@@ -21,6 +21,10 @@ import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.AllMovieGenreView;
 import com.ran.themoviedb.view_pres_med.TheMovieDbConfigView;
 
+/**
+ * Splash Screen launched for every Launch of the App , does the Initial Load
+ * i.e Db Config , genre Info etc
+ */
 public class SplashActivity extends AppCompatActivity
     implements TheMovieDbConfigView, AllMovieGenreView, GenericErrorBuilder.Handler {
 

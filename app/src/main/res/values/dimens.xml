@@ -35,9 +35,19 @@
     <dimen name="floating_button_margin_side_down">16dp</dimen>
 
     <dimen name="recycler_store_item_height">300dp</dimen>
-    <dimen name="grid_recycler_store_item_width">180dp</dimen>
     <dimen name="recycler_store_item_image_height">240dp</dimen>
+    <dimen name="grid_recycler_store_item_width">180dp</dimen>
     <dimen name="grid_recycler_store_item_side_margins">8dp</dimen>
+    <dimen name="linear_recycler_store_item_right_margins">8dp</dimen>
+    <dimen name="linear_recycler_store_item_top_margins">8dp</dimen>
+    <dimen name="linear_recycler_store_item_knownFor_margin">8dp</dimen>
+    <dimen name="linear_recycler_store_item_knownFor_height">60dp</dimen>
 
+    <!-- Genre Movie Recycler View -->
+    <dimen name="recycler_genre_item_width">180dp</dimen>
+    <dimen name="recycler_genre_item_height">50dp</dimen>
+    <dimen name="recycler_genre_item_padding">8dp</dimen>
+    <dimen name="recycler_genre_item_margin_side">20dp</dimen>
+    <dimen name="recycler_genre_item_margin_vertical">10dp</dimen>
 
 </resources>

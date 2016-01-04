@@ -22,6 +22,9 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/1/2016.
+ *
+ * Home Screen Presenter ,for handling Movies and TV of type {@link com.ran.themoviedb
+ * .customviews.HomeBannerView} and People of type {@link com.ran.themoviedb.customviews.HomePosterView}
  */
 public class HomeScreenDataPresenter extends BasePresenter
     implements MovieStoreServiceImpl.Handler, TVShowStoreServiceImpl.Handler,

@@ -48,7 +48,7 @@ public class AppSharedPreferences {
   }
 
   /**
-   * Set the All Genre Data retrieved from the Rest API {@Link com.ran.themoviedb.model.server.api.AllMovieGenreListAPI}
+   * Set the All Genre Data retrieved from the Rest API {@Link com.ran.themoviedb.model.server.api.AllGenreListAPI}
    *
    * @param data -- String Json
    */

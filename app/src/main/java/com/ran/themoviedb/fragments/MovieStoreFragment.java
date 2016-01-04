@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.MovieStoreRecyclerAdapter;
@@ -25,6 +26,9 @@ import com.ran.themoviedb.view_pres_med.MovieStoreView;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
+ * <p/>
+ * Movie Store Fragment showing the Movies in {@link com.ran.themoviedb.viewholders
+ * .MovieStoreViewHolder} and bind data from {@link com.ran.themoviedb.model.server.entities.MovieStoreResults}
  */
 public class MovieStoreFragment extends Fragment
     implements MovieStoreView, GenericErrorBuilder.Handler, StoreClickListener {
@@ -120,11 +124,11 @@ public class MovieStoreFragment extends Fragment
 
   @Override
   public void onStoreItemClick(int id, String name, DisplayStoreType displayStoreType) {
-
+    Toast.makeText(getActivity(), name + " -- Click", Toast.LENGTH_SHORT).show();
   }
 
   @Override
   public void onStoreItemShare(int id, String name, DisplayStoreType displayStoreType) {
-
+    Toast.makeText(getActivity(), name + " -- Share", Toast.LENGTH_SHORT).show();
   }
 }

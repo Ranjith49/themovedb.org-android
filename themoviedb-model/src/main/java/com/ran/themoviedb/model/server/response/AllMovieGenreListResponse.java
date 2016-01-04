@@ -8,8 +8,12 @@ import java.util.ArrayList;
 /**
  * Created by ranjith.suda on 12/29/2015.
  * <p/>
- * Response for Success HTTP Call of {@see com.ran.themoviedb.model.server.api.AllMovieGenreListAPI}
+ * Response for Success HTTP Call of {@see com.ran.themoviedb.model.server.api.AllGenreListAPI}
  */
 public class AllMovieGenreListResponse implements Serializable {
   ArrayList<MovieGenre> genres;
+
+  public ArrayList<MovieGenre> getGenres() {
+    return genres;
+  }
 }

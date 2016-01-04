@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
+ *
+ * Recycler View Adapter responsible for showing the Movie Store {@Link MovieStoreResponse}
  */
 public class MovieStoreRecyclerAdapter extends CustomRecyclerView.Adapter<MovieStoreResponse> {
 
@@ -76,11 +78,9 @@ public class MovieStoreRecyclerAdapter extends CustomRecyclerView.Adapter<MovieS
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
     MovieStoreResults movieStoreResultItem = movieStoreResults.get(position);
     MovieStoreViewHolder movieStoreViewHolder = (MovieStoreViewHolder) holder;
     movieStoreViewHolder.updateViewItem(context, movieStoreResultItem);
-
   }
 
   @Override

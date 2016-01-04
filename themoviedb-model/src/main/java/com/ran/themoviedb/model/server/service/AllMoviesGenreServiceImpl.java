@@ -1,7 +1,7 @@
 package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.api.AllMovieGenreListAPI;
+import com.ran.themoviedb.model.server.api.AllGenreListAPI;
 import com.ran.themoviedb.model.server.response.AllMovieGenreListResponse;
 import com.ran.themoviedb.model.utils.RetrofitAdapters;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
@@ -11,7 +11,7 @@ import retrofit.Call;
 /**
  * Created by ranjith.suda on 12/29/2015.
  * <p/>
- * Retrofit Service Implementation for {@see AllMovieGenreListAPI}
+ * Retrofit Service Implementation for {@see AllGenreListAPI}
  */
 public class AllMoviesGenreServiceImpl extends BaseRetrofitService<AllMovieGenreListResponse> {
 
@@ -33,8 +33,8 @@ public class AllMoviesGenreServiceImpl extends BaseRetrofitService<AllMovieGenre
 
   @Override
   protected Call<AllMovieGenreListResponse> getRetrofitCall() {
-    AllMovieGenreListAPI service =
-        RetrofitAdapters.getAppRestAdapter().create(AllMovieGenreListAPI.class);
+    AllGenreListAPI service =
+        RetrofitAdapters.getAppRestAdapter().create(AllGenreListAPI.class);
     return service.getMovieGenreList(TheMovieDbConstants.APP_API_KEY);
   }
 

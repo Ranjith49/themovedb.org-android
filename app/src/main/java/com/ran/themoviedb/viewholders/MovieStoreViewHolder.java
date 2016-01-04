@@ -28,6 +28,8 @@ import java.util.Date;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
+ *
+ * View Holder for the Movie Store Recycler View
  */
 public class MovieStoreViewHolder extends RecyclerView.ViewHolder implements
     StoreUpdateViewHolder<MovieStoreResults> {
@@ -42,9 +44,9 @@ public class MovieStoreViewHolder extends RecyclerView.ViewHolder implements
   private LinearLayout movieItemContainer;
   private String DATE_FORMAT = "yyyy-MM-dd";
   private final String TAG = MovieStoreViewHolder.class.getSimpleName();
+
   private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
   private final Context activityContext;
-
   public MovieStoreViewHolder(View itemView, StoreClickListener storeClickListener, Context
       context) {
     super(itemView);

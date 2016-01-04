@@ -46,8 +46,8 @@ public class StoreViewHolders {
         return LayoutInflater.from(parent.getContext()).inflate(R.layout
             .recycler_view_grid_store_item, parent, false);
       case PEOPLE_STORE:
-        //TODO [ranjith], Enable after People UI decide
-        return null;
+        return LayoutInflater.from(parent.getContext()).inflate(R.layout
+            .recycler_view_linear_store_item, parent, false);
       default:
         return null;
     }

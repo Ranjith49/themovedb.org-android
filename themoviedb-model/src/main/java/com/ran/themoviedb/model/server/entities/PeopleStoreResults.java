@@ -1,5 +1,7 @@
 package com.ran.themoviedb.model.server.entities;
 
+import java.util.ArrayList;
+
 /**
  * Created by ranjith.suda on 1/1/2016.
  */
@@ -10,6 +12,7 @@ public class PeopleStoreResults {
   int id;
   String name;
   double popularity;
+  ArrayList<PeopleStoreKnownFor> known_for;
 
   public boolean isAdult() {
     return adult;
@@ -30,4 +33,9 @@ public class PeopleStoreResults {
   public double getPopularity() {
     return popularity;
   }
+
+  public ArrayList<PeopleStoreKnownFor> getKnown_for() {
+    return known_for;
+  }
+
 }
