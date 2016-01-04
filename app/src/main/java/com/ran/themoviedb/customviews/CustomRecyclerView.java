@@ -274,17 +274,22 @@ public class CustomRecyclerView extends RelativeLayout {
     private void onListUpdate() {
       totalItemCount = customRecyclerView.adapter.getItemCount();
       lastVisibleItemIndex = findLastVisibleItemPosition();
-      Log.d(TAG, "total Item count :" + totalItemCount + " lastVisible Item index " +
-          ":" + lastVisibleItemIndex);
+      Log.d(TAG, "total Item count :" + totalItemCount + " lastVisible Item index " + ":" +
+          lastVisibleItemIndex);
       /**
-       * a) Update the show Go Top indicator
-       * b) Return of no Next Path ..
+       * a) Update the show Go Top indicator [Handled Linear /Grid Only]
+       * b) Return if no Next Path ..
        * c) if nextLoading , make sure to Reset it
        * d) when to fire the nextPageIndex ..
        */
+      int height_drawn = 0;
+      if (customRecyclerView.layoutManager instanceof GridLayoutManager) {
+        height_drawn = (lastVisibleItemIndex / TheMovieDbConstants.GRID_SPAN_COUNT)
+            * customRecyclerView.height_item_recyclerView;
+      } else if (customRecyclerView.layoutManager instanceof LinearLayoutManager) {
+        height_drawn = lastVisibleItemIndex * customRecyclerView.height_item_recyclerView;
+      }
 
-      int height_drawn = (lastVisibleItemIndex / TheMovieDbConstants.GRID_SPAN_COUNT)
-          * customRecyclerView.height_item_recyclerView;
       if (height_drawn > customRecyclerView.height_container) {
         customRecyclerView.button_move_Up.setVisibility(VISIBLE);
       } else {
@@ -311,11 +316,16 @@ public class CustomRecyclerView extends RelativeLayout {
     }
 
 
+    /**
+     * Method to give the Last Visible Item from layout Manager [GRID /Linear] to show go to Top
+     * View
+     *
+     * @return -- last Visible item Position
+     */
     private int findLastVisibleItemPosition() {
-      if (customRecyclerView.layoutManager instanceof GridLayoutManager || customRecyclerView
-          .layoutManager instanceof LinearLayoutManager) {
-        return ((LinearLayoutManager) customRecyclerView.layoutManager)
-            .findLastVisibleItemPosition();
+      if (customRecyclerView.layoutManager instanceof GridLayoutManager ||
+          customRecyclerView.layoutManager instanceof LinearLayoutManager) {
+        return ((LinearLayoutManager) customRecyclerView.layoutManager).findLastVisibleItemPosition();
       }
       return -1;
     }

@@ -14,7 +14,7 @@ import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p>
+ * <p/>
  * Utility used to create the Generic Error Layout based on
  * a) {@link com.ran.themoviedb.entities.GenericUIErrorLayoutType}
  * b) {@link com.ran.themoviedb.model.server.entities.UserAPIErrorType}
@@ -95,6 +95,8 @@ public class GenericErrorBuilder {
       case UNEXPECTED_ERROR:
         errorMessage.setText(R.string.error_unexpected_error);
         break;
+      case NOCONTENT_ERROR:
+        errorMessage.setText(R.string.error_no_content_error);
     }
     updateVisibilities(true);
   }

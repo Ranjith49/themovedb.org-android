@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ran.themoviedb.activities.SearchActivity">
+
+    <TextView
+        android:id="@+id/search_query_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/search_query_margin"
+        android:layout_marginLeft="@dimen/search_query_margin"
+        android:layout_marginTop="@dimen/search_query_margin"
+        android:maxLines="2"
+        android:text="@string/search_query_string"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/colorTextPrimary"/>
+
+    <LinearLayout
+        android:id="@+id/search_fragment_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
+
+</LinearLayout>

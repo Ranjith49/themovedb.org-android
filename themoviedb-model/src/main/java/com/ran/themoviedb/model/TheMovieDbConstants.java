@@ -73,4 +73,9 @@ public interface TheMovieDbConstants {
    * Span Count of the GRID LAYOUT Manager
    */
   int GRID_SPAN_COUNT = 2;
+
+  /**
+   * Search Query String passed to Search Fragments [Key]
+   */
+  String SEARCH_KEY = "search_key";
 }

@@ -2,7 +2,7 @@ package com.ran.themoviedb.model.server.entities;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- *
+ * <p/>
  * User UI Error Messages shown to User on Errors
  */
 public enum UserAPIErrorType {
@@ -10,7 +10,8 @@ public enum UserAPIErrorType {
   NETWORK_ERROR("network_error"), // Network Connection Error
   NON_HTTP_SUCCESS_ERROR("http_error"), // Non - 200 and ! 401 Error
   AUTH_ERROR("auth_error"), //401 Error
-  UNEXPECTED_ERROR("unexpected_error"); // Any Unknown Error
+  UNEXPECTED_ERROR("unexpected_error"), // Any Unknown Error
+  NOCONTENT_ERROR("no_content_error"); //No Content Error
 
   String name;
 

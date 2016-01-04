@@ -1,8 +1,13 @@
 package com.ran.themoviedb.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.StoreFragmentPagerAdapter;
@@ -14,6 +19,7 @@ public class StoreActivity extends AppCompatActivity {
   ViewPager viewPager;
   DisplayStoreType displayStoreType = DisplayStoreType.MOVIE_STORE;
   StoreFragmentPagerAdapter storeFragmentPagerAdapter;
+  private MenuItem searchMenuItem;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +54,21 @@ public class StoreActivity extends AppCompatActivity {
     storeFragmentPagerAdapter = new StoreFragmentPagerAdapter(getFragmentManager(), this,
         displayStoreType);
     viewPager.setAdapter(storeFragmentPagerAdapter);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    Bundle appData = new Bundle();
+    appData.putString(TheMovieDbConstants.STORE_TYPE_KEY,
+        DisplayStoreType.getStoreName(displayStoreType));
+
+    getMenuInflater().inflate(R.menu.store_search_menu, menu);
+    searchMenuItem = menu.findItem(R.id.menu_search);
+    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+    searchView.setAppSearchData(appData);
+    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+    return true;
   }
 }

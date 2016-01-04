@@ -6,6 +6,9 @@
     <string name="title_activity_movie_store">Movies Store</string>
     <string name="title_activity_tv_store">Tv Shows Store</string>
     <string name="title_activity_people_store">People Store</string>
+    <string name="title_activity_search_movie">Search Results [Movies]</string>
+    <string name="title_activity_search_tv">Search Results [Tv Shows]</string>
+    <string name="title_activity_search_people">Search Results [People]</string>
 
 
     <!-- Error Messages Strings -->
@@ -13,6 +16,7 @@
     <string name="error_server_failure">Internal Server Error</string>
     <string name="error_unexpected_error">Un Expected Error</string>
     <string name="error_auth_failure">Authorization failed</string>
+    <string name="error_no_content_error">No Content Available now . \n Please try again</string>
     <string name="error_refresh_button">Refresh</string>
 
     <!-- Language Selection Screen -->
@@ -74,5 +78,9 @@
 
     <string name="linear_recycler_moreInfo">More Info </string>
     <string name="linear_recycler_knownFor">Known For :</string>
+
+    <string name="search_generic_hint">Search in the Store</string>
+    <string name="search_menu_title">Search</string>
+    <string name="search_query_string">Search Query .. </string>
 
 </resources>

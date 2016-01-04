@@ -1,0 +1,130 @@
+package com.ran.themoviedb.viewholders;
+
+import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ran.themoviedb.R;
+import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.listeners.StoreClickListener;
+import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
+import com.ran.themoviedb.model.server.entities.MovieSearchResults;
+import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
+import com.ran.themoviedb.utils.AppUiUtils;
+import com.ran.themoviedb.utils.ImageLoaderUtils;
+
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * Created by ranjith.suda on 1/4/2016.
+ */
+public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
+    StoreUpdateViewHolder<MovieSearchResults> {
+
+  private TextView movieNameView;
+  private TextView movieRating;
+  private TextView movieYear;
+  private FloatingActionButton movieShare;
+  private ImageView movieImage;
+  private View view;
+  private StoreClickListener storeClickListener;
+  private LinearLayout movieItemContainer;
+  private String DATE_FORMAT = "yyyy-MM-dd";
+  private final String TAG = MovieStoreViewHolder.class.getSimpleName();
+
+  private final int INDEX_BANNER_SIZE = 1; //Todo [ranjith ,do better logic]
+  private final Context activityContext;
+
+
+  public MovieSearchViewHolder(View itemView, StoreClickListener storeClickListener,
+                               Context context) {
+    super(itemView);
+
+    this.activityContext = context;
+    this.view = itemView;
+    this.storeClickListener = storeClickListener;
+    movieImage = (ImageView) view.findViewById(R.id.recycler_item_image);
+    movieRating = (TextView) view.findViewById(R.id.recycler_item_rating);
+    movieYear = (TextView) view.findViewById(R.id.recycler_item_year);
+    movieNameView = (TextView) view.findViewById(R.id.recycler_item_name);
+    movieShare = (FloatingActionButton) view.findViewById(R.id.recycler_item_share);
+    movieItemContainer = (LinearLayout) view.findViewById(R.id.recycler_search_container);
+  }
+
+
+  @Override
+  public void updateViewItem(Context context, final MovieSearchResults item) {
+/**
+ * a) Name
+ * b) Rating
+ * c) Year
+ * d) Click for More details
+ * e) Share Click
+ * f) Image for the movie
+ */
+    final String movieName;
+    if (!AppUiUtils.isStringEmpty(item.getTitle())) {
+      movieName = item.getTitle();
+    } else {
+      movieName = item.getOriginal_title();
+    }
+    movieNameView.setText(movieName);
+    movieRating.setText(String.valueOf(item.getVote_average()));
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+    try {
+      Date date = dateFormat.parse(item.getRelease_date());
+      movieYear.setText(dateFormat.format(date));
+    } catch (ParseException e) {
+      movieYear.setVisibility(View.GONE);
+      Log.d(TAG, "Date Format Exception  : " + e.toString());
+    }
+    movieItemContainer.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        storeClickListener.onStoreItemClick(item.getId(), movieName, DisplayStoreType.MOVIE_STORE);
+      }
+    });
+
+    movieShare.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        storeClickListener.onStoreItemShare(item.getId(), movieName, DisplayStoreType.MOVIE_STORE);
+      }
+    });
+
+    loadImage(item);
+  }
+
+  /**
+   * Helper Method to Load the Image in the View ..
+   */
+  private void loadImage(MovieSearchResults item) {
+    String image_pref_json =
+        AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+
+    Gson gson = new Gson();
+    Type type = new TypeToken<TheMovieDbImagesConfig>() {
+    }.getType();
+
+    TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
+    String image_url = imagesConfig.getBase_url();
+    String image_url_config = imagesConfig.getBackdrop_sizes().get(INDEX_BANNER_SIZE);
+    String IMAGE_BASE_URL = image_url.concat(image_url_config);
+
+    ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, movieImage,
+        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, item.getBackdrop_path()),
+        R.drawable.image_error_placeholder);
+  }
+}

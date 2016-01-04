@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.server.entities.MovieGenre;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class StoreGenreAdapter extends RecyclerView.Adapter<StoreGenreAdapter.Cu
   @Override
   public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     return new CustomViewHolder(
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.reycler_view_item_genre,
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_genre,
             parent, false));
   }
 

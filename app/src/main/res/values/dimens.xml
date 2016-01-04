@@ -50,4 +50,11 @@
     <dimen name="recycler_genre_item_margin_side">20dp</dimen>
     <dimen name="recycler_genre_item_margin_vertical">10dp</dimen>
 
+    <!-- Search Related -->
+    <dimen name="search_query_margin">16dp</dimen>
+    <dimen name="recycler_search_item_height">300dp</dimen>
+    <dimen name="recycler_search_item_image_height">240dp</dimen>
+    <dimen name="recycler_search_bottom_container">58dp</dimen>
+    <dimen name="recycler_search_bottom_divider">2dp</dimen>
+    <dimen name="recycler_search_item_side_margins">8dp</dimen>
 </resources>
