@@ -25,9 +25,11 @@ public class SearchViewHolders {
         return new MovieSearchViewHolder(createView(parent, displayStoreType), storeClickListener,
             context);
       case TV_STORE:
-        //Todo [ranjith]
+        return new TvSearchViewHolder(createView(parent, displayStoreType), storeClickListener,
+            context);
       case PEOPLE_STORE:
-        //Todo [ranjith]
+        return new PeopleSearchViewHolder(createView(parent, displayStoreType), storeClickListener,
+            context);
       default:
         return null;
     }
@@ -37,12 +39,12 @@ public class SearchViewHolders {
 
     switch (storeType) {
       case MOVIE_STORE:
+      case TV_STORE:
         return LayoutInflater.from(parent.getContext()).inflate(R.layout
             .recycler_view_linear_search_item, parent, false);
-      case TV_STORE:
-        //Todo [ranjith]
       case PEOPLE_STORE:
-        //Todo [ranjith]
+        return LayoutInflater.from(parent.getContext()).inflate(R.layout
+            .recycler_view_linear_store_item, parent, false);
       default:
         return null;
     }

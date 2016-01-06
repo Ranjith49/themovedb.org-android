@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.StoreFragmentPagerAdapter;
@@ -20,6 +22,7 @@ public class StoreActivity extends AppCompatActivity {
   DisplayStoreType displayStoreType = DisplayStoreType.MOVIE_STORE;
   StoreFragmentPagerAdapter storeFragmentPagerAdapter;
   private MenuItem searchMenuItem;
+  private SearchView searchView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,16 @@ public class StoreActivity extends AppCompatActivity {
     }
 
     initView();
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    //Make Sure the Search View is in collapsed State [Rest Resumes ]
+    if (searchView != null) {
+      searchView.onActionViewCollapsed();
+    }
   }
 
   /**
@@ -54,6 +67,13 @@ public class StoreActivity extends AppCompatActivity {
     storeFragmentPagerAdapter = new StoreFragmentPagerAdapter(getFragmentManager(), this,
         displayStoreType);
     viewPager.setAdapter(storeFragmentPagerAdapter);
+    viewPager.setOnTouchListener(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        searchView.onActionViewCollapsed();
+        return false;
+      }
+    });
   }
 
   @Override
@@ -66,7 +86,7 @@ public class StoreActivity extends AppCompatActivity {
     searchMenuItem = menu.findItem(R.id.menu_search);
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+    searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
     searchView.setAppSearchData(appData);
     searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
     return true;
