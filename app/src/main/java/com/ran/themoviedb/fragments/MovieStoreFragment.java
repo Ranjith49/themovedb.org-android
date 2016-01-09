@@ -22,6 +22,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieStoreResponse;
+import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.MovieStoreView;
 
 /**
@@ -124,7 +125,7 @@ public class MovieStoreFragment extends Fragment
 
   @Override
   public void onStoreItemClick(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), name + " -- Click", Toast.LENGTH_SHORT).show();
+    Navigator.navigateToMovieDetails(getActivity(),id);
   }
 
   @Override

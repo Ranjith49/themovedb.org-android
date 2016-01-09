@@ -21,6 +21,7 @@ import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieSearchResponse;
+import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.MovieSearchView;
 
 import java.io.UnsupportedEncodingException;
@@ -123,7 +124,7 @@ public class SearchMovieFragment extends Fragment
 
   @Override
   public void onStoreItemClick(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), "Click" + name, Toast.LENGTH_SHORT).show();
+    Navigator.navigateToMovieDetails(getActivity(), id);
   }
 
   @Override

@@ -28,7 +28,7 @@ public interface MovieDetailsAPI {
    * @param lang    -- Language of the Movie
    * @return -- MovieDetailResponse in return
    */
-  @GET("genre/movie/{id}")
+  @GET("movie/{id}")
   Call<MovieDetailResponse> getMovieBasicDetails(@Path("id") int id,
                                                  @Query("api_key") String api_key,
                                                  @Query("language") String lang);
@@ -42,7 +42,7 @@ public interface MovieDetailsAPI {
    * @param lang    -- Language of the Movie
    * @return -- ImageDetailResponse
    */
-  @GET("genre/movie/{id}/images")
+  @GET("movie/{id}/images")
   Call<ImageDetailResponse> getMovieImageDetails(@Path("id") int id,
                                                  @Query("api_key") String api_key,
                                                  @Query("language") String lang);
@@ -57,7 +57,7 @@ public interface MovieDetailsAPI {
    * @param lang    -- Language of the Movie
    * @return -- VideoDetailResponse
    */
-  @GET("genre/movie/{id}/videos")
+  @GET("movie/{id}/videos")
   Call<VideoDetailResponse> getMovieVideoDetails(@Path("id") int id,
                                                  @Query("api_key") String api_key,
                                                  @Query("language") String lang);
@@ -72,7 +72,7 @@ public interface MovieDetailsAPI {
    * @param lang    -- Language of the Movie
    * @return -- CastCrewDetailResponse
    */
-  @GET("genre/movie/{id}/credits")
+  @GET("movie/{id}/credits")
   Call<CastCrewDetailResponse> getCastCrewDetails(@Path("id") int id,
                                                   @Query("api_key") String api_key,
                                                   @Query("language") String lang);
@@ -86,7 +86,7 @@ public interface MovieDetailsAPI {
    * @param lang    -- Language of the Movie
    * @return -- ReviewsDetailResponse
    */
-  @GET("genre/movie/{id}/reviews")
+  @GET("movie/{id}/reviews")
   Call<ReviewsDetailResponse> getReviewDetails(@Path("id") int id,
                                                @Query("api_key") String api_key,
                                                @Query("language") String lang);
@@ -100,7 +100,7 @@ public interface MovieDetailsAPI {
    * @param lang    -- Language of the Movie
    * @return -- MovieSimilarDetailsResponse
    */
-  @GET("genre/movie/{id}/similar")
+  @GET("movie/{id}/similar")
   Call<MovieSimilarDetailsResponse> getSimilarMovies(@Path("id") int id,
                                                      @Query("api_key") String api_key,
                                                      @Query("language") String lang);

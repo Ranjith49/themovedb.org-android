@@ -48,6 +48,7 @@ public class ImageLoaderUtils {
           .centerCrop()
           .animate(android.R.anim.fade_in) //Smooth Transition
           .error(errorHolder)
+          .placeholder(errorHolder)
           .into(imageView);
 
     }
@@ -72,6 +73,7 @@ public class ImageLoaderUtils {
           .centerCrop()
           .animate(android.R.anim.fade_in) //Smooth Transition
           .error(errorHolder)
+          .placeholder(errorHolder)
           .into(imageView);
     }
   }

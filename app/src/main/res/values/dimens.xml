@@ -57,4 +57,16 @@
     <dimen name="recycler_search_bottom_container">58dp</dimen>
     <dimen name="recycler_search_bottom_divider">2dp</dimen>
     <dimen name="recycler_search_item_side_margins">8dp</dimen>
+
+    <!-- Dimens for Movie Screen -->
+    <dimen name="movie_pager_pager_strip_vertical_margins">10dp</dimen>
+    <dimen name="movie_description_image_width">160dp</dimen>
+    <dimen name="movie_description_image_container">240dp</dimen>
+    <dimen name="movie_poster_margin_right">16dp</dimen>
+    <dimen name="movie_poster_margin_top">16dp</dimen>
+
+    <dimen name="movie_card_view_margins">16dp</dimen>
+    <dimen name="over_view_container_padding">8dp</dimen>
+    <dimen name="otherInfo_container_padding">8dp</dimen>
+    <dimen name="other_info_imdb_height">24dp</dimen>
 </resources>

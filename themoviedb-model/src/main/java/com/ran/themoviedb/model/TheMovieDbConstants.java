@@ -78,4 +78,9 @@ public interface TheMovieDbConstants {
    * Search Query String passed to Search Fragments [Key]
    */
   String SEARCH_KEY = "search_key";
+
+  /**
+   * Key for the Movie [Id] ..
+   */
+  String MOVIE_ID_KEY = "movie_id_key";
 }

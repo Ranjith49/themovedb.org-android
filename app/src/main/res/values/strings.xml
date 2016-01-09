@@ -9,7 +9,7 @@
     <string name="title_activity_search_movie">Search Results [Movies]</string>
     <string name="title_activity_search_tv">Search Results [Tv Shows]</string>
     <string name="title_activity_search_people">Search Results [People]</string>
-
+    <string name="title_activity_movie_detail">MovieDetails View</string>
 
     <!-- Error Messages Strings -->
     <string name="error_no_internet_connection">No internet Connection</string>
@@ -82,5 +82,22 @@
     <string name="search_generic_hint">Search in the Store</string>
     <string name="search_menu_title">Search</string>
     <string name="search_query_string">Search Query .. </string>
+
+    <!--- Strings for the Movie Details -->
+    <string-array name="movie_details_tabs">
+        <item>Description</item>
+        <item>Cast &amp; Crew</item>
+        <item>Images</item>
+        <item>Videos</item>
+        <item>Reviews</item>
+        <item>Related</item>
+    </string-array>
+
+    <string name="movie_id_error_message">Error getting the Movie Details . Please try
+        later</string>
+    <string name="movie_running_time">%1$s mins</string>
+    <string name="movie_budget">Budget : %1$s</string>
+    <string name="overview_container_name">OverView</string>
+    <string name="otherInfo_container_name">Other Info</string>
 
 </resources>
