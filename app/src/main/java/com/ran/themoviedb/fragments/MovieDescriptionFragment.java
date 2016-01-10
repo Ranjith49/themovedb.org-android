@@ -3,6 +3,7 @@ package com.ran.themoviedb.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +21,8 @@ import com.ran.themoviedb.customviews.GenericErrorBuilder;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.MovieGenre;
+import com.ran.themoviedb.model.server.entities.ProductionCompany;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieDetailResponse;
@@ -28,6 +32,7 @@ import com.ran.themoviedb.utils.ImageLoaderUtils;
 import com.ran.themoviedb.view_pres_med.MovieDescriptionView;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,12 +51,12 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
   private TextView movieTagLine;
   private TextView movieBudget;
   private TextView movieExternalUrl;
+  private TextView movieImdbUrl;
 
   private ScrollView movieContainer;
   private LinearLayout movieErrorLayout;
   private ProgressBar movieFetchProgressBar;
 
-  private ImageView movieImdbLink;
   private LinearLayout movie_genre_container;
   private LinearLayout movie_production_container;
 
@@ -86,8 +91,8 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     movieTagLine = (TextView) view.findViewById(R.id.overview_tagline);
     movieExternalUrl = (TextView) view.findViewById(R.id.overview_url);
     movieBudget = (TextView) view.findViewById(R.id.overview_price);
+    movieImdbUrl = (TextView) view.findViewById(R.id.overview_imdb);
 
-    movieImdbLink = (ImageView) view.findViewById(R.id.imdb_image);
     movie_genre_container = (LinearLayout) view.findViewById(R.id.genre_list);
     movie_production_container = (LinearLayout) view.findViewById(R.id.production_list);
   }
@@ -107,7 +112,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
   }
 
   private void processResponse(MovieDetailResponse response) {
-    //Top View Done ..
+    //Top View  ..
     if (!AppUiUtils.isStringEmpty(response.getTitle())) {
       movieTitle.setText(response.getTitle());
       movieTitle.setVisibility(View.VISIBLE);
@@ -142,13 +147,103 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     movieBudget.setText(movie_Budget);
     movieBudget.setVisibility(View.VISIBLE);
 
-    //Bottom Container ..(TODO ranjith)
     if (!AppUiUtils.isStringEmpty(response.getImdb_id())) {
-      movieImdbLink.setTag(response.getImdb_id());
-      movieImdbLink.setVisibility(View.VISIBLE);
+      movieImdbUrl.setText(TheMovieDbConstants.IMDB_BASE_URL.concat(response.getImdb_id()));
+      movieImdbUrl.setTag(response.getImdb_id());
+      movieImdbUrl.setVisibility(View.VISIBLE);
+    }
+
+    loadGenreDetails(response.getGenres());
+    loadProductionCompanies(response.getProduction_companies());
+  }
+
+  /**
+   * Utility to add the Production company list in Vertical layout from Response
+   *
+   * @param data -- List of Production Company
+   */
+  private void loadProductionCompanies(ArrayList<ProductionCompany> data) {
+    if (data != null && data.size() >= 0) {
+
+      for (ProductionCompany productionCompany : data) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(productionCompany.getName());
+        textView.setTag(productionCompany.getId());
+        textView.setMaxLines(2);
+        textView.setBackgroundDrawable(
+            getResources().getDrawable(R.drawable.other_info_item_background));
+        textView.setTextColor(getResources().getColor(R.color.color_text_white));
+        textView.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_production, 0, 0, 0);
+        textView.setPadding(
+            getResources().getDimensionPixelSize(R.dimen.otherInfo_container_padding), 0,
+            getResources().getDimensionPixelSize(R.dimen.otherInfo_container_padding), 0);
+        textView.setGravity(Gravity.CENTER);
+        textView.setMaxWidth(
+            getResources().getDimensionPixelSize(R.dimen.other_info_container_genre_maxWidth));
+        textView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Toast.makeText(getActivity(), "Productions : " + String.valueOf(v.getTag()), Toast
+                .LENGTH_SHORT).show();
+          }
+        });
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+            .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,
+            getResources().getDimensionPixelSize(R.dimen.other_info_item_margin_vertical), 0,
+            getResources().getDimensionPixelSize(R.dimen.other_info_item_margin_vertical));
+
+        movie_production_container.addView(textView, params);
+      }
     }
   }
 
+  /**
+   * Utility to add the Genre company list in Vertical layout from Response
+   *
+   * @param data -- List of Genre Company
+   */
+  private void loadGenreDetails(ArrayList<MovieGenre> data) {
+    if (data != null && data.size() >= 0) {
+
+      for (MovieGenre movieGenre : data) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(movieGenre.getName());
+        textView.setTag(movieGenre.getId());
+        textView.setMaxLines(2);
+        textView.setBackgroundDrawable(
+            getResources().getDrawable(R.drawable.other_info_item_background));
+        textView.setTextColor(getResources().getColor(R.color.color_text_white));
+        textView.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_genre, 0, 0, 0);
+        textView.setPadding(
+            getResources().getDimensionPixelSize(R.dimen.otherInfo_container_padding), 0,
+            getResources().getDimensionPixelSize(R.dimen.otherInfo_container_padding), 0);
+        textView.setGravity(Gravity.CENTER);
+        textView.setMaxWidth(
+            getResources().getDimensionPixelSize(R.dimen.other_info_container_genre_maxWidth));
+        textView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Toast.makeText(getActivity(), "Genre : " + String.valueOf(v.getTag()),
+                Toast.LENGTH_SHORT).show();
+          }
+        });
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+            .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,
+            getResources().getDimensionPixelSize(R.dimen.other_info_item_margin_vertical), 0,
+            getResources().getDimensionPixelSize(R.dimen.other_info_item_margin_vertical));
+
+        movie_genre_container.addView(textView, params);
+      }
+    }
+  }
+
+  /**
+   * Load the Image Poster of the Movie
+   *
+   * @param url -- Url passed
+   */
   private void loadImage(String url) {
     String image_pref_json =
         AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();

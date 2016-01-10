@@ -68,5 +68,6 @@
     <dimen name="movie_card_view_margins">16dp</dimen>
     <dimen name="over_view_container_padding">8dp</dimen>
     <dimen name="otherInfo_container_padding">8dp</dimen>
-    <dimen name="other_info_imdb_height">24dp</dimen>
+    <dimen name="other_info_container_genre_maxWidth">120dp</dimen>
+    <dimen name="other_info_item_margin_vertical">4dp</dimen>
 </resources>

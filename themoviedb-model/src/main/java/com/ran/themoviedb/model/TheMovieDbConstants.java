@@ -83,4 +83,9 @@ public interface TheMovieDbConstants {
    * Key for the Movie [Id] ..
    */
   String MOVIE_ID_KEY = "movie_id_key";
+
+  /**
+   * Base URL of IMDB for deeplinking
+   */
+  String IMDB_BASE_URL = "www.imdb.com/title/";
 }

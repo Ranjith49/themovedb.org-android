@@ -19,7 +19,8 @@
     <color name="color_bottom_color">#48BDBDBD</color>
     <color name="color_text_home">#ffffff</color>
 
-    <color name="color_text_store">#ffffff</color>
+    <color name="color_text_white">#ffffff</color>
     <color name="color_pager_strip_background">#757575</color>
+
 
 </resources>

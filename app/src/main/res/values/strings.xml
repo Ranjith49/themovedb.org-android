@@ -98,6 +98,6 @@
     <string name="movie_running_time">%1$s mins</string>
     <string name="movie_budget">Budget : %1$s</string>
     <string name="overview_container_name">OverView</string>
-    <string name="otherInfo_container_name">Other Info</string>
+    <string name="otherInfo_container_name">Genre and Production Details</string>
 
 </resources>

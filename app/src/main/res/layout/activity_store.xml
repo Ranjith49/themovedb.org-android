@@ -20,7 +20,7 @@
             android:paddingBottom="@dimen/store_pager_pager_strip_vertical_margins"
             android:paddingTop="@dimen/store_pager_pager_strip_vertical_margins"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:textColor="@color/color_text_store">
+            android:textColor="@color/color_text_white">
 
         </android.support.v4.view.PagerTabStrip>
 

@@ -1,6 +1,7 @@
 package com.ran.themoviedb.model.server.response;
 
 import com.ran.themoviedb.model.server.entities.MovieGenre;
+import com.ran.themoviedb.model.server.entities.ProductionCompany;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class MovieDetailResponse implements Serializable {
   String backdrop_path;
   long budget;
   ArrayList<MovieGenre> genres;
+  ArrayList<ProductionCompany> production_companies;
   String homepage;
   int id;
   String imdb_id;
@@ -30,6 +32,10 @@ public class MovieDetailResponse implements Serializable {
   boolean video;
   float vote_average;
   int vote_count;
+
+  public ArrayList<ProductionCompany> getProduction_companies() {
+    return production_companies;
+  }
 
   public String getOriginal_title() {
     return original_title;
