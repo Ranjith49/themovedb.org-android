@@ -171,7 +171,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
         textView.setTag(productionCompany.getId());
         textView.setMaxLines(2);
         textView.setBackgroundDrawable(
-            getResources().getDrawable(R.drawable.other_info_item_background));
+            getResources().getDrawable(R.drawable.genre_border_rectangle));
         textView.setTextColor(getResources().getColor(R.color.color_text_white));
         textView.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_production, 0, 0, 0);
         textView.setPadding(
@@ -212,7 +212,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
         textView.setTag(movieGenre.getId());
         textView.setMaxLines(2);
         textView.setBackgroundDrawable(
-            getResources().getDrawable(R.drawable.other_info_item_background));
+            getResources().getDrawable(R.drawable.genre_border_rectangle));
         textView.setTextColor(getResources().getColor(R.color.color_text_white));
         textView.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_genre, 0, 0, 0);
         textView.setPadding(

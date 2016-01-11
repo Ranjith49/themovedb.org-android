@@ -4,10 +4,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v13.app.FragmentStatePagerAdapter;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.fragments.MovieDescriptionFragment;
+import com.ran.themoviedb.fragments.MovieReviewsFragment;
+import com.ran.themoviedb.fragments.MovieSimilarFragment;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 
 /**
@@ -29,10 +32,25 @@ public class MovieDetailPagerAdapter extends FragmentStatePagerAdapter {
 
     Bundle bundle = new Bundle();
     bundle.putInt(TheMovieDbConstants.MOVIE_ID_KEY, movieId);
+    switch (position) {
+      case 0:
+        Fragment movieFragment = new MovieDescriptionFragment();
+        movieFragment.setArguments(bundle);
+        return movieFragment;
+      case 4:
+        Fragment reviewFragment = new MovieReviewsFragment();
+        reviewFragment.setArguments(bundle);
+        return reviewFragment;
+      case 5:
+        Fragment relatedFragment = new MovieSimilarFragment();
+        relatedFragment.setArguments(bundle);
+        return relatedFragment;
+      default:
+        Fragment movieFragment1 = new MovieDescriptionFragment();
+        movieFragment1.setArguments(bundle);
+        return movieFragment1;
+    }
 
-    Fragment movieFragment = new MovieDescriptionFragment();
-    movieFragment.setArguments(bundle);
-    return movieFragment;
   }
 
   @Override
@@ -43,5 +61,10 @@ public class MovieDetailPagerAdapter extends FragmentStatePagerAdapter {
   @Override
   public int getCount() {
     return movieTabNames.length;
+  }
+
+  @Override
+  public Parcelable saveState() {
+    return null;
   }
 }

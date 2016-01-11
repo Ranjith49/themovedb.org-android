@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/movie_card_view_margins"
+                                    card_view:cardCornerRadius="4dp"
+                                    card_view:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/review_card_height_min"
+        android:orientation="vertical"
+        android:padding="@dimen/review_container_internalPadding">
+
+        <TextView
+            android:id="@+id/recycler_review_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="Author"
+            android:textColor="@color/colorTextPrimary"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/recycler_review_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="8"
+            android:paddingTop="@dimen/review_container_internalPadding"
+            android:text="Review in here"
+            android:textColor="@color/colorTextPrimary"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

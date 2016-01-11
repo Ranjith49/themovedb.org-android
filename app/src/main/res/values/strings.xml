@@ -90,7 +90,7 @@
         <item>Images</item>
         <item>Videos</item>
         <item>Reviews</item>
-        <item>Related</item>
+        <item>Related Movies</item>
     </string-array>
 
     <string name="movie_id_error_message">Error getting the Movie Details . Please try

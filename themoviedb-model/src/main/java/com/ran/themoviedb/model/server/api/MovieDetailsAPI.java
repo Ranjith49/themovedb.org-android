@@ -84,10 +84,12 @@ public interface MovieDetailsAPI {
    * @param id      -- Id of the Movie
    * @param api_key -- API Key of the App
    * @param lang    -- Language of the Movie
+   * @param page    -- index of the page
    * @return -- ReviewsDetailResponse
    */
   @GET("movie/{id}/reviews")
   Call<ReviewsDetailResponse> getReviewDetails(@Path("id") int id,
+                                               @Query("page") int page,
                                                @Query("api_key") String api_key,
                                                @Query("language") String lang);
 
@@ -98,10 +100,12 @@ public interface MovieDetailsAPI {
    * @param id      -- Id of the Movie
    * @param api_key -- API Key of the App
    * @param lang    -- Language of the Movie
+   * @param page    -- index of the page
    * @return -- MovieSimilarDetailsResponse
    */
   @GET("movie/{id}/similar")
   Call<MovieSimilarDetailsResponse> getSimilarMovies(@Path("id") int id,
+                                                     @Query("page") int page,
                                                      @Query("api_key") String api_key,
                                                      @Query("language") String lang);
 }
