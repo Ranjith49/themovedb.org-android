@@ -119,8 +119,8 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     }
     movieRating.setText(String.valueOf(response.getVote_average()));
     movieRating.setVisibility(View.VISIBLE);
-    String runningTime = String.format(getResources().getString(R.string.movie_running_time),
-        String.valueOf(response.getRuntime()));
+    String runningTime = String.format(getActivity().getResources().
+        getString(R.string.movie_running_time), String.valueOf(response.getRuntime()));
     movieRunningTime.setText(runningTime);
     movieRunningTime.setVisibility(View.VISIBLE);
     if (!AppUiUtils.isStringEmpty(response.getRelease_date())) {
@@ -142,8 +142,8 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
       movieExternalUrl.setText(response.getHomepage());
       movieExternalUrl.setVisibility(View.VISIBLE);
     }
-    String movie_Budget = String.format(getResources().getString(R.string.movie_budget), String
-        .valueOf(response.getBudget()));
+    String movie_Budget = String.format(getActivity().getResources().getString(R.string
+        .movie_budget), String.valueOf(response.getBudget()));
     movieBudget.setText(movie_Budget);
     movieBudget.setVisibility(View.VISIBLE);
 
@@ -171,7 +171,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
         textView.setTag(productionCompany.getId());
         textView.setMaxLines(2);
         textView.setBackgroundDrawable(
-            getResources().getDrawable(R.drawable.genre_border_rectangle));
+            getActivity().getResources().getDrawable(R.drawable.genre_border_rectangle));
         textView.setTextColor(getResources().getColor(R.color.color_text_white));
         textView.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_production, 0, 0, 0);
         textView.setPadding(

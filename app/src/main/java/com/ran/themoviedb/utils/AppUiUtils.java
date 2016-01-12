@@ -51,8 +51,8 @@ public class AppUiUtils {
    * @return -- true/false
    */
   public static boolean isStringEmpty(String string) {
-    if (string == null || string.equalsIgnoreCase(TheMovieDbConstants.EMPTY_STRING) || string
-        .equalsIgnoreCase(TheMovieDbConstants.NULL_STRING)) {
+    if (string == null || string.equalsIgnoreCase(TheMovieDbConstants.EMPTY_STRING) ||
+        string.equalsIgnoreCase(TheMovieDbConstants.NULL_STRING)) {
       return true;
     } else {
       return false;

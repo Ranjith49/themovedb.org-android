@@ -99,5 +99,7 @@
     <string name="movie_budget">Budget : %1$s</string>
     <string name="overview_container_name">OverView</string>
     <string name="otherInfo_container_name">Genre and Production Details</string>
+    <string name="movie_cast_title">Cast</string>
+    <string name="movie_crew_title">Crew</string>
 
 </resources>

@@ -35,6 +35,16 @@ public interface TheMovieDbConstants {
   String EMPTY_STRING = "";
 
   /**
+   * COLON String
+   */
+  String COLON_STRING = ":";
+
+  /**
+   * Space String
+   */
+  String SPACE_STRING = " ";
+
+  /**
    * Null String
    */
   String NULL_STRING = "null";

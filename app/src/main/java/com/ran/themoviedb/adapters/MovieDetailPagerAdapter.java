@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.v13.app.FragmentStatePagerAdapter;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.fragments.MovieCastAndCrewFragment;
 import com.ran.themoviedb.fragments.MovieDescriptionFragment;
 import com.ran.themoviedb.fragments.MovieReviewsFragment;
 import com.ran.themoviedb.fragments.MovieSimilarFragment;
@@ -37,6 +38,10 @@ public class MovieDetailPagerAdapter extends FragmentStatePagerAdapter {
         Fragment movieFragment = new MovieDescriptionFragment();
         movieFragment.setArguments(bundle);
         return movieFragment;
+      case 1:
+        Fragment castAndCrewFragment = new MovieCastAndCrewFragment();
+        castAndCrewFragment.setArguments(bundle);
+        return castAndCrewFragment;
       case 4:
         Fragment reviewFragment = new MovieReviewsFragment();
         reviewFragment.setArguments(bundle);

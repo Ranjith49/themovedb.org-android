@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="@dimen/movie_cast_crew_item_width"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/cast_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/movie_cast_crew_bottom_container"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_bottom_color"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cast_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/movie_cast_crew_title_dimens"
+            android:maxLines="2"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/color_text_white"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+</RelativeLayout>

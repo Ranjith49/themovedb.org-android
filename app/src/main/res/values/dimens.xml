@@ -71,10 +71,15 @@
     <dimen name="other_info_container_genre_maxWidth">120dp</dimen>
     <dimen name="other_info_item_margin_vertical">4dp</dimen>
 
-    <!-- Dimens for The Review items -->
+    <!-- Dimens for The Movie Review items -->
     <dimen name="review_card_height_max_rough">100dp</dimen>
     <dimen name="review_card_height_min">60dp</dimen>
     <dimen name="review_container_internalPadding">8dp</dimen>
     <dimen name="review_card_text_max_height">120dp</dimen>
+
+    <dimen name="movie_cast_crew_title_dimens">8dp</dimen>
+    <dimen name="movie_cast_crew_item_width">120dp</dimen>
+    <dimen name="movie_cast_crew_bottom_container">40dp</dimen>
+    <dimen name="movie_crew_container_height">64dp</dimen>
 
 </resources>
