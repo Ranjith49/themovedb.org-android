@@ -1,6 +1,6 @@
 package com.ran.themoviedb.listeners;
 
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 
 /**
  * Created by ranjith.suda on 1/3/2016.

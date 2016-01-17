@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
 import com.ran.themoviedb.model.server.entities.MovieSearchResults;

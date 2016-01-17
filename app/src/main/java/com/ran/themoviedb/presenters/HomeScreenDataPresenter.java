@@ -69,6 +69,8 @@ public class HomeScreenDataPresenter extends BasePresenter
 
   @Override
   public void start() {
+    homeScreenView.showProgressBar(true);
+
     movieBannerUrls = new ArrayList<>();
     tvBannerUrls = new ArrayList<>();
     peoplePosterUrls = new ArrayList<>();
@@ -78,7 +80,6 @@ public class HomeScreenDataPresenter extends BasePresenter
     movieService.request(uniqueId);
     peopleService.request(uniqueId);
     tvService.request(uniqueId);
-    homeScreenView.showProgressBar(true);
   }
 
   @Override

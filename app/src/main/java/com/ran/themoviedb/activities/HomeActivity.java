@@ -15,7 +15,7 @@ import com.ran.themoviedb.R;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
 import com.ran.themoviedb.customviews.HomeBannerView;
 import com.ran.themoviedb.customviews.HomePosterView;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;

@@ -31,8 +31,8 @@ public class MovieSimilarDataPresenter extends BasePresenter
 
   @Override
   public void start() {
-    service.request(uniqueId);
     movieSimilarView.showProgressBar(true, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+    service.request(uniqueId);
   }
 
   @Override

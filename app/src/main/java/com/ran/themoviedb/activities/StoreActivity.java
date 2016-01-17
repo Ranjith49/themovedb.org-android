@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.StoreFragmentPagerAdapter;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 
 public class StoreActivity extends AppCompatActivity {

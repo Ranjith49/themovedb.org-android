@@ -38,8 +38,8 @@ public class MovieStoreDataPresenter extends BasePresenter
 
   @Override
   public void start() {
-    movieService.request(uniqueId);
     movieStoreView.showProgressBar(true, pageIndex == MovieStoreFragment.FIRST_PAGE_INDEX);
+    movieService.request(uniqueId);
   }
 
   @Override

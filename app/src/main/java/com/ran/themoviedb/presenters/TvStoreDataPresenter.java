@@ -37,8 +37,8 @@ public class TvStoreDataPresenter extends BasePresenter implements TVShowStoreSe
 
   @Override
   public void start() {
-    tvService.request(uniqueId);
     tvStoreView.showProgressBar(true, pageIndex == TvStoreFragment.FIRST_PAGE_INDEX);
+    tvService.request(uniqueId);
   }
 
   @Override

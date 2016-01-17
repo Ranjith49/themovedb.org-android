@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class ImageDetailResponse implements Serializable {
 
   int id;
-  ArrayList<ImageDetails> backdrops;
-  ArrayList<ImageDetails> posters;
+  ArrayList<ImageDetails> backdrops = new ArrayList<>();
+  ArrayList<ImageDetails> posters = new ArrayList<>();
 
   public int getId() {
     return id;

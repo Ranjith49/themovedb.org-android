@@ -87,8 +87,7 @@
     <string-array name="movie_details_tabs">
         <item>Description</item>
         <item>Cast &amp; Crew</item>
-        <item>Images</item>
-        <item>Videos</item>
+        <item>Images &amp; Videos</item>
         <item>Reviews</item>
         <item>Related Movies</item>
     </string-array>
@@ -101,5 +100,8 @@
     <string name="otherInfo_container_name">Genre and Production Details</string>
     <string name="movie_cast_title">Cast</string>
     <string name="movie_crew_title">Crew</string>
+    <string name="image_poster_title">Posters : %1$s</string>
+    <string name="image_banner_title">Banners : %1$s</string>
+
 
 </resources>

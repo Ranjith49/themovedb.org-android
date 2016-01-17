@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.fragments.MovieGenreStoreFragment;
 import com.ran.themoviedb.fragments.MovieStoreFragment;
 import com.ran.themoviedb.fragments.PeopleStoreFragment;

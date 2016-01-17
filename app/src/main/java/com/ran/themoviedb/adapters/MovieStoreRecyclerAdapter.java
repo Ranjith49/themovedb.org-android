@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.ran.themoviedb.customviews.CustomRecyclerView;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.server.entities.MovieStoreResults;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;

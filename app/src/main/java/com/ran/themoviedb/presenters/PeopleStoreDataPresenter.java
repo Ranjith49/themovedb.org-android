@@ -38,8 +38,8 @@ public class PeopleStoreDataPresenter extends BasePresenter
 
   @Override
   public void start() {
-    serviceImpl.request(uniqueId);
     peopleStoreView.showProgressBar(true, pageIndex == PeopleStoreFragment.FIRST_PAGE_INDEX);
+    serviceImpl.request(uniqueId);
   }
 
   @Override

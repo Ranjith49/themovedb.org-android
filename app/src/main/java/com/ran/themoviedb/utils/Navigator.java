@@ -7,7 +7,7 @@ import com.ran.themoviedb.activities.HomeActivity;
 import com.ran.themoviedb.activities.LanguageSelectionActivity;
 import com.ran.themoviedb.activities.MovieDetailActivity;
 import com.ran.themoviedb.activities.StoreActivity;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 
 /**

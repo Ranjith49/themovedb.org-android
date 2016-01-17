@@ -25,7 +25,9 @@ public class MovieCastCrewServiceImpl extends BaseRetrofitService<CastCrewDetail
 
   @Override
   protected void handleApiResponse(CastCrewDetailResponse response, int uniqueId) {
-    if (response == null) {
+    if (response == null ||
+        (response.getCrew() == null || response.getCrew().size() < 0) &&
+        (response.getCast() == null || response.getCast().size() < 0)) {
       handler.onCastCrewError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
     } else {
       handler.onCastCrewResponse(response, uniqueId);

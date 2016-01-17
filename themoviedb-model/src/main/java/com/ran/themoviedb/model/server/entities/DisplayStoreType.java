@@ -1,4 +1,4 @@
-package com.ran.themoviedb.entities;
+package com.ran.themoviedb.model.server.entities;
 
 /**
  * Created by ranjith.suda on 1/3/2016.

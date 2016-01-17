@@ -35,8 +35,8 @@ public class TvSearchDataPresenter extends BasePresenter
 
   @Override
   public void start() {
-    serviceImpl.request(uniqueId);
     tvSearchView.showProgressBar(true, pageIndex == SearchTvFragment.FIRST_PAGE_INDEX);
+    serviceImpl.request(uniqueId);
   }
 
   @Override

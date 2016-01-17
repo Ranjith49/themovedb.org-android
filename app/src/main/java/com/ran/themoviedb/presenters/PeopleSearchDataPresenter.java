@@ -35,8 +35,8 @@ public class PeopleSearchDataPresenter extends BasePresenter
 
   @Override
   public void start() {
-    serviceImpl.request(uniqueId);
     peopleSearchView.showProgressBar(true, pageIndex == SearchPeopleFragment.FIRST_PAGE_INDEX);
+    serviceImpl.request(uniqueId);
   }
 
   @Override

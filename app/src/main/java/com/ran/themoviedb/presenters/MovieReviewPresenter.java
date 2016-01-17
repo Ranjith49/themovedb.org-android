@@ -30,8 +30,8 @@ public class MovieReviewPresenter extends BasePresenter implements MovieReviewSe
 
   @Override
   public void start() {
-    service.request(uniqueId);
     movieReviewView.showProgressBar(true, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+    service.request(uniqueId);
   }
 
   @Override

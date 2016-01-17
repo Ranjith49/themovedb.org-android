@@ -15,7 +15,7 @@ import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.TvSearchRecyclerAdapter;
 import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;

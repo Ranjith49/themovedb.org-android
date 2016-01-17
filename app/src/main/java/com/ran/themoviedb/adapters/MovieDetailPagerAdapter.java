@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.v13.app.FragmentStatePagerAdapter;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.fragments.ImageDetailFragment;
 import com.ran.themoviedb.fragments.MovieCastAndCrewFragment;
 import com.ran.themoviedb.fragments.MovieDescriptionFragment;
 import com.ran.themoviedb.fragments.MovieReviewsFragment;
@@ -16,6 +17,8 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 
 /**
  * Created by ranjith.suda on 1/9/2016.
+ * <p/>
+ * Movie Detail View Pager Adapter bind to the ViewPager in the MovieDetailActivity
  */
 public class MovieDetailPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -42,11 +45,15 @@ public class MovieDetailPagerAdapter extends FragmentStatePagerAdapter {
         Fragment castAndCrewFragment = new MovieCastAndCrewFragment();
         castAndCrewFragment.setArguments(bundle);
         return castAndCrewFragment;
-      case 4:
+      case 2:
+        Fragment imageFragment = new ImageDetailFragment();
+        imageFragment.setArguments(bundle);
+        return imageFragment;
+      case 3:
         Fragment reviewFragment = new MovieReviewsFragment();
         reviewFragment.setArguments(bundle);
         return reviewFragment;
-      case 5:
+      case 4:
         Fragment relatedFragment = new MovieSimilarFragment();
         relatedFragment.setArguments(bundle);
         return relatedFragment;

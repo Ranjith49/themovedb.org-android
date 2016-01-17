@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.fragments.SearchMovieFragment;
 import com.ran.themoviedb.fragments.SearchPeopleFragment;
 import com.ran.themoviedb.fragments.SearchTvFragment;

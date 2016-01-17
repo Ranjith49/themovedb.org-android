@@ -28,8 +28,8 @@ public class MovieCastCrewPresenter extends BasePresenter
 
   @Override
   public void start() {
-    service.request(uniqueId);
     movieCastCrewView.showProgressBar(true);
+    service.request(uniqueId);
   }
 
   @Override

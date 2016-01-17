@@ -32,8 +32,8 @@ public class MovieDescriptionPresenter extends BasePresenter implements
 
   @Override
   public void start() {
-    service.request(uniqueId);
     movieDescriptionView.showProgressBar(true);
+    service.request(uniqueId);
   }
 
   @Override
