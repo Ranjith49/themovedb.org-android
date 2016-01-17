@@ -43,7 +43,8 @@ public interface MovieDetailsAPI {
    */
   @GET("movie/{id}/images")
   Call<ImageDetailResponse> getMovieImageDetails(@Path("id") int id,
-                                                 @Query("api_key") String api_key);
+                                                 @Query("api_key") String api_key,
+                                                 @Query("language") String lang);
 
 
   /**

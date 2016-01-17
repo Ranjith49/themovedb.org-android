@@ -46,7 +46,7 @@ public class ImageServiceImpl extends BaseRetrofitService<ImageDetailResponse> {
     switch (storeType) {
       case MOVIE_STORE:
         MovieDetailsAPI api = RetrofitAdapters.getAppRestAdapter().create(MovieDetailsAPI.class);
-        return api.getMovieImageDetails(id, TheMovieDbConstants.APP_API_KEY);
+        return api.getMovieImageDetails(id, TheMovieDbConstants.APP_API_KEY, language);
       case TV_STORE:
         return null;
       default:

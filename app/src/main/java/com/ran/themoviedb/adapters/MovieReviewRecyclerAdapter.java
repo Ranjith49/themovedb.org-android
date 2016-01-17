@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.ran.themoviedb.R;
@@ -84,16 +85,30 @@ public class MovieReviewRecyclerAdapter extends CustomRecyclerView.Adapter<Revie
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-    ReviewViewHolder holder_review = (ReviewViewHolder) holder;
+    final ReviewViewHolder holder_review = (ReviewViewHolder) holder;
     holder_review.review.setText(reviewsDetails.get(position).getContent());
     holder_review.author.setText(reviewsDetails.get(position).getAuthor());
-    holder_review.review.setOnClickListener(new View.OnClickListener() {
+
+    ViewTreeObserver viewTreeObserver = holder_review.review.getViewTreeObserver();
+    viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override
-      public void onClick(View v) {
-        reviewClickListener.onReviewClick(reviewsDetails.get(position).getId(),
-            reviewsDetails.get(position).getUrl());
+      public void onGlobalLayout() {
+        ViewTreeObserver obs = holder_review.review.getViewTreeObserver();
+        obs.removeGlobalOnLayoutListener(this);
+        //TODO [ranjith , better logic]
+        if (holder_review.review.getLineCount() >= 8) {
+          holder_review.review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              reviewClickListener.onReviewClick(reviewsDetails.get(position).getId(),
+                  reviewsDetails.get(position).getUrl());
+            }
+          });
+        }
       }
     });
+
+
   }
 
   @Override

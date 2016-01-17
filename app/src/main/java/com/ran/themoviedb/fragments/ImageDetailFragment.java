@@ -51,7 +51,7 @@ public class ImageDetailFragment extends Fragment
   private ImagePresenter imagePresenter;
   private ImageDetailAdapter imagePosterAdapter;
   private ImageDetailAdapter imageBannerAdapter;
-  private final int INDEX_BANNER_SIZE = 2; //Todo [ranjith ,do better logic]
+  private final int INDEX_BANNER_SIZE = 1; //Todo [ranjith ,do better logic]
   private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
 
 
