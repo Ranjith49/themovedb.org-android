@@ -1,10 +1,16 @@
 package com.ran.themoviedb.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -18,13 +24,18 @@ import com.ran.themoviedb.adapters.ImageDetailAdapter;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
+import com.ran.themoviedb.listeners.VideoPopupClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.ImageDetails;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
+import com.ran.themoviedb.model.server.entities.VideoDetails;
 import com.ran.themoviedb.presenters.ImagePresenter;
+import com.ran.themoviedb.presenters.VideoPresenter;
+import com.ran.themoviedb.utils.VideoPopupCreator;
 import com.ran.themoviedb.view_pres_med.ImageDisplayView;
+import com.ran.themoviedb.view_pres_med.VideoDisplayView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -33,8 +44,10 @@ import java.util.ArrayList;
  * Created by ranjith.suda on 1/17/2016.
  */
 public class ImageDetailFragment extends Fragment
-    implements ImageDisplayView, GenericErrorBuilder.Handler {
+    implements ImageDisplayView, VideoDisplayView, GenericErrorBuilder.Handler,
+    VideoPopupClickListener {
 
+  private final String TAG = ImageDetailFragment.class.getSimpleName();
   private View view;
   private LinearLayout image_container;
   private LinearLayout image_poster_container;
@@ -49,11 +62,13 @@ public class ImageDetailFragment extends Fragment
   private int id;
 
   private ImagePresenter imagePresenter;
+  private VideoPresenter videoPresenter;
   private ImageDetailAdapter imagePosterAdapter;
   private ImageDetailAdapter imageBannerAdapter;
   private final int INDEX_BANNER_SIZE = 1; //Todo [ranjith ,do better logic]
   private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
 
+  private ArrayList<VideoDetails> videoDetails;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,10 +102,14 @@ public class ImageDetailFragment extends Fragment
     imagePresenter = new ImagePresenter(getActivity(), this, ImageDetailFragment.class.hashCode(),
         id, DisplayStoreType.MOVIE_STORE);
     imagePresenter.start();
+    videoPresenter = new VideoPresenter(getActivity(), this, ImageDetailFragment.class.hashCode(),
+        id, DisplayStoreType.MOVIE_STORE);
+    videoPresenter.start();
   }
 
   @Override
   public void onDestroyView() {
+    videoPresenter.stop();
     imagePresenter.stop();
     super.onDestroyView();
   }
@@ -123,6 +142,23 @@ public class ImageDetailFragment extends Fragment
     String image_url_config = imagesConfig.getBackdrop_sizes().get(INDEX_BANNER_SIZE);
 
     return image_url.concat(image_url_config);
+  }
+
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.image_detail_screen_menu, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.item_video:
+        View view = getActivity().findViewById(R.id.item_video);
+        VideoPopupCreator.createListPopupWindow(getActivity(), videoDetails, this, view);
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   //-- CallBacks from different Views -- //
@@ -173,5 +209,23 @@ public class ImageDetailFragment extends Fragment
   @Override
   public void imageError(UserAPIErrorType errorType) {
     genericErrorBuilder.setUserAPIError(errorType);
+  }
+
+  @Override
+  public void onVideoResponse(ArrayList<VideoDetails> videoDetails) {
+    this.videoDetails = videoDetails;
+    setHasOptionsMenu(true);
+  }
+
+  @Override
+  public void onVideoClickItem(String videoId, String videoKey) {
+    //TODO [Ideally handle the No ActivityFound Exception ]
+    try {
+      String youtubeUrl = TheMovieDbConstants.YOUTUBE_BASE_URL.concat(videoKey);
+      Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl));
+      startActivity(intent);
+    } catch (Exception e) {
+      Log.d(TAG, e.toString());
+    }
   }
 }

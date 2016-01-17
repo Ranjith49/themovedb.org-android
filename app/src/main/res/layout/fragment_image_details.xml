@@ -10,14 +10,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
-        android:weightSum="5">
+        android:weightSum="6">
 
         <!-- Poster Image Container -->
         <LinearLayout
             android:id="@+id/image_poster_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -44,7 +44,7 @@
             android:id="@+id/image_banner_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="3.5"
             android:orientation="vertical"
             android:visibility="gone">
 

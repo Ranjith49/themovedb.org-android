@@ -43,8 +43,7 @@ public interface MovieDetailsAPI {
    */
   @GET("movie/{id}/images")
   Call<ImageDetailResponse> getMovieImageDetails(@Path("id") int id,
-                                                 @Query("api_key") String api_key,
-                                                 @Query("language") String lang);
+                                                 @Query("api_key") String api_key);
 
 
   /**
@@ -53,13 +52,11 @@ public interface MovieDetailsAPI {
    *
    * @param id      -- Id of the Movie
    * @param api_key -- API Key of the App
-   * @param lang    -- Language of the Movie
    * @return -- VideoDetailResponse
    */
   @GET("movie/{id}/videos")
   Call<VideoDetailResponse> getMovieVideoDetails(@Path("id") int id,
-                                                 @Query("api_key") String api_key,
-                                                 @Query("language") String lang);
+                                                 @Query("api_key") String api_key);
 
 
   /**

@@ -4,7 +4,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.api.MovieDetailsAPI;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
-import com.ran.themoviedb.model.server.response.ImageDetailResponse;
+import com.ran.themoviedb.model.server.response.VideoDetailResponse;
 import com.ran.themoviedb.model.utils.RetrofitAdapters;
 
 import retrofit.Call;
@@ -12,14 +12,14 @@ import retrofit.Call;
 /**
  * Created by ranjith.suda on 1/17/2016.
  */
-public class ImageServiceImpl extends BaseRetrofitService<ImageDetailResponse> {
+public class VideoServiceImpl extends BaseRetrofitService<VideoDetailResponse> {
 
   private int id;
   private String language;
   private DisplayStoreType storeType;
   private Handler handler;
 
-  public ImageServiceImpl(int id, DisplayStoreType storeType, Handler handler, String language) {
+  public VideoServiceImpl(int id, DisplayStoreType storeType, Handler handler, String language) {
     this.id = id;
     this.language = language;
     this.storeType = storeType;
@@ -27,26 +27,25 @@ public class ImageServiceImpl extends BaseRetrofitService<ImageDetailResponse> {
   }
 
   @Override
-  protected void handleApiResponse(ImageDetailResponse response, int uniqueId) {
-    if (response == null ||
-        (response.getBackdrops().size() <= 0 && response.getPosters().size() <= 0)) {
-      handler.onImageError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
+  protected void handleApiResponse(VideoDetailResponse response, int uniqueId) {
+    if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
+      handler.onVideoError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
     } else {
-      handler.onImageResponse(response, uniqueId);
+      handler.onVideoResponse(response, uniqueId);
     }
   }
 
   @Override
   protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-    handler.onImageError(errorType, uniqueId);
+    handler.onVideoError(errorType, uniqueId);
   }
 
   @Override
-  protected Call<ImageDetailResponse> getRetrofitCall() {
+  protected Call<VideoDetailResponse> getRetrofitCall() {
     switch (storeType) {
       case MOVIE_STORE:
         MovieDetailsAPI api = RetrofitAdapters.getAppRestAdapter().create(MovieDetailsAPI.class);
-        return api.getMovieImageDetails(id, TheMovieDbConstants.APP_API_KEY);
+        return api.getMovieVideoDetails(id, TheMovieDbConstants.APP_API_KEY);
       case TV_STORE:
         return null;
       default:
@@ -56,9 +55,9 @@ public class ImageServiceImpl extends BaseRetrofitService<ImageDetailResponse> {
 
   public interface Handler {
 
-    void onImageResponse(ImageDetailResponse response, int uniqueId);
+    void onVideoResponse(VideoDetailResponse response, int uniqueId);
 
-    void onImageError(UserAPIErrorType errorType, int uniqueId);
+    void onVideoError(UserAPIErrorType errorType, int uniqueId);
 
   }
 }

@@ -82,7 +82,8 @@
     <dimen name="movie_cast_crew_bottom_container">40dp</dimen>
     <dimen name="movie_crew_container_height">64dp</dimen>
 
-    <dimen name="image_poster_width">120dp</dimen>
+    <dimen name="image_poster_width">140dp</dimen>
     <dimen name="image_banner_height">240dp</dimen>
+    <dimen name="video_popup_width">160dp</dimen>
 
 </resources>

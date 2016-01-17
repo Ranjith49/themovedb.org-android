@@ -98,4 +98,9 @@ public interface TheMovieDbConstants {
    * Base URL of IMDB for deeplinking
    */
   String IMDB_BASE_URL = "www.imdb.com/title/";
+
+  /**
+   * Base URL of Youtube to be handled..
+   */
+  String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
 }

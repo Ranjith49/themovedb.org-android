@@ -102,6 +102,7 @@
     <string name="movie_crew_title">Crew</string>
     <string name="image_poster_title">Posters : %1$s</string>
     <string name="image_banner_title">Banners : %1$s</string>
+    <string name="video_action_bar_title">Youtube Videos</string>
 
 
 </resources>
