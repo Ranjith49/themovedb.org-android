@@ -14,6 +14,7 @@ import com.ran.themoviedb.fragments.MovieDescriptionFragment;
 import com.ran.themoviedb.fragments.MovieReviewsFragment;
 import com.ran.themoviedb.fragments.MovieSimilarFragment;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 
 /**
  * Created by ranjith.suda on 1/9/2016.
@@ -36,6 +37,8 @@ public class MovieDetailPagerAdapter extends FragmentStatePagerAdapter {
 
     Bundle bundle = new Bundle();
     bundle.putInt(TheMovieDbConstants.MOVIE_ID_KEY, movieId);
+    bundle.putString(TheMovieDbConstants.STORE_TYPE_KEY,
+        DisplayStoreType.getStoreName(DisplayStoreType.MOVIE_STORE));
     switch (position) {
       case 0:
         Fragment movieFragment = new MovieDescriptionFragment();

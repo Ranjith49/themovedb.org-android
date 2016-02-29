@@ -2,6 +2,7 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.api.MovieDetailsAPI;
+import com.ran.themoviedb.model.server.api.TvShowDetailsAPI;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.ImageDetailResponse;
@@ -48,7 +49,8 @@ public class ImageServiceImpl extends BaseRetrofitService<ImageDetailResponse> {
         MovieDetailsAPI api = RetrofitAdapters.getAppRestAdapter().create(MovieDetailsAPI.class);
         return api.getMovieImageDetails(id, TheMovieDbConstants.APP_API_KEY);
       case TV_STORE:
-        return null;
+        TvShowDetailsAPI api1 = RetrofitAdapters.getAppRestAdapter().create(TvShowDetailsAPI.class);
+        return api1.getTvShowImageDetails(id, TheMovieDbConstants.APP_API_KEY);
       default:
         return null;
     }

@@ -67,6 +67,7 @@ public class ImageDetailFragment extends Fragment
   private ImageDetailAdapter imageBannerAdapter;
   private final int INDEX_BANNER_SIZE = 1; //Todo [ranjith ,do better logic]
   private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
+  private DisplayStoreType displayStoreType;
 
   private ArrayList<VideoDetails> videoDetails;
 
@@ -74,10 +75,18 @@ public class ImageDetailFragment extends Fragment
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     view = inflater.inflate(R.layout.fragment_image_details, container, false);
-    //TODO [ranjith ,Here enable TV show logic also ..]
+
     Bundle bundle = getArguments();
     if (bundle.containsKey(TheMovieDbConstants.MOVIE_ID_KEY)) {
       id = bundle.getInt(TheMovieDbConstants.MOVIE_ID_KEY);
+    }
+    if (bundle.containsKey(TheMovieDbConstants.TV_SHOW_ID_KEY)) {
+      id = bundle.getInt(TheMovieDbConstants.TV_SHOW_ID_KEY);
+    }
+    if (bundle.containsKey(TheMovieDbConstants.STORE_TYPE_KEY)) {
+      displayStoreType = DisplayStoreType.getStoreType(
+          bundle.getString(TheMovieDbConstants.STORE_TYPE_KEY,
+              DisplayStoreType.getStoreName(DisplayStoreType.MOVIE_STORE)));
     }
 
     image_container = (LinearLayout) view.findViewById(R.id.image_container);
@@ -100,10 +109,10 @@ public class ImageDetailFragment extends Fragment
 
   private void initializePresenter() {
     imagePresenter = new ImagePresenter(getActivity(), this, ImageDetailFragment.class.hashCode(),
-        id, DisplayStoreType.MOVIE_STORE);
+        id, displayStoreType);
     imagePresenter.start();
     videoPresenter = new VideoPresenter(getActivity(), this, ImageDetailFragment.class.hashCode(),
-        id, DisplayStoreType.MOVIE_STORE);
+        id, displayStoreType);
     videoPresenter.start();
   }
 

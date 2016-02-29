@@ -87,6 +87,9 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
     } catch (ParseException e) {
       tvYear.setVisibility(View.GONE);
       Log.d(TAG, "Date Format Exception  : " + e.toString());
+    } catch (Exception e) {
+      tvYear.setVisibility(View.GONE);
+      Log.d(TAG, "Exception in reading the date");
     }
     tvItemContainer.setOnClickListener(new View.OnClickListener() {
       @Override
