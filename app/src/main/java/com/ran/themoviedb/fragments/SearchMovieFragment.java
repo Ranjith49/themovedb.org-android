@@ -29,6 +29,8 @@ import java.net.URLEncoder;
 
 /**
  * Created by ranjith.suda on 1/4/2016.
+ * <p/>
+ * Search Movie Fragment
  */
 public class SearchMovieFragment extends Fragment
     implements MovieSearchView, GenericErrorBuilder.Handler, StoreClickListener {

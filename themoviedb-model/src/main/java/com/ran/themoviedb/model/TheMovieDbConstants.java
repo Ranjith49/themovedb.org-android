@@ -45,6 +45,11 @@ public interface TheMovieDbConstants {
   String SPACE_STRING = " ";
 
   /**
+   * Comma String
+   */
+  String COMMA_STRING = ",";
+
+  /**
    * Null String
    */
   String NULL_STRING = "null";
@@ -93,6 +98,11 @@ public interface TheMovieDbConstants {
    * Key for the Movie [Id] ..
    */
   String MOVIE_ID_KEY = "movie_id_key";
+
+  /**
+   * Key for the TvShow [Id] ..
+   */
+  String TV_SHOW_ID_KEY = "tvShow_id_key";
 
   /**
    * Base URL of IMDB for deeplinking

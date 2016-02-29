@@ -8,15 +8,20 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.adapters.MovieDetailPagerAdapter;
+import com.ran.themoviedb.adapters.TvShowDetailPagerAdapter;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 
-public class MovieDetailActivity extends AppCompatActivity {
+/**
+ * Created by ranjith.suda on 2/29/2016.
+ * <p/>
+ * Activity responsible for showing the Tv Show Details
+ */
+public class TvShowDetailActivity extends AppCompatActivity {
 
   private ViewPager viewPager;
-  private MovieDetailPagerAdapter movieDetailPagerAdapter;
-  private final int MOVIE_DEFAULT_INVALID_INDEX = -1;
-  int movieId = MOVIE_DEFAULT_INVALID_INDEX;
+  private TvShowDetailPagerAdapter movieDetailPagerAdapter;
+  private final int TV_DEFAULT_INVALID_INDEX = -1;
+  int tvShowId = TV_DEFAULT_INVALID_INDEX;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +32,17 @@ public class MovieDetailActivity extends AppCompatActivity {
   }
 
   private void initView() {
-
-    if (getIntent().hasExtra(TheMovieDbConstants.MOVIE_ID_KEY)) {
-      movieId = getIntent().getIntExtra(TheMovieDbConstants.MOVIE_ID_KEY,
-          MOVIE_DEFAULT_INVALID_INDEX);
+    if (getIntent().hasExtra(TheMovieDbConstants.TV_SHOW_ID_KEY)) {
+      tvShowId =
+          getIntent().getIntExtra(TheMovieDbConstants.TV_SHOW_ID_KEY, TV_DEFAULT_INVALID_INDEX);
     }
 
-    if (movieId != MOVIE_DEFAULT_INVALID_INDEX) {
+    if (tvShowId != TV_DEFAULT_INVALID_INDEX) {
       viewPager = (ViewPager) findViewById(R.id.movie_viewpager);
-      movieDetailPagerAdapter = new MovieDetailPagerAdapter(this, getFragmentManager(), movieId);
+      movieDetailPagerAdapter = new TvShowDetailPagerAdapter(this, getFragmentManager(), tvShowId);
       viewPager.setAdapter(movieDetailPagerAdapter);
     } else {
-      Toast.makeText(this, R.string.movie_id_error_message, Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, R.string.tv_id_error_message, Toast.LENGTH_SHORT).show();
       finish();
     }
   }
@@ -53,7 +57,7 @@ public class MovieDetailActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.item_share:
-        Toast.makeText(this, "Share " + movieId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Share " + tvShowId, Toast.LENGTH_SHORT).show();
         return true;
       default:
         return super.onOptionsItemSelected(item);

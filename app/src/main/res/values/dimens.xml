@@ -86,4 +86,12 @@
     <dimen name="image_banner_height">240dp</dimen>
     <dimen name="video_popup_width">160dp</dimen>
 
+    <!-- Dimens for the Tv Screen -->
+
+    <dimen name="tv_pager_pager_strip_vertical_margins">10dp</dimen>
+    <dimen name="tv_description_image_width">160dp</dimen>
+    <dimen name="tv_description_image_container">240dp</dimen>
+    <dimen name="tv_poster_margin_right">16dp</dimen>
+    <dimen name="tv_poster_margin_top">16dp</dimen>
+    <dimen name="tv_card_view_margins">16dp</dimen>
 </resources>

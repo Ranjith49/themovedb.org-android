@@ -15,7 +15,6 @@ public class MovieDescriptionPresenter extends BasePresenter implements
     MovieDescriptionServiceImpl.Handler {
 
   private MovieDescriptionView movieDescriptionView;
-  private int movieId;
   private String movieLang;
   private MovieDescriptionServiceImpl service;
   private int uniqueId;
@@ -23,7 +22,6 @@ public class MovieDescriptionPresenter extends BasePresenter implements
   public MovieDescriptionPresenter(Context context, MovieDescriptionView movieDescriptionView, int
       movieId, int uniqueId) {
     this.movieDescriptionView = movieDescriptionView;
-    this.movieId = movieId;
     this.movieLang = AppSharedPreferences.getInstance(context).getAppLanguageData();
     this.uniqueId = uniqueId;
 

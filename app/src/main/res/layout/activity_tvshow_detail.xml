@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ran.themoviedb.activities.MovieDetailActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/tv_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/tv_pager_tabstrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/color_pager_strip_background"
+            android:paddingBottom="@dimen/tv_pager_pager_strip_vertical_margins"
+            android:paddingTop="@dimen/tv_pager_pager_strip_vertical_margins"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@android:color/white">
+        </android.support.v4.view.PagerTabStrip>
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

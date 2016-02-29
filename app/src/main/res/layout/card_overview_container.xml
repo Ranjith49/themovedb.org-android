@@ -24,11 +24,35 @@
         android:textStyle="italic"
         android:visibility="gone"/>
 
+    <!-- Used only for the Tv Shows -->
+    <TextView
+        android:id="@+id/overview_no_seasons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/overview_description"
+        android:layout_marginTop="8dp"
+        android:text="No of the Seasons : 9"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"
+        android:visibility="gone"/>
+
+    <!-- Used only for the Tv Shows -->
+    <TextView
+        android:id="@+id/overview_no_episodes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/overview_no_seasons"
+        android:layout_marginTop="8dp"
+        android:text="No of the Seasons : 200"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/overview_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/overview_tagline"
+        android:layout_below="@id/overview_no_episodes"
         android:layout_marginTop="16dp"
         android:drawableRight="@mipmap/ic_dollar"
         android:gravity="center"
@@ -56,7 +80,6 @@
         android:layout_marginTop="16dp"
         android:autoLink="web"
         android:text="www.google.com"
-        android:visibility="gone"
-        />
+        android:visibility="gone"/>
 
 </RelativeLayout>

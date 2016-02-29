@@ -1,41 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:card_view="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.ran.themoviedb.fragments.MovieDescriptionFragment">
+             tools:context=".fragments.TvShowDetailFragment">
 
+    <!-- Tv Detail Container -->
     <ScrollView
-        android:id="@+id/movie_scroll_view"
+        android:id="@+id/tv_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:visibility="gone">
 
         <RelativeLayout
-            android:id="@+id/movie_description_container"
+            android:id="@+id/tvShow_description_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <!-- Image -->
             <ImageView
-                android:id="@+id/movie_poster"
-                android:layout_width="@dimen/movie_description_image_width"
-                android:layout_height="@dimen/movie_description_image_container"
+                android:id="@+id/tvShow_poster"
+                android:layout_width="@dimen/tv_description_image_width"
+                android:layout_height="@dimen/tv_description_image_container"
                 android:src="@drawable/image_error_placeholder"/>
 
             <!-- Container for [Name ,Votes ,Date and Run Time ] -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_description_image_container"
-                android:layout_toRightOf="@id/movie_poster"
+                android:layout_height="@dimen/tv_description_image_container"
+                android:layout_toRightOf="@id/tvShow_poster"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/movie_poster_margin_right"
-                android:paddingTop="@dimen/movie_poster_margin_top"
+                android:paddingLeft="@dimen/tv_poster_margin_right"
+                android:paddingTop="@dimen/tv_poster_margin_top"
                 android:weightSum="6">
 
                 <TextView
-                    android:id="@+id/movie_name"
+                    android:id="@+id/tv_show_name"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
@@ -47,7 +49,7 @@
                     android:visibility="gone"/>
 
                 <TextView
-                    android:id="@+id/movie_rating"
+                    android:id="@+id/tv_show_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -57,7 +59,7 @@
                     android:visibility="gone"/>
 
                 <TextView
-                    android:id="@+id/movie_date"
+                    android:id="@+id/tv_show_date"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -67,7 +69,7 @@
                     android:visibility="gone"/>
 
                 <TextView
-                    android:id="@+id/movie_runtime"
+                    android:id="@+id/tv_show_runtime"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -81,8 +83,8 @@
                 android:id="@+id/overview_container_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/movie_poster"
-                android:layout_marginLeft="@dimen/movie_card_view_margins"
+                android:layout_below="@id/tvShow_poster"
+                android:layout_marginLeft="@dimen/tv_card_view_margins"
                 android:layout_marginTop="@dimen/over_view_container_padding"
                 android:text="@string/overview_container_name"
                 android:textColor="@android:color/black"
@@ -94,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/overview_container_desc"
-                android:layout_margin="@dimen/movie_card_view_margins"
+                android:layout_margin="@dimen/tv_card_view_margins"
                 card_view:cardCornerRadius="4dp"
                 card_view:cardElevation="6dp">
 
@@ -102,29 +104,6 @@
 
             </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/otherInfo_container_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/card_overview_container"
-                android:layout_marginLeft="@dimen/movie_card_view_margins"
-                android:text="@string/otherInfo_container_name"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"/>
-
-            <!-- Other Info  view Container -->
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_other_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/otherInfo_container_desc"
-                android:layout_margin="@dimen/movie_card_view_margins"
-                card_view:cardCornerRadius="4dp"
-                card_view:cardElevation="6dp">
-
-                <include layout="@layout/card_otherinfo_container"/>
-
-            </android.support.v7.widget.CardView>
         </RelativeLayout>
     </ScrollView>
 
@@ -138,7 +117,7 @@
 
     <!-- Progress Bar -->
     <ProgressBar
-        android:id="@+id/movie_description_progress"
+        android:id="@+id/tv_description_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -2,12 +2,15 @@ package com.ran.themoviedb.utils;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
 
 import com.ran.themoviedb.db.AppSharedPreferenceKeys;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+
+import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/1/2016.
@@ -57,5 +60,18 @@ public class AppUiUtils {
     } else {
       return false;
     }
+  }
+
+  /**
+   * Method to return the Comma separated String for a list
+   *
+   * @param list -- list
+   * @return -- String comma separated
+   */
+  public static String generateCommaString(ArrayList<String> list) {
+    if (list == null || list.size() == 0) {
+      return TheMovieDbConstants.EMPTY_STRING;
+    }
+    return TextUtils.join(TheMovieDbConstants.COMMA_STRING, list);
   }
 }

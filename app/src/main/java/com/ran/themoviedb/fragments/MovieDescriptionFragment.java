@@ -35,7 +35,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment to show the MovieDescription
  */
 public class MovieDescriptionFragment extends Fragment implements GenericErrorBuilder.Handler,
     MovieDescriptionView {

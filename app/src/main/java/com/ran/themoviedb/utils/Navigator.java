@@ -7,6 +7,7 @@ import com.ran.themoviedb.activities.HomeActivity;
 import com.ran.themoviedb.activities.LanguageSelectionActivity;
 import com.ran.themoviedb.activities.MovieDetailActivity;
 import com.ran.themoviedb.activities.StoreActivity;
+import com.ran.themoviedb.activities.TvShowDetailActivity;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 
@@ -58,6 +59,18 @@ public class Navigator {
   public static void navigateToMovieDetails(Context context, int movieId) {
     Intent intent = new Intent(context, MovieDetailActivity.class);
     intent.putExtra(TheMovieDbConstants.MOVIE_ID_KEY, movieId);
+    context.startActivity(intent);
+  }
+
+  /**
+   * Method to navigate to the Tv Show Details Screen
+   *
+   * @param context  -- Context
+   * @param tvShowId -- Id of the Tv Show
+   */
+  public static void navigateToTvShowDetails(Context context, int tvShowId) {
+    Intent intent = new Intent(context, TvShowDetailActivity.class);
+    intent.putExtra(TheMovieDbConstants.TV_SHOW_ID_KEY, tvShowId);
     context.startActivity(intent);
   }
 }

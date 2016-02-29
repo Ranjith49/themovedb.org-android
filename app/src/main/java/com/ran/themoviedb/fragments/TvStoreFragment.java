@@ -22,6 +22,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TVShowStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TVShowStoreResponse;
+import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.TvStoreView;
 
 /**
@@ -113,7 +114,7 @@ public class TvStoreFragment extends Fragment implements TvStoreView, GenericErr
 
   @Override
   public void onStoreItemClick(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), name + " -- Click", Toast.LENGTH_SHORT).show();
+    Navigator.navigateToTvShowDetails(getActivity(), id);
   }
 
   @Override
