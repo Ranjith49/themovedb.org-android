@@ -94,4 +94,7 @@
     <dimen name="tv_poster_margin_right">16dp</dimen>
     <dimen name="tv_poster_margin_top">16dp</dimen>
     <dimen name="tv_card_view_margins">16dp</dimen>
+    <dimen name="tv_season_image_width">120dp</dimen>
+    <dimen name="tv_season_image_height">160dp</dimen>
+
 </resources>

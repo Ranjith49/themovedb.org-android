@@ -10,6 +10,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.fragments.ImageDetailFragment;
 import com.ran.themoviedb.fragments.TvShowDetailFragment;
+import com.ran.themoviedb.fragments.TvShowSeasonsFragment;
 import com.ran.themoviedb.fragments.TvShowSimilarFragment;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
@@ -42,6 +43,10 @@ public class TvShowDetailPagerAdapter extends FragmentStatePagerAdapter {
         Fragment tvDetailFragment = new TvShowDetailFragment();
         tvDetailFragment.setArguments(bundle);
         return tvDetailFragment;
+      case 1:
+        Fragment tvSeasonFragment = new TvShowSeasonsFragment();
+        tvSeasonFragment.setArguments(bundle);
+        return tvSeasonFragment;
       case 2:
         Fragment imageFragment = new ImageDetailFragment();
         imageFragment.setArguments(bundle);

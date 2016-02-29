@@ -120,5 +120,6 @@
     <string name="tv_running_time">%1$s mins</string>
     <string name="tv_season_title">No of Seasons : %1$s</string>
     <string name="tv_episode_title">No of Episodes : %1$s</string>
+    <string name="tv_season_item_title">Season</string>
 
 </resources>
