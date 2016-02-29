@@ -87,7 +87,6 @@
     <dimen name="video_popup_width">160dp</dimen>
 
     <!-- Dimens for the Tv Screen -->
-
     <dimen name="tv_pager_pager_strip_vertical_margins">10dp</dimen>
     <dimen name="tv_description_image_width">160dp</dimen>
     <dimen name="tv_description_image_container">240dp</dimen>
@@ -96,5 +95,13 @@
     <dimen name="tv_card_view_margins">16dp</dimen>
     <dimen name="tv_season_image_width">120dp</dimen>
     <dimen name="tv_season_image_height">160dp</dimen>
+
+    <!-- Dimens for the People Screen -->
+    <dimen name="people_description_image_width">160dp</dimen>
+    <dimen name="people_description_image_container">240dp</dimen>
+    <dimen name="people_poster_margin_right">16dp</dimen>
+    <dimen name="people_poster_margin_top">16dp</dimen>
+    <dimen name="people_card_view_margins">16dp</dimen>
+
 
 </resources>

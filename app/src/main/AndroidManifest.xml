@@ -104,6 +104,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ran.themoviedb.activities.StoreActivity"/>
         </activity>
+
+        <!-- People Details View Activity -->
+        <activity
+            android:name=".activities.PeopleDetailActivity"
+            android:configChanges="fontScale|keyboard"
+            android:label="@string/title_activity_people_detail"
+            android:parentActivityName=".activities.StoreActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ran.themoviedb.activities.StoreActivity"/>
+        </activity>
+
     </application>
 
 </manifest>

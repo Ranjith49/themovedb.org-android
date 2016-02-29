@@ -22,11 +22,12 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.PeopleStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleStoreResponse;
+import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.PeopleStoreView;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- *
+ * <p/>
  * People Store Information from {@link com.ran.themoviedb.model.server.entities
  * .PeopleStoreResults} displayed in form of {@link com.ran.themoviedb.viewholders.PeopleStoreViewHolder}
  */
@@ -120,7 +121,7 @@ public class PeopleStoreFragment extends Fragment
 
   @Override
   public void onStoreItemClick(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), name + " -- Click", Toast.LENGTH_SHORT).show();
+    Navigator.navigateToPeopleDetails(getActivity(), id);
   }
 
   @Override

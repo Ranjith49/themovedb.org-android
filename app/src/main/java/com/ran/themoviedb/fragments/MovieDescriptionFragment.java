@@ -148,7 +148,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     movieBudget.setVisibility(View.VISIBLE);
 
     if (!AppUiUtils.isStringEmpty(response.getImdb_id())) {
-      movieImdbUrl.setText(TheMovieDbConstants.IMDB_BASE_URL.concat(response.getImdb_id()));
+      movieImdbUrl.setText(TheMovieDbConstants.IMDB_BASE_TITLE_URL.concat(response.getImdb_id()));
       movieImdbUrl.setTag(response.getImdb_id());
       movieImdbUrl.setVisibility(View.VISIBLE);
     }

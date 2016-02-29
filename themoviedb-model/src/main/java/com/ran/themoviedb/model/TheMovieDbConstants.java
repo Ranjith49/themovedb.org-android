@@ -105,9 +105,19 @@ public interface TheMovieDbConstants {
   String TV_SHOW_ID_KEY = "tvShow_id_key";
 
   /**
-   * Base URL of IMDB for deeplinking
+   * Key for the People [Id] ..
    */
-  String IMDB_BASE_URL = "www.imdb.com/title/";
+  String PEOPLE_ID_KEY = "people_id_key";
+
+  /**
+   * Base URL of IMDB Title for deeplinking
+   */
+  String IMDB_BASE_TITLE_URL = "www.imdb.com/title/";
+
+  /**
+   * Base URL of IMDB People for deeplinking
+   */
+  String IMDB_BASE_PEOPLE_URL = "www.imdb.com/name/";
 
   /**
    * Base URL of Youtube to be handled..
