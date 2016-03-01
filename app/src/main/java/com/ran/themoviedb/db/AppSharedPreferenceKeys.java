@@ -2,14 +2,14 @@ package com.ran.themoviedb.db;
 
 /**
  * Created by ranjith.suda on 12/31/2015.
- * <p>
+ * <p/>
  * Interface Holding the Shared App Preference Keys ..
  */
 public interface AppSharedPreferenceKeys {
   /**
    * App Shared Preference Key
    */
-  String APP_SHARED_PREF_KEY = "theMovieDbPref";
+  String APP_SHARED_PREF = "theMovieDbPref";
 
   /**
    * App All Genre List Key
@@ -25,4 +25,9 @@ public interface AppSharedPreferenceKeys {
    * App Language Pref key
    */
   String APP_LANG_KEY = "theMovieDblang_key";
+
+  /**
+   * App First Launch Status Key
+   */
+  String APP_FIRST_LAUNCH_KEY = "theMovieDbFirstLaunch_key";
 }

@@ -34,7 +34,7 @@ public class AppSharedPreferences {
   }
 
   private AppSharedPreferences(Context context) {
-    sharedPreferences = context.getSharedPreferences(AppSharedPreferenceKeys.APP_SHARED_PREF_KEY,
+    sharedPreferences = context.getSharedPreferences(AppSharedPreferenceKeys.APP_SHARED_PREF,
         Context.MODE_PRIVATE);
   }
 
@@ -108,5 +108,23 @@ public class AppSharedPreferences {
   public String getAppLanguageData() {
     return sharedPreferences.getString(AppSharedPreferenceKeys.APP_LANG_KEY, LanguageType
         .getLangString(LanguageType.ENGLISH));
+  }
+
+  /**
+   * Method to check whether it is first launch or not
+   *
+   * @return -- state of launch
+   */
+  public boolean isAppFirstLaunch() {
+    return sharedPreferences.getBoolean(AppSharedPreferenceKeys.APP_FIRST_LAUNCH_KEY, true);
+  }
+
+  /**
+   * Method to Disable App First Launch or not..
+   */
+  public void disableAppFirstLaunch() {
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putBoolean(AppSharedPreferenceKeys.APP_FIRST_LAUNCH_KEY, false);
+    editor.commit();
   }
 }

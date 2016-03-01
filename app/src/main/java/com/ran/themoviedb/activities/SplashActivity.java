@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
+import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.presenters.AllMovieGenreListPresenter;
@@ -29,7 +30,7 @@ public class SplashActivity extends AppCompatActivity
     implements TheMovieDbConfigView, AllMovieGenreView, GenericErrorBuilder.Handler {
 
   private final String TAG = SplashActivity.class.getSimpleName();
-  private final int SPLASH_TIME_MILLS = 2000;
+  private final int SPLASH_TIME_MILLS = 1000;
   private final int MESSAGE_SPLASH_TYPE = 100;
   private boolean isAppConfigRetrieved = false;
   private boolean isGenreInfoRetrieved = false;
@@ -101,10 +102,10 @@ public class SplashActivity extends AppCompatActivity
   private synchronized void callLanguageSelectionScreen() {
     //Todo ranjith [Enable Key present for showing languageScreen or not]
     if (isGenreInfoRetrieved && isAppConfigRetrieved) {
-      if (AppUiUtils.isInitialLangDone(this)) {
-        Navigator.navigateToAppHome(this);
-      } else {
+      if (AppSharedPreferences.getInstance(this).isAppFirstLaunch()) {
         Navigator.navigateToLanguageScreen(this);
+      } else {
+        Navigator.navigateToAppHome(this);
       }
       finish();
     } else if (isGenreInfoRetrieved && !isAppConfigRetrieved) {

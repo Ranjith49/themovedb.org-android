@@ -18,21 +18,6 @@ import java.util.ArrayList;
 public class AppUiUtils {
 
   /**
-   * Method to decide whether the Initial Language Selection is done or not
-   *
-   * @param context -- Context of the App ..
-   * @return
-   */
-  public static boolean isInitialLangDone(Context context) {
-    if (AppSharedPreferences.getInstance(context)
-        .getSharedPrefApp().contains(AppSharedPreferenceKeys.APP_LANG_KEY)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
    * Method to deliver the Current Screen Dimens [width and height]
    *
    * @param context -- Context from Screen to retrieve

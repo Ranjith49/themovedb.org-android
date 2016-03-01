@@ -48,6 +48,7 @@ public class LanguageSelectionActivity extends AppCompatActivity implements
     mLanguageContinue.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        AppSharedPreferences.getInstance(context).disableAppFirstLaunch();
         Navigator.navigateToAppHome(context);
         finish();
       }
