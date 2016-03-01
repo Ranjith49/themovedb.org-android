@@ -117,6 +117,9 @@
                 android:value="com.ran.themoviedb.activities.StoreActivity"/>
         </activity>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2361b2f6737db4208dcf43bf22340a96fe523c3f" />
     </application>
 
 </manifest>

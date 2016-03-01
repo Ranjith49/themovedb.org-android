@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,6 +9,7 @@
 
     <!-- Top level Container -->
     <RelativeLayout
+        android:id="@+id/language_top_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/language_screen_top_container_height"
         android:background="@color/list_language_top_container">
@@ -17,8 +18,8 @@
             android:id="@+id/language_top_container_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_marginTop="@dimen/language_screen_top_margin"
+            android:gravity="center_horizontal"
             android:text="@string/langauge_selection_title"
             android:textAppearance="@android:style/TextAppearance.Large"
             android:textStyle="bold"/>
@@ -33,33 +34,48 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:src="@mipmap/ic_action"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:src="@mipmap/ic_picture"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:src="@mipmap/ic_video"/>
         </LinearLayout>
 
     </RelativeLayout>
 
+    <!-- Continue Button -->
+    <Button android:id="@+id/language_screen_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:text="@string/language_continue"
+            android:textColor="@color/color_text_white"
+            android:textStyle="bold"/>
+
     <!-- List of languages -->
     <ListView
         android:id="@+id/language_screen_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/language_screen_continue"
+        android:layout_below="@id/language_top_container">
 
     </ListView>
 
-</LinearLayout>
+
+</RelativeLayout>

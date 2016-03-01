@@ -1,11 +1,13 @@
 package com.ran.themoviedb.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,6 +15,8 @@ import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.LanguageBaseAdapter;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.utils.ApplicationUtils;
+import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.Navigator;
 
 /**
@@ -25,11 +29,14 @@ public class LanguageSelectionActivity extends AppCompatActivity implements
   private LanguageBaseAdapter languageBaseAdapter;
   private String langCodes[];
   private long mBackPressedTime;
+  private Button mLanguageContinue;
+  private Context context;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_language_selection);
+    this.context = this;
 
     getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
     getSupportActionBar().setCustomView(R.layout.language_selection_custom_actiobar);
@@ -37,7 +44,14 @@ public class LanguageSelectionActivity extends AppCompatActivity implements
     langListView = (ListView) findViewById(R.id.language_screen_listView);
     langCodes = getResources().getStringArray(R.array.language_display_codes);
     languageBaseAdapter = new LanguageBaseAdapter(this, langCodes);
-
+    mLanguageContinue = (Button) findViewById(R.id.language_screen_continue);
+    mLanguageContinue.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Navigator.navigateToAppHome(context);
+        finish();
+      }
+    });
   }
 
   @Override
@@ -51,8 +65,7 @@ public class LanguageSelectionActivity extends AppCompatActivity implements
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     AppSharedPreferences.getInstance(this).setAppLanguageData(langCodes[position]);
-    finish();
-    Navigator.navigateToAppHome(this);
+    languageBaseAdapter.notifyDataSetChanged();
   }
 
   @Override

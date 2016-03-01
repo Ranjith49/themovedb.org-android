@@ -94,5 +94,4 @@ public class LanguageBaseAdapter extends BaseAdapter {
         return R.mipmap.usa;
     }
   }
-
 }

@@ -23,10 +23,10 @@
 
     <!-- Language Selection Screen -->
     <string name="language_selection_title">Movie DataBase</string>
-    <string name="langauge_selection_title">Choose Your App Language \n We strive to give
+    <string name="langauge_selection_title">Choose Your Language \n We strive to give
         accurate Movie/Tv Show Results
     </string>
-
+    <string name="language_continue">Continue</string>
     <string-array name="language_display_titles">
         <item>English (USA)</item>
         <item>German</item>
