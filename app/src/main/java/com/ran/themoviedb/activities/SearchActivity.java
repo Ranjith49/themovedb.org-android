@@ -48,7 +48,7 @@ public class SearchActivity extends AppCompatActivity {
       case TV_STORE:
         setTitle(getResources().getString(R.string.title_activity_search_tv));
         break;
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         setTitle(getResources().getString(R.string.title_activity_search_people));
         break;
     }
@@ -93,7 +93,7 @@ public class SearchActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.search_fragment_holder, searchTvFragment);
         fragmentTransaction.commit();
         break;
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         SearchPeopleFragment searchPeopleFragment = new SearchPeopleFragment();
         searchPeopleFragment.setArguments(searchBundle);
         fragmentTransaction.replace(R.id.search_fragment_holder, searchPeopleFragment);

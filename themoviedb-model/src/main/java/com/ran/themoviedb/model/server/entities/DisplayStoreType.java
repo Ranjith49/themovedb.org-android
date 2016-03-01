@@ -5,9 +5,9 @@ package com.ran.themoviedb.model.server.entities;
  */
 public enum DisplayStoreType {
 
-  MOVIE_STORE("movies_store"),
-  TV_STORE("tv_store"),
-  PEOPLE_STORE("people_store");
+  MOVIE_STORE("movie"),
+  TV_STORE("tv"),
+  PERSON_STORE("person");
 
   String name;
 

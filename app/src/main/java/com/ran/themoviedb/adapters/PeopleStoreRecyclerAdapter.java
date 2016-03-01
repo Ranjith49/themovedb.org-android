@@ -89,7 +89,7 @@ public class PeopleStoreRecyclerAdapter extends CustomRecyclerView.Adapter<Peopl
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return StoreViewHolders.getStoreViewHolder(context, parent, DisplayStoreType.PEOPLE_STORE,
+    return StoreViewHolders.getStoreViewHolder(context, parent, DisplayStoreType.PERSON_STORE,
         storeClickListener);
   }
 

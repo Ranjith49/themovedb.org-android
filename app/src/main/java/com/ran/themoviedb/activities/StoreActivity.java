@@ -58,7 +58,7 @@ public class StoreActivity extends AppCompatActivity {
       case TV_STORE:
         setTitle(R.string.title_activity_tv_store);
         break;
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         setTitle(R.string.title_activity_people_store);
         break;
     }

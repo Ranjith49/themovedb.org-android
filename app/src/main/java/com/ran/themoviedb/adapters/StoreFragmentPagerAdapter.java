@@ -85,7 +85,7 @@ public class StoreFragmentPagerAdapter extends FragmentStatePagerAdapter {
         tvFragment.setArguments(bundle1);
         return tvFragment;
 
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         Fragment peopleFragment = new PeopleStoreFragment();
         Bundle bundle2 = new Bundle();
         bundle2.putString(TheMovieDbConstants.PEOPLE_STORE_TYPE_KEY, PeopleStoreType.getStoreName
@@ -103,7 +103,7 @@ public class StoreFragmentPagerAdapter extends FragmentStatePagerAdapter {
         return movieTabNames[position];
       case TV_STORE:
         return tvTabNames[position];
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         return peopleTabNames[position];
     }
     return super.getPageTitle(position);
@@ -116,7 +116,7 @@ public class StoreFragmentPagerAdapter extends FragmentStatePagerAdapter {
         return movieTabNames.length;
       case TV_STORE:
         return tvTabNames.length;
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         return peopleTabNames.length;
     }
     return 0;

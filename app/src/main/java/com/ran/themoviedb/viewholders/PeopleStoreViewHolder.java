@@ -111,14 +111,14 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
       @Override
       public void onClick(View v) {
         storeClickListener.onStoreItemClick(item.getId(), item.getName(),
-            DisplayStoreType.PEOPLE_STORE);
+            DisplayStoreType.PERSON_STORE);
       }
     });
     peopleShare.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         storeClickListener.onStoreItemShare(item.getId(), item.getName(),
-            DisplayStoreType.PEOPLE_STORE);
+            DisplayStoreType.PERSON_STORE);
       }
     });
     loadProfileImage(item);

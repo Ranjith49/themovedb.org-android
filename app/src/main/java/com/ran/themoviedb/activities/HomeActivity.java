@@ -203,7 +203,7 @@ public class HomeActivity extends AppCompatActivity
         break;
 
       case R.id.home_people_poster:
-        Navigator.navigateToStore(this, DisplayStoreType.PEOPLE_STORE);
+        Navigator.navigateToStore(this, DisplayStoreType.PERSON_STORE);
         overridePendingTransition(R.anim.activity_right_left_enter,
             R.anim.activity_right_left_exit);
         break;

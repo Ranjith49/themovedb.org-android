@@ -117,9 +117,32 @@
                 android:value="com.ran.themoviedb.activities.StoreActivity"/>
         </activity>
 
+        <!-- Deep link Activity responsible for Parsing the Deep links -->
+        <activity android:name=".activities.DeepLinkActivity"
+                  android:configChanges="fontScale|keyboard"
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait">
+
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <!-- http://www.themoviedb.org/<movie/tv/person>/123-xxxx -->
+                <data android:host="www.themoviedb.org"
+                      android:pathPattern="/.*"
+                      android:scheme="http"/>
+
+                <!-- https://www.themoviedb.org/<movie/tv/person>/123-xxxx -->
+                <data android:host="www.themoviedb.org"
+                      android:pathPattern="/.*"
+                      android:scheme="https"/>
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="2361b2f6737db4208dcf43bf22340a96fe523c3f" />
+            android:value="2361b2f6737db4208dcf43bf22340a96fe523c3f"/>
     </application>
 
 </manifest>

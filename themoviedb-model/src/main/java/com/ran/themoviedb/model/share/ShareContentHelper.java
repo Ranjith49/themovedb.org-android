@@ -26,7 +26,7 @@ public class ShareContentHelper {
         return TheMovieDbConstants.WAP_MOVIE_URL + String.valueOf(id);
       case TV_STORE:
         return TheMovieDbConstants.WAP_TV_URL + String.valueOf(id);
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         return TheMovieDbConstants.WAP_PERSON_URL + String.valueOf(id);
       default:
         return TheMovieDbConstants.EMPTY_STRING;

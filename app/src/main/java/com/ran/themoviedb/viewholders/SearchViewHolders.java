@@ -27,7 +27,7 @@ public class SearchViewHolders {
       case TV_STORE:
         return new TvSearchViewHolder(createView(parent, displayStoreType), storeClickListener,
             context);
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         return new PeopleSearchViewHolder(createView(parent, displayStoreType), storeClickListener,
             context);
       default:
@@ -42,7 +42,7 @@ public class SearchViewHolders {
       case TV_STORE:
         return LayoutInflater.from(parent.getContext()).inflate(R.layout
             .recycler_view_linear_search_item, parent, false);
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         return LayoutInflater.from(parent.getContext()).inflate(R.layout
             .recycler_view_linear_store_item, parent, false);
       default:

@@ -27,7 +27,7 @@ public class StoreViewHolders {
       case TV_STORE:
         return new TVStoreViewHolder(createView(parent, displayStoreType), storeClickListener,
             context);
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         return new PeopleStoreViewHolder(createView(parent, displayStoreType), storeClickListener,
             context);
 
@@ -45,7 +45,7 @@ public class StoreViewHolders {
       case TV_STORE:
         return LayoutInflater.from(parent.getContext()).inflate(R.layout
             .recycler_view_grid_store_item, parent, false);
-      case PEOPLE_STORE:
+      case PERSON_STORE:
         return LayoutInflater.from(parent.getContext()).inflate(R.layout
             .recycler_view_linear_store_item, parent, false);
       default:

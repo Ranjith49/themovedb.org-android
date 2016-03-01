@@ -84,7 +84,7 @@ public class PeopleSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Peop
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return SearchViewHolders.getSearchViewHolder(context, parent, DisplayStoreType.PEOPLE_STORE,
+    return SearchViewHolders.getSearchViewHolder(context, parent, DisplayStoreType.PERSON_STORE,
         storeClickListener);
   }
 

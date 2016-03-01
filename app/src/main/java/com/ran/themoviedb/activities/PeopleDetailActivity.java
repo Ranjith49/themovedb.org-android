@@ -65,7 +65,7 @@ public class PeopleDetailActivity extends AppCompatActivity {
         String shareDesc = String.format(getResources().getString(R.string.share_people_desc),
                 TheMovieDbConstants.EMPTY_STRING);
         ShareContent shareContent = new ShareContent(TheMovieDbConstants.EMPTY_STRING,
-            shareDesc, peopleId, DisplayStoreType.PEOPLE_STORE);
+            shareDesc, peopleId, DisplayStoreType.PERSON_STORE);
         ShareContentHelper.buildShareIntent(this, shareContent,
             getResources().getString(R.string.share_app_dialog_title));
         Log.d("Share", "Share Id  : " + peopleId);
