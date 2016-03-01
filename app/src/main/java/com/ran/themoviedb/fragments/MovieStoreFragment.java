@@ -22,12 +22,16 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieStoreResponse;
+import com.ran.themoviedb.model.share.ShareContent;
+import com.ran.themoviedb.model.share.ShareContentHelper;
 import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.MovieStoreView;
 
+import java.util.logging.Logger;
+
 /**
  * Created by ranjith.suda on 1/3/2016.
- * <p/>
+ * <p>
  * Movie Store Fragment showing the Movies in {@link com.ran.themoviedb.viewholders
  * .MovieStoreViewHolder} and bind data from {@link com.ran.themoviedb.model.server.entities.MovieStoreResults}
  */
@@ -125,11 +129,17 @@ public class MovieStoreFragment extends Fragment
 
   @Override
   public void onStoreItemClick(int id, String name, DisplayStoreType displayStoreType) {
-    Navigator.navigateToMovieDetails(getActivity(),id);
+    Navigator.navigateToMovieDetails(getActivity(), id);
   }
 
   @Override
   public void onStoreItemShare(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), name + " -- Share", Toast.LENGTH_SHORT).show();
+    String shareDesc = String.format(getActivity().getResources().
+        getString(R.string.share_movie_description), name);
+
+    ShareContent shareContent = new ShareContent(name, shareDesc, id, displayStoreType);
+    ShareContentHelper.buildShareIntent(getActivity(), shareContent,
+        getResources().getString(R.string.share_app_dialog_title));
+    Log.d(TAG, "Share Id  : " + id + " Name : " + name);
   }
 }

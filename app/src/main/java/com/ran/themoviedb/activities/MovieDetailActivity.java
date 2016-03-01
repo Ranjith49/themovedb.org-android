@@ -3,6 +3,7 @@ package com.ran.themoviedb.activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.MovieDetailPagerAdapter;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
+import com.ran.themoviedb.model.share.ShareContent;
+import com.ran.themoviedb.model.share.ShareContentHelper;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -53,7 +57,13 @@ public class MovieDetailActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.item_share:
-        Toast.makeText(this, "Share " + movieId, Toast.LENGTH_SHORT).show();
+        String shareDesc = String.format(getResources().getString(R.string.share_movie_description),
+            TheMovieDbConstants.EMPTY_STRING);
+        ShareContent shareContent = new ShareContent(TheMovieDbConstants.EMPTY_STRING,
+            shareDesc, movieId, DisplayStoreType.MOVIE_STORE);
+        ShareContentHelper.buildShareIntent(this, shareContent,
+            getResources().getString(R.string.share_app_dialog_title));
+        Log.d("Share", "Share Id  : " + movieId);
         return true;
       default:
         return super.onOptionsItemSelected(item);

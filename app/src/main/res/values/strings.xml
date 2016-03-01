@@ -125,4 +125,16 @@
     <string name="people_id_error_message">Error getting the People Details . Please try later
     </string>
 
+    <!-- Share Strings -->
+    <string name="share_movie_description">Explore more information about %1$s via Movie
+        DataBase , powered by TMDB. \n \n
+    </string>
+    <string name="share_tv_description">Explore more information about <![CDATA[<b> %1$s </b>]]>
+        via Movie DataBase , powered by TMDB. \n \n
+    </string>
+    <string name="share_people_desc">Find  more information about %1$s via Movie
+        DataBase , powered by TMDB. \n \n
+    </string>
+    <string name="share_app_dialog_title">Share Via ..</string>
+
 </resources>

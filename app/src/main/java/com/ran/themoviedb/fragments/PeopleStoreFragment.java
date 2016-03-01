@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.PeopleStoreRecyclerAdapter;
@@ -22,6 +21,8 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.PeopleStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleStoreResponse;
+import com.ran.themoviedb.model.share.ShareContent;
+import com.ran.themoviedb.model.share.ShareContentHelper;
 import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.PeopleStoreView;
 
@@ -126,6 +127,12 @@ public class PeopleStoreFragment extends Fragment
 
   @Override
   public void onStoreItemShare(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), name + " -- Share", Toast.LENGTH_SHORT).show();
+    String shareDesc = String.format(getActivity().getResources().
+        getString(R.string.share_people_desc), name);
+
+    ShareContent shareContent = new ShareContent(name, shareDesc, id, displayStoreType);
+    ShareContentHelper.buildShareIntent(getActivity(), shareContent,
+        getResources().getString(R.string.share_app_dialog_title));
+    Log.d(TAG, "Share Id  : " + id + " Name : " + name);
   }
 }

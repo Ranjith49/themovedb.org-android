@@ -125,25 +125,36 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
 
   @Override
   public void movieCastCrewData(CastCrewDetailResponse response) {
+    boolean isCastDataAvailable = false;
+    boolean isCrewDataAvailable = false;
+
     if (response.getCast() != null && response.getCast().size() > 0) {
-      castAdapter = new MovieGenericCastCrewAdapter(response.getCast(), null, MovieCastCrewType.CAST_TYPE,
-          getActivity(), generateImageBaseUrl(), this);
+      castAdapter =
+          new MovieGenericCastCrewAdapter(response.getCast(), null, MovieCastCrewType.CAST_TYPE,
+              getActivity(), generateImageBaseUrl(), this);
       cast_recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager
           .HORIZONTAL, false));
       cast_recycler.setAdapter(castAdapter);
       cast_container.setVisibility(View.VISIBLE);
+      isCastDataAvailable = true;
     }
 
     if (response.getCrew() != null && response.getCrew().size() > 0) {
-      crewAdapter = new MovieGenericCastCrewAdapter(null, response.getCrew(), MovieCastCrewType.CREW_TYPE,
-          getActivity(), generateImageBaseUrl(), this);
+      crewAdapter = new MovieGenericCastCrewAdapter(null, response.getCrew(),
+          MovieCastCrewType.CREW_TYPE, getActivity(), generateImageBaseUrl(), this);
       crew_recycler.setLayoutManager(
           new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
       crew_recycler.setAdapter(crewAdapter);
       crew_container.setVisibility(View.VISIBLE);
+      isCrewDataAvailable = true;
     }
+
     //Total Response container here ..
-    cast_crew_container.setVisibility(View.VISIBLE);
+    if (isCastDataAvailable || isCrewDataAvailable) {
+      cast_crew_container.setVisibility(View.VISIBLE);
+    } else {
+      genericErrorBuilder.setUserAPIError(UserAPIErrorType.NOCONTENT_ERROR);
+    }
   }
 
   @Override

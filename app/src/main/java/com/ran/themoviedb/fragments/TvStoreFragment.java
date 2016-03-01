@@ -22,12 +22,14 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TVShowStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TVShowStoreResponse;
+import com.ran.themoviedb.model.share.ShareContent;
+import com.ran.themoviedb.model.share.ShareContentHelper;
 import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.TvStoreView;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- *
+ * <p>
  * Tv Store Data information shown in {@link com.ran.themoviedb.viewholders.TVStoreViewHolder}
  * from data source of type {@link com.ran.themoviedb.model.server.entities.TvShowStoreResults}
  */
@@ -119,6 +121,12 @@ public class TvStoreFragment extends Fragment implements TvStoreView, GenericErr
 
   @Override
   public void onStoreItemShare(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), name + " -- Share", Toast.LENGTH_SHORT).show();
+    String shareDesc = String.format(getActivity().getResources().
+        getString(R.string.share_tv_description), name);
+
+    ShareContent shareContent = new ShareContent(name, shareDesc, id, displayStoreType);
+    ShareContentHelper.buildShareIntent(getActivity(), shareContent,
+        getResources().getString(R.string.share_app_dialog_title));
+    Log.d(TAG, "Share Id  : " + id + " Name : " + name);
   }
 }

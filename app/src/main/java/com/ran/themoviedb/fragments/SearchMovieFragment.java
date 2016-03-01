@@ -21,6 +21,8 @@ import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieSearchResponse;
+import com.ran.themoviedb.model.share.ShareContent;
+import com.ran.themoviedb.model.share.ShareContentHelper;
 import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.MovieSearchView;
 
@@ -29,7 +31,7 @@ import java.net.URLEncoder;
 
 /**
  * Created by ranjith.suda on 1/4/2016.
- * <p/>
+ * <p>
  * Search Movie Fragment
  */
 public class SearchMovieFragment extends Fragment
@@ -131,6 +133,12 @@ public class SearchMovieFragment extends Fragment
 
   @Override
   public void onStoreItemShare(int id, String name, DisplayStoreType displayStoreType) {
-    Toast.makeText(getActivity(), "Share" + name, Toast.LENGTH_SHORT).show();
+    String shareDesc = String.format(getActivity().getResources().
+        getString(R.string.share_movie_description), name);
+
+    ShareContent shareContent = new ShareContent(name, shareDesc, id, displayStoreType);
+    ShareContentHelper.buildShareIntent(getActivity(), shareContent,
+        getResources().getString(R.string.share_app_dialog_title));
+    Log.d(TAG, "Share Id  : " + id + " Name : " + name);
   }
 }

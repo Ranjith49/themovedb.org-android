@@ -14,7 +14,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p/>
+ * <p>
  * Class responsible for navigating to Other Screens /Views
  */
 public class Navigator {
@@ -36,6 +36,8 @@ public class Navigator {
    */
   public static void navigateToAppHome(Context context) {
     Intent intent = new Intent(context, HomeActivity.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
     context.startActivity(intent);
   }
 

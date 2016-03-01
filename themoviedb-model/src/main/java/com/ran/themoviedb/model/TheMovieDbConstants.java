@@ -2,7 +2,7 @@ package com.ran.themoviedb.model;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p/>
+ * <p>
  * Constants Used across the Application.
  */
 public interface TheMovieDbConstants {
@@ -123,4 +123,33 @@ public interface TheMovieDbConstants {
    * Base URL of Youtube to be handled..
    */
   String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
+
+  /**
+   * Open Anchor Tag to create the URL link
+   */
+  String ANCHOR_OPEN_TAG = "<br/><a href=";
+  /**
+   * Close Tag for the Url
+   */
+  String CLOSE_TAG = ">";
+  /**
+   * Close Anchor Tag for the Url link
+   */
+  String ANCHOR_CLOSE_TAG = "</a><br/>";
+
+  /**
+   * Wap Movie Base Url
+   */
+  String WAP_MOVIE_URL = "https://www.themoviedb.org/movie/";
+
+  /**
+   * Wap Tv Base Url
+   */
+  String WAP_TV_URL = "https://www.themoviedb.org/tv/";
+
+  /**
+   * Wap Person Base Url
+   */
+  String WAP_PERSON_URL = "https://www.themoviedb.org/person/";
+
 }
