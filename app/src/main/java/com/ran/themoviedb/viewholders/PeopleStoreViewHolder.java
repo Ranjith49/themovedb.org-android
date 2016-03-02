@@ -1,9 +1,11 @@
 package com.ran.themoviedb.viewholders;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -77,6 +79,13 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
     peopleRating = (TextView) view.findViewById(R.id.recycler_item_rating);
     peopleMoreInfo = (TextView) view.findViewById(R.id.recycler_item_more);
     peopleShare = (FloatingActionButton) view.findViewById(R.id.recycler_item_share);
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+      // get rid of margins since shadow area is now the margin
+      ViewGroup.MarginLayoutParams p =
+          (ViewGroup.MarginLayoutParams) peopleShare.getLayoutParams();
+      p.setMargins(0, 0, 0, 0);
+      peopleShare.setLayoutParams(p);
+    }
 
     known1_Layout = (RelativeLayout) view.findViewById(R.id.recycler_knownFor_1_container);
     known1_Image = (ImageView) view.findViewById(R.id.recycler_knownFor_1);

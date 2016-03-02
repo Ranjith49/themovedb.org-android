@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -91,6 +92,13 @@ public class CustomRecyclerView extends RelativeLayout {
     bottom_error_message = (TextView) root.findViewById(R.id.recycler_error_textView);
     button_refresh = (Button) root.findViewById(R.id.recycler_error_button_view);
     button_move_Up = (FloatingActionButton) root.findViewById(R.id.recycler_top_go_view);
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+      // get rid of margins since shadow area is now the margin
+      ViewGroup.MarginLayoutParams p =
+          (ViewGroup.MarginLayoutParams) button_move_Up.getLayoutParams();
+      p.setMargins(0, 0, AppUiUtils.dpToPx(context, 8), 0);
+      button_move_Up.setLayoutParams(p);
+    }
 
     button_refresh.setOnClickListener(new OnClickListener() {
       @Override

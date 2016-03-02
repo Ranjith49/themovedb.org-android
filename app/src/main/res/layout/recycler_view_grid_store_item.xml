@@ -28,7 +28,7 @@
             app:backgroundTint="@color/colorAccent"
             app:elevation="6dp"
             app:fabSize="mini"
-            app:pressedTranslationZ="12dp"/>
+            app:pressedTranslationZ="6dp"/>
     </FrameLayout>
 
     <RelativeLayout

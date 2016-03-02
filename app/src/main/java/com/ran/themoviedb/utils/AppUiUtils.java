@@ -77,4 +77,9 @@ public class AppUiUtils {
         TheMovieDbConstants.SPACE_STRING +
         TheMovieDbConstants.UNITS[digitGroups];
   }
+
+  public static int dpToPx(Context context, float dp) {
+    float scale = context.getResources().getDisplayMetrics().density;
+    return (int) ((dp * scale) + 0.5f);
+  }
 }

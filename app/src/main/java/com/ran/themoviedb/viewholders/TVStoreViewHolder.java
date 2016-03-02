@@ -1,10 +1,12 @@
 package com.ran.themoviedb.viewholders;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +59,13 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
     tvYear = (TextView) view.findViewById(R.id.recycler_item_year);
     tvNameView = (TextView) view.findViewById(R.id.recycler_item_name);
     tvShare = (FloatingActionButton) view.findViewById(R.id.recycler_item_share);
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+      // get rid of margins since shadow area is now the margin
+      ViewGroup.MarginLayoutParams p =
+          (ViewGroup.MarginLayoutParams) tvShare.getLayoutParams();
+      p.setMargins(0, 0, AppUiUtils.dpToPx(context, 8), 0);
+      tvShare.setLayoutParams(p);
+    }
     tvItemContainer = (LinearLayout) view.findViewById(R.id.recycler_item_container);
   }
 

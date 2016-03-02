@@ -95,6 +95,6 @@
         android:visibility="gone"
         app:backgroundTint="@color/colorAccent"
         app:elevation="6dp"
-        app:pressedTranslationZ="12dp"/>
+        app:pressedTranslationZ="6dp"/>
 
 </RelativeLayout>

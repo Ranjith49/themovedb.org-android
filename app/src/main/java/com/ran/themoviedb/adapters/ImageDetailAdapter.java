@@ -1,6 +1,7 @@
 package com.ran.themoviedb.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.model.server.entities.ImageDetails;
+import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
 import com.ran.themoviedb.utils.Navigator;
 
@@ -54,6 +56,18 @@ public class ImageDetailAdapter extends RecyclerView.Adapter {
         Navigator.navigateToFullImageScreen(context, imageDetails.get(position).getFile_path());
       }
     });
+
+    ImageLoaderUtils.loadImageWithPlaceHolder(context, imageHolder.image_view,
+        ImageLoaderUtils.getImageUrl(baseUrl, imageDetails.get(position).getFile_path()),
+        R.drawable.image_error_placeholder);
+
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+      // get rid of margins since shadow area is now the margin
+      ViewGroup.MarginLayoutParams p =
+          (ViewGroup.MarginLayoutParams) imageHolder.image_download.getLayoutParams();
+      p.setMargins(0, 0, AppUiUtils.dpToPx(context, 2), 0);
+      imageHolder.image_download.setLayoutParams(p);
+    }
     imageHolder.image_download.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -61,9 +75,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter {
       }
     });
 
-    ImageLoaderUtils.loadImageWithPlaceHolder(context, imageHolder.image_view,
-        ImageLoaderUtils.getImageUrl(baseUrl, imageDetails.get(position).getFile_path()),
-        R.drawable.image_error_placeholder);
+
   }
 
   @Override
