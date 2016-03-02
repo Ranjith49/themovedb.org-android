@@ -2,7 +2,7 @@ package com.ran.themoviedb.model;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p>
+ * <p/>
  * Constants Used across the Application.
  */
 public interface TheMovieDbConstants {
@@ -152,4 +152,8 @@ public interface TheMovieDbConstants {
    */
   String WAP_PERSON_URL = "https://www.themoviedb.org/person/";
 
+  /**
+   * Key for sending the full Image Url
+   */
+  String FULL_IMAGE_URL_KEY = "full_image_url_key";
 }

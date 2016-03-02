@@ -25,6 +25,7 @@ import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.CastCrewDetailResponse;
 import com.ran.themoviedb.presenters.MovieCastCrewPresenter;
+import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.MovieCastCrewView;
 
 import java.lang.reflect.Type;
@@ -105,7 +106,7 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
   //--- Various Call Backs from different Interfaces --//
   @Override
   public void onPersonDetail(int id, String name) {
-    Toast.makeText(getActivity(), "name : " + name, Toast.LENGTH_SHORT).show();
+    Navigator.navigateToPeopleDetails(getActivity(), id);
   }
 
   @Override

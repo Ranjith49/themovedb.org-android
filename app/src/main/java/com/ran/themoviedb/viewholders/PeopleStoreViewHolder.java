@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- *
+ * <p/>
  * View Holder for the People Store Recycler View
  */
 public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
@@ -155,6 +156,7 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
     for (int i = 0; i < items.size() && i < MAX_KNOWN_FOR; i++) {
       final int item_id = items.get(i).getId();
       final String name;
+      final int index = i;
       if (!AppUiUtils.isStringEmpty(items.get(i).getTitle())) {
         name = items.get(i).getTitle();
       } else {
@@ -169,7 +171,7 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
           known1_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              storeClickListener.onStoreItemClick(item_id, name, DisplayStoreType.MOVIE_STORE);
+              onKnownItemClick(item_id, name, items.get(index));
             }
           });
           break;
@@ -181,7 +183,7 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
           known2_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              storeClickListener.onStoreItemClick(item_id, name, DisplayStoreType.MOVIE_STORE);
+              onKnownItemClick(item_id, name, items.get(index));
             }
           });
           break;
@@ -193,11 +195,26 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
           known3_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              storeClickListener.onStoreItemClick(item_id, name, DisplayStoreType.MOVIE_STORE);
+              onKnownItemClick(item_id, name, items.get(index));
             }
           });
           break;
       }
+    }
+  }
+
+  private void onKnownItemClick(int item_id, String name, PeopleStoreKnownFor peopleStoreKnownFor) {
+    if (peopleStoreKnownFor.getMedia_type()
+        .equalsIgnoreCase(DisplayStoreType.getStoreName(DisplayStoreType.MOVIE_STORE))) {
+      storeClickListener.onStoreItemClick(item_id, name, DisplayStoreType.MOVIE_STORE);
+    } else if (peopleStoreKnownFor.getMedia_type()
+        .equalsIgnoreCase(DisplayStoreType.getStoreName(DisplayStoreType.TV_STORE))) {
+      storeClickListener.onStoreItemClick(item_id, name, DisplayStoreType.TV_STORE);
+    } else if (peopleStoreKnownFor.getMedia_type()
+        .equalsIgnoreCase(DisplayStoreType.getStoreName(DisplayStoreType.PERSON_STORE))) {
+      storeClickListener.onStoreItemClick(item_id, name, DisplayStoreType.PERSON_STORE);
+    } else {
+      Toast.makeText(activityContext, R.string.people_known_for_error, Toast.LENGTH_SHORT).show();
     }
   }
 

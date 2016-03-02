@@ -12,8 +12,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/image_item_download"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_gravity="top|right"
         android:layout_marginRight="4dp"
         android:layout_marginTop="4dp"

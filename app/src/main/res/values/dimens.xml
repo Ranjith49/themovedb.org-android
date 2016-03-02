@@ -104,4 +104,7 @@
     <dimen name="people_card_view_margins">16dp</dimen>
 
 
+    <!-- Dimens for the Full UI -->
+    <dimen name="full_image_margins_vertical">8dp</dimen>
+    <dimen name="full_image_margins_horizontal">16dp</dimen>
 </resources>

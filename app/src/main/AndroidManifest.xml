@@ -117,6 +117,14 @@
                 android:value="com.ran.themoviedb.activities.StoreActivity"/>
         </activity>
 
+        <!-- Full Image View Activity -->
+        <activity
+            android:name=".activities.FullImageActivity"
+            android:configChanges="fontScale|keyboard"
+            android:label="@string/title_activity_full_image"
+            android:screenOrientation="portrait">
+        </activity>
+
         <!-- Deep link Activity responsible for Parsing the Deep links -->
         <activity android:name=".activities.DeepLinkActivity"
                   android:configChanges="fontScale|keyboard"

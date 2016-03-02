@@ -122,7 +122,13 @@ public class PeopleStoreFragment extends Fragment
 
   @Override
   public void onStoreItemClick(int id, String name, DisplayStoreType displayStoreType) {
-    Navigator.navigateToPeopleDetails(getActivity(), id);
+    if (displayStoreType == DisplayStoreType.PERSON_STORE) {
+      Navigator.navigateToPeopleDetails(getActivity(), id);
+    } else if (displayStoreType == DisplayStoreType.MOVIE_STORE) {
+      Navigator.navigateToMovieDetails(getActivity(), id);
+    } else {
+      Navigator.navigateToTvShowDetails(getActivity(), id);
+    }
   }
 
   @Override

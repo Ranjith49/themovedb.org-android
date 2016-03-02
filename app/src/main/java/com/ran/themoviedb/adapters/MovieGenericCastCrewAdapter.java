@@ -34,7 +34,8 @@ public class MovieGenericCastCrewAdapter extends RecyclerView.Adapter {
 
   public MovieGenericCastCrewAdapter(ArrayList<CastDetails> castDetails,
                                      ArrayList<CrewDetails> crewDetails,
-                                     MovieCastCrewType castCrewType, Context context, String baseUrl,
+                                     MovieCastCrewType castCrewType, Context context,
+                                     String baseUrl,
                                      CastCrewListener listener) {
 
     this.castCrewType = castCrewType;
@@ -71,13 +72,7 @@ public class MovieGenericCastCrewAdapter extends RecyclerView.Adapter {
           TheMovieDbConstants.SPACE_STRING + TheMovieDbConstants.SPACE_STRING +
           crewDetails.get(position).getName());
       crewHolder.crew_department.setText(crewDetails.get(position).getDepartment());
-      crewHolder.crew_holder.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          castCrewListener.onPersonDetail(crewDetails.get(position).getId(),
-              crewDetails.get(position).getName());
-        }
-      });
+      //No crew click handling , as no info available
     }
 
     //Cast Type binding

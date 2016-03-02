@@ -3,6 +3,7 @@ package com.ran.themoviedb.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ran.themoviedb.activities.FullImageActivity;
 import com.ran.themoviedb.activities.HomeActivity;
 import com.ran.themoviedb.activities.LanguageSelectionActivity;
 import com.ran.themoviedb.activities.MovieDetailActivity;
@@ -14,7 +15,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p>
+ * <p/>
  * Class responsible for navigating to Other Screens /Views
  */
 public class Navigator {
@@ -86,6 +87,18 @@ public class Navigator {
   public static void navigateToPeopleDetails(Context context, int peopleId) {
     Intent intent = new Intent(context, PeopleDetailActivity.class);
     intent.putExtra(TheMovieDbConstants.PEOPLE_ID_KEY, peopleId);
+    context.startActivity(intent);
+  }
+
+  /**
+   * Method to navigate to Full Image Screen
+   *
+   * @param context  -- Context
+   * @param imageUrl -- url
+   */
+  public static void navigateToFullImageScreen(Context context, String imageUrl) {
+    Intent intent = new Intent(context, FullImageActivity.class);
+    intent.putExtra(TheMovieDbConstants.FULL_IMAGE_URL_KEY, imageUrl);
     context.startActivity(intent);
   }
 }

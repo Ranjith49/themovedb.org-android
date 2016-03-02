@@ -12,6 +12,7 @@
     <string name="title_activity_movie_detail">MovieDetails View</string>
     <string name="title_activity_tv_detail">TvShowDetails View</string>
     <string name="title_activity_people_detail">PeopleDetails View</string>
+    <string name="title_activity_full_image">Full Image View</string>
 
     <!-- Error Messages Strings -->
     <string name="error_no_internet_connection">No internet Connection</string>
@@ -84,6 +85,7 @@
     <string name="search_generic_hint">Search in the Store</string>
     <string name="search_menu_title">Search</string>
     <string name="search_query_string">Search Query ..</string>
+    <string name="people_known_for_error">No results found for this Item</string>
 
     <!--- Strings for the Movie Details -->
     <string-array name="movie_details_tabs">
@@ -132,9 +134,12 @@
     <string name="share_tv_description">Explore more information about <![CDATA[<b> %1$s </b>]]>
         via Movie DataBase , powered by TMDB. \n \n
     </string>
-    <string name="share_people_desc">Find  more information about %1$s via Movie
+    <string name="share_people_desc">Find more information about %1$s via Movie
         DataBase , powered by TMDB. \n \n
     </string>
     <string name="share_app_dialog_title">Share Via ..</string>
 
+    <string name="image_download_button">Download Image</string>
+    <string name="image_load_issue">Sorry , There is problem in loading full Image</string>
+    <string name="image_more">DETAILS</string>
 </resources>

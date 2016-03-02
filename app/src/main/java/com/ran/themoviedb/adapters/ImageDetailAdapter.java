@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.model.server.entities.ImageDetails;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
+import com.ran.themoviedb.utils.Navigator;
 
 import java.util.ArrayList;
 
@@ -47,12 +48,19 @@ public class ImageDetailAdapter extends RecyclerView.Adapter {
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
     ImageHolder imageHolder = (ImageHolder) holder;
+    imageHolder.image_view.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Navigator.navigateToFullImageScreen(context, imageDetails.get(position).getFile_path());
+      }
+    });
     imageHolder.image_download.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Toast.makeText(context, "Download click", Toast.LENGTH_SHORT).show();
       }
     });
+
     ImageLoaderUtils.loadImageWithPlaceHolder(context, imageHolder.image_view,
         ImageLoaderUtils.getImageUrl(baseUrl, imageDetails.get(position).getFile_path()),
         R.drawable.image_error_placeholder);
