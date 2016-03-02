@@ -3,6 +3,7 @@ package com.ran.themoviedb.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 public class MovieDescriptionFragment extends Fragment implements GenericErrorBuilder.Handler,
     MovieDescriptionView {
 
+  private final String TAG = MovieDescriptionFragment.class.getSimpleName();
   private View view;
   private ImageView moviePoster;
   private TextView movieTitle;
@@ -183,8 +185,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
         textView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Toast.makeText(getActivity(), "Productions : " + String.valueOf(v.getTag()), Toast
-                .LENGTH_SHORT).show();
+            Log.d(TAG, "Production : " + String.valueOf(v.getTag()));
           }
         });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
@@ -224,8 +225,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
         textView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Toast.makeText(getActivity(), "Genre : " + String.valueOf(v.getTag()),
-                Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Genre : " + String.valueOf(v.getTag()));
           }
         });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams

@@ -142,4 +142,17 @@
     <string name="image_download_button">Download Image</string>
     <string name="image_load_issue">Sorry , There is problem in loading full Image</string>
     <string name="image_more">DETAILS</string>
+    <string name="image_name">Name :</string>
+    <string name="image_width">Width :</string>
+    <string name="image_resolution">Resolution :</string>
+
+    <!--About Us Snack Bar -->
+    <string name="about_us_string">Designed and powered by TMDB</string>
+    <string name="about_us_email">Email</string>
+
+    <string name="about_us_emailTitle">FeedBack about The MovieDataBase App</string>
+    <string name="about_us_emailId">ranjithsuda123@gmail.com</string>
+    <string name="about_us_emailDialogTitle">Send Email via ..</string>
+    <string name="about_us_appVersion">App Version :</string>
+    <string name="about_us_deviceVersion">OS Version :</string>
 </resources>

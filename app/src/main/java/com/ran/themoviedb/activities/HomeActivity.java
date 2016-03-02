@@ -1,7 +1,9 @@
 package com.ran.themoviedb.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -36,6 +38,7 @@ public class HomeActivity extends AppCompatActivity
     implements HomeScreenView, GenericErrorBuilder.Handler, View.OnClickListener {
 
   private final String TAG = HomeActivity.class.getSimpleName();
+  private Context context;
   LinearLayout errorLayout;
   ProgressBar progressBar;
   LinearLayout contentLayout;
@@ -51,6 +54,7 @@ public class HomeActivity extends AppCompatActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    context = this;
     setContentView(R.layout.activity_home);
     initView();
   }
@@ -65,7 +69,6 @@ public class HomeActivity extends AppCompatActivity
     progressBar.setVisibility(View.GONE);
     contentLayout = (LinearLayout) findViewById(R.id.home_screen_content);
     contentLayout.setVisibility(View.GONE);
-
     dataPresenter =
         new HomeScreenDataPresenter(HomeActivity.this, this, HomeActivity.class.hashCode(),
             MovieStoreType.MOVIE_POPULAR,
@@ -106,7 +109,13 @@ public class HomeActivity extends AppCompatActivity
         Navigator.navigateToLanguageScreen(this);
         return true;
       case R.id.home_menu_aboutus:
-        //Todo [ranjith] , Enable About Us UI ..
+        Snackbar.make(contentLayout, R.string.about_us_string, Snackbar.LENGTH_LONG)
+            .setAction(R.string.about_us_email, new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                Navigator.sendEmail(context);
+              }
+            }).setActionTextColor(getResources().getColor(R.color.colorAccent)).show();
         return true;
       default:
         return super.onOptionsItemSelected(item);

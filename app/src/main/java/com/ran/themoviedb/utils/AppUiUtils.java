@@ -10,6 +10,7 @@ import com.ran.themoviedb.db.AppSharedPreferenceKeys;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -58,5 +59,22 @@ public class AppUiUtils {
       return TheMovieDbConstants.EMPTY_STRING;
     }
     return TextUtils.join(TheMovieDbConstants.COMMA_STRING, list);
+  }
+
+  /**
+   * Method to get Size based on size passed
+   *
+   * @param size -- Bytes
+   * @return -- Readable format size
+   */
+  public static String getUnitSize(long size) {
+    if (size <= 0) {
+      return TheMovieDbConstants.ZERO_STRING;
+    }
+    int digitGroups = (int) (Math.log10(size) / Math.log10(TheMovieDbConstants.TWO_POWER_TEN));
+    return new DecimalFormat("#,##0.#").format(
+        size / Math.pow(TheMovieDbConstants.TWO_POWER_TEN, digitGroups)) +
+        TheMovieDbConstants.SPACE_STRING +
+        TheMovieDbConstants.UNITS[digitGroups];
   }
 }

@@ -24,6 +24,7 @@ public class ImageLoaderUtils {
    * @return -- baseUrl + endPointUrl
    */
   public static String getImageUrl(String baseURl, String endPoint) {
+    Log.d(TAG, "Base url : " + baseURl + " end point : " + endPoint);
     if (baseURl != null && endPoint != null) {
       return baseURl.concat(endPoint);
     } else {

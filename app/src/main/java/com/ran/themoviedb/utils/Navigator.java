@@ -2,7 +2,11 @@ package com.ran.themoviedb.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.os.Build;
 
+import com.ran.themoviedb.BuildConfig;
+import com.ran.themoviedb.R;
 import com.ran.themoviedb.activities.FullImageActivity;
 import com.ran.themoviedb.activities.HomeActivity;
 import com.ran.themoviedb.activities.LanguageSelectionActivity;
@@ -100,5 +104,42 @@ public class Navigator {
     Intent intent = new Intent(context, FullImageActivity.class);
     intent.putExtra(TheMovieDbConstants.FULL_IMAGE_URL_KEY, imageUrl);
     context.startActivity(intent);
+  }
+
+  /**
+   * Method to send the Email for About Us
+   *
+   * @param context -- Context
+   */
+  public static void sendEmail(Context context) {
+    String emailTitle = context.getString(R.string.about_us_emailTitle);
+    String emailId = context.getString(R.string.about_us_emailId);
+    String emailChooserTitle = context.getString(R.string.about_us_emailDialogTitle);
+
+    Intent email = new Intent(Intent.ACTION_SEND);
+    email.putExtra(Intent.EXTRA_EMAIL, new String[]{emailId});
+    email.putExtra(Intent.EXTRA_SUBJECT, emailTitle);
+    email.putExtra(Intent.EXTRA_TEXT, buildEmailBody(context));
+    // need this to prompts email client only
+    email.setType("message/rfc822");
+    context.startActivity(Intent.createChooser(email, emailChooserTitle));
+  }
+
+  private static String buildEmailBody(Context context) {
+    String body = TheMovieDbConstants.EMPTY_STRING;
+    String deviceVersion = context.getString(R.string.about_us_deviceVersion) +
+        TheMovieDbConstants.EMPTY_STRING + Build.VERSION.RELEASE;
+    String appVersion =
+        context.getString(R.string.about_us_appVersion) + TheMovieDbConstants.EMPTY_STRING;
+    try {
+      PackageInfo packageInfo = context.getPackageManager()
+          .getPackageInfo(context.getPackageName(), 0);
+      appVersion = appVersion + packageInfo.versionName;
+    } catch (Exception e) {
+      appVersion = appVersion + BuildConfig.VERSION_NAME + TheMovieDbConstants.OPEN_BRACKET +
+          BuildConfig.VERSION_CODE + TheMovieDbConstants.CLOSE_BRACKET;
+    }
+
+    return body + deviceVersion + System.getProperty("line.separator") + appVersion;
   }
 }

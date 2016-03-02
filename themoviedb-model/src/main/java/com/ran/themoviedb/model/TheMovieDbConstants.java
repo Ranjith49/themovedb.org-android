@@ -50,6 +50,11 @@ public interface TheMovieDbConstants {
   String COMMA_STRING = ",";
 
   /**
+   * X string
+   */
+  String MULTIPLY_STRING = "x";
+
+  /**
    * Null String
    */
   String NULL_STRING = "null";
@@ -156,4 +161,21 @@ public interface TheMovieDbConstants {
    * Key for sending the full Image Url
    */
   String FULL_IMAGE_URL_KEY = "full_image_url_key";
+
+  String ZERO_STRING = "0";
+  int TWO_POWER_TEN = 1024;
+
+  /**
+   * Open Bracket
+   */
+  String OPEN_BRACKET = "(";
+
+  /**
+   * Close Bracket
+   */
+  String CLOSE_BRACKET = ")";
+  /*
+* String array of size units
+*/
+  String[] UNITS = {"B", "KB", "MB", "GB", "TB"};
 }

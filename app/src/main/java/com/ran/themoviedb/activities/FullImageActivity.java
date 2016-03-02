@@ -26,9 +26,12 @@ import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
+import com.ran.themoviedb.utils.AppUiUtils;
+import com.ran.themoviedb.utils.FullImagePopupCreator;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -53,7 +56,12 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
   private final TopBottomViewHandler mHandler = new TopBottomViewHandler();
   private final int HIDE_MESSAGE = 101;
   private final int HIDE_AFTER_DURATION = 5000;
+  private final int START_INDEX = 1;
 
+  //Info for the Bitmap Data ..
+  private String bitmap_resolution;
+  private String bitmap_size;
+  private String bitmap_file_name;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,7 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
     initView();
     if (getIntent().hasExtra(TheMovieDbConstants.FULL_IMAGE_URL_KEY)) {
       String imagePath = getIntent().getStringExtra(TheMovieDbConstants.FULL_IMAGE_URL_KEY);
+      bitmap_file_name = imagePath.substring(START_INDEX);
       Glide.with(this)
           .load(ImageLoaderUtils.getImageUrl(generateImageBannerBaseUrl(), imagePath)).asBitmap()
           .animate(android.R.anim.fade_in) //Smooth Transition
@@ -85,6 +94,10 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
             @Override
             public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target,
                                            boolean isFromMemoryCache, boolean isFirstResource) {
+              bitmap_resolution = resource.getWidth() + TheMovieDbConstants.MULTIPLY_STRING
+                  + resource.getHeight();
+              bitmap_size = AppUiUtils.getUnitSize(resource.getByteCount());
+              Log.d(TAG, "resolution : " + bitmap_resolution + " size : " + bitmap_size);
               imageDownloadProgressBar.setVisibility(View.GONE);
               initialisePhotoView();
               fullImage.setVisibility(View.VISIBLE);
@@ -121,6 +134,19 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
     imageDownloadProgressBar = (ProgressBar) findViewById(R.id.full_image_progressBar);
     topContainer = (RelativeLayout) findViewById(R.id.full_image_top_container);
     detailsView = (TextView) findViewById(R.id.full_image_details);
+    detailsView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        String data[] = new String[3];
+        data[0] = getResources().getString(R.string.image_name) + TheMovieDbConstants
+            .SPACE_STRING + bitmap_file_name;
+        data[1] = getResources().getString(R.string.image_resolution) + TheMovieDbConstants
+            .SPACE_STRING + bitmap_resolution;
+        data[2] = getResources().getString(R.string.image_width) + TheMovieDbConstants
+            .SPACE_STRING + bitmap_size;
+        FullImagePopupCreator.showPopupWindow(context, data, detailsView);
+      }
+    });
   }
 
   private void initialisePhotoView() {
@@ -168,6 +194,7 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
         case HIDE_MESSAGE:
           topContainer.setVisibility(View.GONE);
           downloadButton.setVisibility(View.GONE);
+          FullImagePopupCreator.hidePopupWindow();
           break;
         default:
           super.handleMessage(msg);
