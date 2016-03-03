@@ -133,7 +133,7 @@ public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, movieImage,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, item.getBackdrop_path()),
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, item.getBackdrop_path()),
         R.drawable.image_error_placeholder);
   }
 }

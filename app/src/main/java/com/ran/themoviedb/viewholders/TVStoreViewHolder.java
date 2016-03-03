@@ -134,7 +134,7 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, tvImage,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, item.getPoster_path()),
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, item.getPoster_path()),
         R.drawable.image_error_placeholder);
   }
 }

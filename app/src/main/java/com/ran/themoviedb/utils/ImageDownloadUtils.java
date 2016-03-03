@@ -1,15 +1,21 @@
 package com.ran.themoviedb.utils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.download.Downloader;
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
+import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.utils.ApplicationUtils;
 
 import java.io.File;
+import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 3/3/2016.
@@ -23,10 +29,11 @@ public class ImageDownloadUtils {
 
   private final static String IMAGE_DIRECTORY = "TheMovieDB";
   private final static String TAG = ImageDownloadUtils.class.getSimpleName();
-  private final static long MB_DIFF = 1000 * 1000;
+  private final static long FREE_MB = 25 * 1000 * 1000; // 25 MB free Space is required to download
 
-  public static void startDownload(String downloadUrl, DisplayStoreType storeType,
-                                   long fileSizeBytes, String fileName) {
+  public static void startDownload(String downloadUrl) {
+
+    String fileName = TheMovieDbConstants.EMPTY_STRING;
     if (Downloader.getInstance().getCurrentRunningDownloads().containsKey(downloadUrl)) {
       Toast.makeText(ApplicationUtils.getApplication(), R.string.download_error_fileExists, Toast
           .LENGTH_SHORT).show();
@@ -51,7 +58,7 @@ public class ImageDownloadUtils {
 
     //Validate the Space ..
     long availableSpace = fileDir.getFreeSpace();
-    if (fileSizeBytes + MB_DIFF > availableSpace) {
+    if (FREE_MB > availableSpace) {
       Log.d(TAG, "No space to download the image");
       Toast.makeText(ApplicationUtils.getApplication(), R.string.download_error_noSpace, Toast
           .LENGTH_SHORT).show();
@@ -65,7 +72,7 @@ public class ImageDownloadUtils {
       Toast.makeText(ApplicationUtils.getApplication(), R.string.download_error_fileExists, Toast
           .LENGTH_SHORT).show();
     } else {
-      Downloader.getInstance().startDownloadImage(downloadUrl, imageFile, storeType);
+      Downloader.getInstance().startDownloadImage(downloadUrl, imageFile);
     }
   }
 
@@ -102,4 +109,6 @@ public class ImageDownloadUtils {
       return null;
     }
   }
+
+
 }

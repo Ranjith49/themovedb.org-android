@@ -211,7 +211,7 @@ public class PeopleSearchViewHolder extends RecyclerView.ViewHolder implements
 
   private void loadPosterMovie(String baseUrl, String url, ImageView imageView) {
     ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, imageView,
-        ImageLoaderUtils.getImageUrl(baseUrl, url),
+        ImageLoaderUtils.buildImageUrl(baseUrl, url),
         R.drawable.image_error_placeholder);
   }
 
@@ -232,7 +232,7 @@ public class PeopleSearchViewHolder extends RecyclerView.ViewHolder implements
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, peopleImage,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, item.getProfile_path()),
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, item.getProfile_path()),
         R.drawable.image_error_placeholder);
   }
 }

@@ -9,7 +9,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.utils.ApplicationUtils;
 
 import java.io.File;
@@ -50,12 +49,17 @@ public class Downloader {
     return instance;
   }
 
-  public void startDownloadImage(String fileDownloadUrl, File fileToDownload,
-                                 DisplayStoreType storeType) {
+  /**
+   * Start the Download of the Image
+   *
+   * @param fileDownloadUrl -- Complete Download Url
+   * @param fileToDownload  -- File where to be downloaded
+   */
+  public void startDownloadImage(String fileDownloadUrl, File fileToDownload) {
     Uri downloadUri = Uri.parse(fileDownloadUrl);
     DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-    request.setTitle("Downloading " + storeType.name() + "Image");
-    request.setDescription("Powered by TMDB");
+    request.setTitle("Downloading Image");
+    request.setDescription("Powered by TMDB"); // TODo[ranjith, enable Strings here]
     request.allowScanningByMediaScanner();
     request.setVisibleInDownloadsUi(true);
     //Download location ..
@@ -70,6 +74,11 @@ public class Downloader {
     }
   }
 
+  /**
+   * Getter for getting the current Running Downloads
+   *
+   * @return -- get the list of downloads
+   */
   public ConcurrentHashMap<String, Long> getCurrentRunningDownloads() {
     return currentRunningDownloads;
   }
@@ -124,12 +133,12 @@ public class Downloader {
           switch (downloadStatus) {
             case DownloadManager.STATUS_FAILED:
               Log.d(TAG, "Download is failed , We cannot do any thing");
-              //TODO [ranjith .suda] , show the Toast with failure.
+              //TODO [ranjith] , show the Toast with failure.
               listItemsIterator.remove();
               break;
             case DownloadManager.STATUS_SUCCESSFUL:
               Log.d(TAG, "Download is Success , File is created");
-              //TODO [ranjith .suda] , show the Toast with Success.
+              //TODO [ranjith] , show the Toast with Success.
               listItemsIterator.remove();
               break;
             case DownloadManager.STATUS_PAUSED:

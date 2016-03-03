@@ -109,6 +109,6 @@ public class TvShowSeasonsRecyclerAdapter extends RecyclerView.Adapter {
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(context, view, ImageLoaderUtils
-        .getImageUrl(IMAGE_BASE_URL, url), R.drawable.image_error_placeholder);
+        .buildImageUrl(IMAGE_BASE_URL, url), R.drawable.image_error_placeholder);
   }
 }

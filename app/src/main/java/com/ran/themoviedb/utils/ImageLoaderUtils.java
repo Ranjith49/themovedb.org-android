@@ -5,7 +5,13 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
+
+import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 1/1/2016.
@@ -23,13 +29,40 @@ public class ImageLoaderUtils {
    * @param endPoint -- end point
    * @return -- baseUrl + endPointUrl
    */
-  public static String getImageUrl(String baseURl, String endPoint) {
+  public static String buildImageUrl(String baseURl, String endPoint) {
     Log.d(TAG, "Base url : " + baseURl + " end point : " + endPoint);
     if (baseURl != null && endPoint != null) {
       return baseURl.concat(endPoint);
     } else {
       return TheMovieDbConstants.EMPTY_STRING;
     }
+  }
+
+  /**
+   * Utility Method to get the Original Image Base Url
+   *
+   * @param context   -- Context
+   * @param imageType -- Image Type [Banner / poster]
+   * @return -- Full Original Image Url
+   */
+  public static String generateOrgImageBaseUrl(Context context, String imageType) {
+    String image_pref_json = AppSharedPreferences.getInstance(context).getMovieImageConfigData();
+
+    Gson gson = new Gson();
+    Type type = new TypeToken<TheMovieDbImagesConfig>() {
+    }.getType();
+
+    TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
+    String image_url = imagesConfig.getBase_url();
+    String image_url_config = TheMovieDbConstants.EMPTY_STRING;
+    if (imageType.equalsIgnoreCase(TheMovieDbConstants.IMAGE_BANNER_TYPE)) {
+      image_url_config =
+          imagesConfig.getBackdrop_sizes().get(imagesConfig.getBackdrop_sizes().size() - 1);
+    } else {
+      image_url_config =
+          imagesConfig.getBackdrop_sizes().get(imagesConfig.getPoster_sizes().size() - 1);
+    }
+    return image_url.concat(image_url_config);
   }
 
   /**

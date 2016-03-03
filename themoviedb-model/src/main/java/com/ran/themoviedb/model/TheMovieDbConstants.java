@@ -60,6 +60,16 @@ public interface TheMovieDbConstants {
   String NULL_STRING = "null";
 
   /**
+   * Zero String
+   */
+  String ZERO_STRING = "0";
+
+  /**
+   * Two power Ten Constant
+   */
+  int TWO_POWER_TEN = 1024;
+
+  /**
    * Home Banner Millis Seconds Delay
    */
   int HOME_BANNER_MILLS_SECS = 5000;
@@ -158,13 +168,9 @@ public interface TheMovieDbConstants {
   String WAP_PERSON_URL = "https://www.themoviedb.org/person/";
 
   /**
-   * Key for sending the full Image Url
+   * Key for sending the Image Url
    */
-  String FULL_IMAGE_URL_KEY = "full_image_url_key";
-
-  String ZERO_STRING = "0";
-  int TWO_POWER_TEN = 1024;
-
+  String IMAGE_URL_KEY = "image_url_key";
   /**
    * Open Bracket
    */
@@ -178,4 +184,11 @@ public interface TheMovieDbConstants {
 * String array of size units
 */
   String[] UNITS = {"B", "KB", "MB", "GB", "TB"};
+
+  /**
+   * Key and Values for the Image Types..
+   */
+  String IMAGE_TYPE_KEY = "image_type_key";
+  String IMAGE_POSTER_TYPE = "image_poster";
+  String IMAGE_BANNER_TYPE = "image_banner";
 }

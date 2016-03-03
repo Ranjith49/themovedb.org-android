@@ -143,7 +143,7 @@ public class PeopleDetailFragment extends Fragment
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(getActivity(), peoplePoster,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, url), R.drawable.image_error_placeholder);
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, url), R.drawable.image_error_placeholder);
   }
 
   // -- Call Backs from various Interfaces .. //

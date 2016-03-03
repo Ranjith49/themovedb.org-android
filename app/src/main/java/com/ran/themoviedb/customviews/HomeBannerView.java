@@ -47,7 +47,7 @@ public class HomeBannerView extends RelativeLayout {
         case MESSAGE_IMAGE_LOAD:
           currentIndex = (++currentIndex) % MAX_BAN; //Todo [Ranjith ,Better logic ]
           ImageLoaderUtils.loadImageWithPlaceHolder(context, imageBanner,
-              ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, bannerUrls.get(currentIndex)),
+              ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, bannerUrls.get(currentIndex)),
               R.drawable.image_error_placeholder);
 
           //Send to load again
@@ -121,7 +121,7 @@ public class HomeBannerView extends RelativeLayout {
     MAX_BAN = (bannerUrls.size() > MAX_BAN) ? MAX_BAN : bannerUrls.size();
     currentIndex = (++currentIndex) % MAX_BAN; //Todo [Ranjith ,Better logic ]
     ImageLoaderUtils.loadImageWithPlaceHolder(context, imageBanner,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, bannerUrls.get(currentIndex)),
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, bannerUrls.get(currentIndex)),
         R.drawable.image_error_placeholder);
 
     //Initialize the Handler here for the Change in banner for every 5 seconds ..

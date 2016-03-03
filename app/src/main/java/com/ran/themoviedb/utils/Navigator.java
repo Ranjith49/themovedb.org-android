@@ -100,9 +100,10 @@ public class Navigator {
    * @param context  -- Context
    * @param imageUrl -- url
    */
-  public static void navigateToFullImageScreen(Context context, String imageUrl) {
+  public static void navigateToFullImageScreen(Context context, String imageUrl, String imageType) {
     Intent intent = new Intent(context, FullImageActivity.class);
-    intent.putExtra(TheMovieDbConstants.FULL_IMAGE_URL_KEY, imageUrl);
+    intent.putExtra(TheMovieDbConstants.IMAGE_URL_KEY, imageUrl);
+    intent.putExtra(TheMovieDbConstants.IMAGE_TYPE_KEY, imageType);
     context.startActivity(intent);
   }
 

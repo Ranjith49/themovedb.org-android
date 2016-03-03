@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -258,7 +257,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(getActivity(), moviePoster, ImageLoaderUtils
-        .getImageUrl(IMAGE_BASE_URL, url), R.drawable.image_error_placeholder);
+        .buildImageUrl(IMAGE_BASE_URL, url), R.drawable.image_error_placeholder);
   }
 
   // -- Call Backs from various Interfaces .. ---

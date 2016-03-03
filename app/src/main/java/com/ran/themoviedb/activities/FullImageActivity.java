@@ -20,18 +20,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.FullImagePopupCreator;
+import com.ran.themoviedb.utils.ImageDownloadUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
-
-import java.lang.reflect.Type;
-import java.util.logging.Logger;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -57,11 +51,15 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
   private final int HIDE_MESSAGE = 101;
   private final int HIDE_AFTER_DURATION = 5000;
   private final int START_INDEX = 1;
+  private String imageType = TheMovieDbConstants.IMAGE_BANNER_TYPE;
+  private String imageBaseUrl = TheMovieDbConstants.EMPTY_STRING;
+  private String imageEndPath = TheMovieDbConstants.EMPTY_STRING;
 
   //Info for the Bitmap Data ..
   private String bitmap_resolution;
   private String bitmap_size;
   private String bitmap_file_name;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +72,15 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
     setContentView(R.layout.activity_full_image_ui);
 
     initView();
-    if (getIntent().hasExtra(TheMovieDbConstants.FULL_IMAGE_URL_KEY)) {
-      String imagePath = getIntent().getStringExtra(TheMovieDbConstants.FULL_IMAGE_URL_KEY);
-      bitmap_file_name = imagePath.substring(START_INDEX);
+    if (getIntent().hasExtra(TheMovieDbConstants.IMAGE_TYPE_KEY)) {
+      imageType = getIntent().getStringExtra(TheMovieDbConstants.IMAGE_TYPE_KEY);
+    }
+    if (getIntent().hasExtra(TheMovieDbConstants.IMAGE_URL_KEY)) {
+      imageEndPath = getIntent().getStringExtra(TheMovieDbConstants.IMAGE_URL_KEY);
+      bitmap_file_name = imageEndPath.substring(START_INDEX);
+      imageBaseUrl = ImageLoaderUtils.generateOrgImageBaseUrl(this, imageType);
       Glide.with(this)
-          .load(ImageLoaderUtils.getImageUrl(generateImageBannerBaseUrl(), imagePath)).asBitmap()
+          .load(ImageLoaderUtils.buildImageUrl(imageBaseUrl, imageEndPath)).asBitmap()
           .animate(android.R.anim.fade_in) //Smooth Transition
           .error(R.drawable.image_error_placeholder)
           .listener(new RequestListener<String, Bitmap>() {
@@ -131,6 +133,13 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
     });
     fullImage = (ImageView) findViewById(R.id.full_image_ui);
     downloadButton = (Button) findViewById(R.id.full_image_download);
+    downloadButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        ImageDownloadUtils.startDownload(
+            ImageLoaderUtils.buildImageUrl(imageBaseUrl, imageEndPath));
+      }
+    });
     imageDownloadProgressBar = (ProgressBar) findViewById(R.id.full_image_progressBar);
     topContainer = (RelativeLayout) findViewById(R.id.full_image_top_container);
     detailsView = (TextView) findViewById(R.id.full_image_details);
@@ -154,20 +163,6 @@ public class FullImageActivity extends Activity implements PhotoViewAttacher.OnP
     mAttacher.setScaleType(ImageView.ScaleType.CENTER);
     mAttacher.setZoomable(true);
     mAttacher.setOnPhotoTapListener(this);
-  }
-
-  private String generateImageBannerBaseUrl() {
-    String image_pref_json = AppSharedPreferences.getInstance(this).getMovieImageConfigData();
-
-    Gson gson = new Gson();
-    Type type = new TypeToken<TheMovieDbImagesConfig>() {
-    }.getType();
-
-    TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
-    String image_url = imagesConfig.getBase_url();
-    String image_url_config =
-        imagesConfig.getBackdrop_sizes().get(imagesConfig.getBackdrop_sizes().size() - 1);
-    return image_url.concat(image_url_config);
   }
 
   @Override

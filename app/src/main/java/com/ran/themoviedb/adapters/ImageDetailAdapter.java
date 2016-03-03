@@ -8,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.ImageDetails;
 import com.ran.themoviedb.utils.AppUiUtils;
+import com.ran.themoviedb.utils.ImageDownloadUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
 import com.ran.themoviedb.utils.Navigator;
 
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/17/2016.
+ * <p/>
+ * Image Details Adapter with support for Poster and Banner .
  */
 public class ImageDetailAdapter extends RecyclerView.Adapter {
 
@@ -27,6 +30,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter {
   private ArrayList<ImageDetails> imageDetails;
   private Context context;
   private String baseUrl;
+  private String imageType;
 
   public ImageDetailAdapter(boolean isPoster, ArrayList<ImageDetails> imageDetails, Context context,
                             String baseUrl) {
@@ -34,6 +38,11 @@ public class ImageDetailAdapter extends RecyclerView.Adapter {
     this.imageDetails = imageDetails;
     this.context = context;
     this.baseUrl = baseUrl;
+    if (isPoster) {
+      imageType = TheMovieDbConstants.IMAGE_POSTER_TYPE;
+    } else {
+      imageType = TheMovieDbConstants.IMAGE_BANNER_TYPE;
+    }
   }
 
   @Override
@@ -53,12 +62,13 @@ public class ImageDetailAdapter extends RecyclerView.Adapter {
     imageHolder.image_view.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Navigator.navigateToFullImageScreen(context, imageDetails.get(position).getFile_path());
+        Navigator.navigateToFullImageScreen(context, imageDetails.get(position).getFile_path(),
+            imageType);
       }
     });
 
     ImageLoaderUtils.loadImageWithPlaceHolder(context, imageHolder.image_view,
-        ImageLoaderUtils.getImageUrl(baseUrl, imageDetails.get(position).getFile_path()),
+        ImageLoaderUtils.buildImageUrl(baseUrl, imageDetails.get(position).getFile_path()),
         R.drawable.image_error_placeholder);
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -71,11 +81,11 @@ public class ImageDetailAdapter extends RecyclerView.Adapter {
     imageHolder.image_download.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Toast.makeText(context, "Download click", Toast.LENGTH_SHORT).show();
+        String baseUrl = ImageLoaderUtils.generateOrgImageBaseUrl(context, imageType);
+        ImageDownloadUtils.startDownload(
+            ImageLoaderUtils.buildImageUrl(baseUrl, imageDetails.get(position).getFile_path()));
       }
     });
-
-
   }
 
   @Override

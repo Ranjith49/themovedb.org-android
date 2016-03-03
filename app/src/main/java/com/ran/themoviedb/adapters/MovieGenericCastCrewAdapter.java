@@ -82,7 +82,7 @@ public class MovieGenericCastCrewAdapter extends RecyclerView.Adapter {
       String image_endPoint = castDetails.get(position).getProfile_path();
       if (!AppUiUtils.isStringEmpty(image_endPoint)) {
         ImageLoaderUtils.loadImageWithPlaceHolder(context, holder_custom.image_person,
-            ImageLoaderUtils.getImageUrl(baseUrl, image_endPoint),
+            ImageLoaderUtils.buildImageUrl(baseUrl, image_endPoint),
             R.drawable.image_error_placeholder);
       } else {
         holder_custom.image_person.setImageResource(R.drawable.image_error_placeholder);

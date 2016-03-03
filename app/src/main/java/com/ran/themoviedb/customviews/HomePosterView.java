@@ -132,19 +132,19 @@ public class HomePosterView extends RelativeLayout {
     //a) Image Poster 1 View
     currentIndex = (++currentIndex) % MAX_POSTERS; //Todo [Ranjith ,Better logic ]
     ImageLoaderUtils.loadImageWithPlaceHolder(context, imagePoster1,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, posterUrls.get(currentIndex)),
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, posterUrls.get(currentIndex)),
         R.drawable.image_error_placeholder);
 
     //b) Image Poster 2 View
     currentIndex = (++currentIndex) % MAX_POSTERS; //Todo [Ranjith ,Better logic ]
     ImageLoaderUtils.loadImageWithPlaceHolder(context, imagePoster2,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, posterUrls.get(currentIndex)),
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, posterUrls.get(currentIndex)),
         R.drawable.image_error_placeholder);
 
     //c) Image Poster 3 View
     currentIndex = (++currentIndex) % MAX_POSTERS; //Todo [Ranjith ,Better logic ]
     ImageLoaderUtils.loadImageWithPlaceHolder(context, imagePoster3,
-        ImageLoaderUtils.getImageUrl(IMAGE_BASE_URL, posterUrls.get(currentIndex)),
+        ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, posterUrls.get(currentIndex)),
         R.drawable.image_error_placeholder);
   }
 
