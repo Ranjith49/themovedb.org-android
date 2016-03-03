@@ -54,13 +54,13 @@ public class ImageLoaderUtils {
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = TheMovieDbConstants.EMPTY_STRING;
+    String image_url_config;
     if (imageType.equalsIgnoreCase(TheMovieDbConstants.IMAGE_BANNER_TYPE)) {
       image_url_config =
           imagesConfig.getBackdrop_sizes().get(imagesConfig.getBackdrop_sizes().size() - 1);
     } else {
       image_url_config =
-          imagesConfig.getBackdrop_sizes().get(imagesConfig.getPoster_sizes().size() - 1);
+          imagesConfig.getPoster_sizes().get(imagesConfig.getPoster_sizes().size() - 1);
     }
     return image_url.concat(image_url_config);
   }

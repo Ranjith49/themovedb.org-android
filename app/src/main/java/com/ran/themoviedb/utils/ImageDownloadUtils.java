@@ -1,26 +1,20 @@
 package com.ran.themoviedb.utils;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.download.Downloader;
-import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.utils.ApplicationUtils;
 
 import java.io.File;
-import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 3/3/2016.
  * <p/>
- * Image Download Utils Class , that transforms the calls from APp --> Downloader Module
+ * Image Download Utils Class , that transforms the calls from App --> Downloader Module
  * Validates ,
  * a) whether Download can proceed or not
  * b) Space Available for Download or not
@@ -31,14 +25,21 @@ public class ImageDownloadUtils {
   private final static String TAG = ImageDownloadUtils.class.getSimpleName();
   private final static long FREE_MB = 25 * 1000 * 1000; // 25 MB free Space is required to download
 
+  /**
+   * Initial validator , whether to actually make the Download call or not
+   *
+   * @param downloadUrl -- Url / file to be downloaded
+   */
   public static void startDownload(String downloadUrl) {
 
-    String fileName = TheMovieDbConstants.EMPTY_STRING;
+    String splitString[] = downloadUrl.split(TheMovieDbConstants.BACKSLASH);
+    String fileName = splitString[splitString.length - 1];
     if (Downloader.getInstance().getCurrentRunningDownloads().containsKey(downloadUrl)) {
-      Toast.makeText(ApplicationUtils.getApplication(), R.string.download_error_fileExists, Toast
+      Toast.makeText(ApplicationUtils.getApplication(), R.string.download_inProgress, Toast
           .LENGTH_SHORT).show();
       return;
     }
+
     //Validate the Mount Status ..
     if (!isExternalStorageWritable()) {
       Log.d(TAG, "Not Writable Storage ,Ignore it");
@@ -67,15 +68,14 @@ public class ImageDownloadUtils {
 
     //Now Create the File Path for the file to be created..
     File imageFile = new File(fileDir, fileName);
-    if (imageFile.exists()) {
-      Log.d(TAG, "File Already Exists");
+    if (imageFile.isFile()) {
+      Log.d(TAG, "File Already Exists, No need to download again");
       Toast.makeText(ApplicationUtils.getApplication(), R.string.download_error_fileExists, Toast
           .LENGTH_SHORT).show();
     } else {
-      Downloader.getInstance().startDownloadImage(downloadUrl, imageFile);
+      Downloader.getInstance().startDownloadImage(downloadUrl, imageFile, fileName);
     }
   }
-
 
   /* Checks if external storage is available for read and write */
   private static boolean isExternalStorageWritable() {
@@ -109,6 +109,4 @@ public class ImageDownloadUtils {
       return null;
     }
   }
-
-
 }

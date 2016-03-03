@@ -100,7 +100,6 @@ public class SplashActivity extends AppCompatActivity
   }
 
   private synchronized void callLanguageSelectionScreen() {
-    //Todo ranjith [Enable Key present for showing languageScreen or not]
     if (isGenreInfoRetrieved && isAppConfigRetrieved) {
       if (AppSharedPreferences.getInstance(this).isAppFirstLaunch()) {
         Navigator.navigateToLanguageScreen(this);

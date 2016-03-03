@@ -157,6 +157,7 @@
     <string name="about_us_deviceVersion">OS Version :</string>
 
     <!-- Strings responsible for Downloading the Files -->
+    <string name="download_inProgress">File Download is in progress</string>
     <string name="download_error_fileExists">Same File Exists in the Device.Open Gallery to
         View it.
     </string>

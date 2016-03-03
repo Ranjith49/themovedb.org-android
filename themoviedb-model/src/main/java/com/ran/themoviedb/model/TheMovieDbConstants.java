@@ -65,6 +65,10 @@ public interface TheMovieDbConstants {
   String ZERO_STRING = "0";
 
   /**
+   * Back Slash String
+   */
+  String BACKSLASH = "/";
+  /**
    * Two power Ten Constant
    */
   int TWO_POWER_TEN = 1024;
