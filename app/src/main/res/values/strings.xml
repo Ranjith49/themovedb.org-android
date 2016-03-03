@@ -155,4 +155,12 @@
     <string name="about_us_emailDialogTitle">Send Email via ..</string>
     <string name="about_us_appVersion">App Version :</string>
     <string name="about_us_deviceVersion">OS Version :</string>
+
+    <!-- Strings responsible for Downloading the Files -->
+    <string name="download_error_fileExists">Same File Exists in the Device.Open Gallery to
+        View it.
+    </string>
+    <string name="download_error_fileMount">Unable to access the Storage Space</string>
+    <string name="download_error_noSpace">Failed due to insufficient Storage Space</string>
+    <string name="download_file_success">File saved Successfully to %1$s in Pictures</string>
 </resources>

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/themoviedb-android.iml" filepath="$PROJECT_DIR$/themoviedb-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/themovedb.org-android.iml" filepath="$PROJECT_DIR$/themovedb.org-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/themoviedb-model/themoviedb-model.iml" filepath="$PROJECT_DIR$/themoviedb-model/themoviedb-model.iml" />
     </modules>
   </component>
