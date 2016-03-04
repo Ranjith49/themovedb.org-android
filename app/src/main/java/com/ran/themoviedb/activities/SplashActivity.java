@@ -22,7 +22,7 @@ import com.ran.themoviedb.view_pres_med.TheMovieDbConfigView;
 
 /**
  * Splash Screen launched for every Launch of the App , does the Initial Load
- * i.e Db Config , genre Info etc
+ * i.e Db Config [Preload Data is fetched first]
  */
 public class SplashActivity extends AppCompatActivity
     implements TheMovieDbConfigView, GenericErrorBuilder.Handler {
@@ -105,6 +105,7 @@ public class SplashActivity extends AppCompatActivity
     } else {
       Navigator.navigateToAppHome(this);
     }
+    finish();
   }
 
   @Override
