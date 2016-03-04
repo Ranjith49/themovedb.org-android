@@ -93,7 +93,7 @@
         <item>Cast &amp; Crew</item>
         <item>Images &amp; Videos</item>
         <item>Reviews</item>
-        <item>Related Movies</item>
+        <item>Similar Movies</item>
     </string-array>
 
     <string name="movie_id_error_message">Error getting the Movie Details . Please try later
@@ -113,7 +113,7 @@
         <item>Description</item>
         <item>Seasons</item>
         <item>Images &amp; Videos</item>
-        <item>Related TvShows</item>
+        <item>Similar TvShows</item>
     </string-array>
 
     <string name="tv_id_error_message">Error getting the Tv Show Details . Please try
@@ -138,6 +138,14 @@
         DataBase , powered by TMDB. \n \n
     </string>
     <string name="share_app_dialog_title">Share Via ..</string>
+
+    <!-- People Detail Adapter -->
+
+    <!--- Strings for the Tv Show Details -->
+    <string-array name="people_detail_tabs">
+        <item>Information</item>
+        <item>Known For</item>
+    </string-array>
 
     <string name="image_download_button">Download Image</string>
     <string name="image_load_issue">Sorry , There is problem in loading full Image</string>

@@ -30,11 +30,11 @@ import java.util.Date;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- * <p/>
+ * <p>
  * View Holder for the Movie Store Recycler View
  */
-public class MovieStoreViewHolder extends RecyclerView.ViewHolder implements
-    StoreUpdateViewHolder<MovieStoreResults> {
+public class MovieStoreViewHolder extends RecyclerView.ViewHolder
+    implements StoreUpdateViewHolder<MovieStoreResults> {
 
   private TextView movieNameView;
   private TextView movieRating;
@@ -90,14 +90,19 @@ public class MovieStoreViewHolder extends RecyclerView.ViewHolder implements
     }
     movieNameView.setText(movieName);
     movieRating.setText(String.valueOf(item.getVote_average()));
+    movieRating.setVisibility(View.VISIBLE);
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-    try {
-      Date date = dateFormat.parse(item.getRelease_date());
-      movieYear.setText(dateFormat.format(date));
-    } catch (ParseException e) {
+    if (AppUiUtils.isStringEmpty(item.getRelease_date())) {
       movieYear.setVisibility(View.GONE);
-      Log.d(TAG, "Date Format Exception  : " + e.toString());
+    } else {
+      SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+      try {
+        Date date = dateFormat.parse(item.getRelease_date());
+        movieYear.setText(dateFormat.format(date));
+      } catch (ParseException e) {
+        movieYear.setVisibility(View.GONE);
+        Log.d(TAG, "Date Format Exception  : " + e.toString());
+      }
     }
     movieItemContainer.setOnClickListener(new View.OnClickListener() {
       @Override

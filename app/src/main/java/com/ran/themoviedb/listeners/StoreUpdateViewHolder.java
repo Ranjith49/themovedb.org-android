@@ -4,6 +4,8 @@ import android.content.Context;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
+ * <p>
+ * Common Interface to update Store View Holders
  */
 public interface StoreUpdateViewHolder<T> {
 

@@ -77,21 +77,23 @@ public class TvSearchViewHolder extends RecyclerView.ViewHolder implements
  * c) Year
  * d) Click for More details
  * e) Share Click
- * f) Image for the movie
+ * f) Image for the tv
  */
     tvNameView.setText(item.getName());
     tvRating.setText(String.valueOf(item.getVote_average()));
+    tvRating.setVisibility(View.VISIBLE);
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-    try {
-      Date date = dateFormat.parse(item.getFirst_air_date());
-      tvYear.setText(dateFormat.format(date));
-    } catch (ParseException e) {
+    if (AppUiUtils.isStringEmpty(item.getFirst_air_date())) {
       tvYear.setVisibility(View.GONE);
-      Log.d(TAG, "Date Format Exception  : " + e.toString());
-    } catch (Exception e) {
-      tvYear.setVisibility(View.GONE);
-      Log.d(TAG, "Some other Exception : " + e.toString());
+    } else {
+      SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+      try {
+        Date date = dateFormat.parse(item.getFirst_air_date());
+        tvYear.setText(dateFormat.format(date));
+      } catch (ParseException e) {
+        tvYear.setVisibility(View.GONE);
+        Log.d(TAG, "Date Format Exception  : " + e.toString());
+      }
     }
     tvItemContainer.setOnClickListener(new View.OnClickListener() {
       @Override

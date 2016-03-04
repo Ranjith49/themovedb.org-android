@@ -12,6 +12,8 @@ import com.ran.themoviedb.listeners.StoreClickListener;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
+ * <p>
+ * View Holders responsible for Store Views
  */
 public class StoreViewHolders {
 
@@ -30,7 +32,6 @@ public class StoreViewHolders {
       case PERSON_STORE:
         return new PeopleStoreViewHolder(createView(parent, displayStoreType), storeClickListener,
             context);
-
       default:
         return null;
     }

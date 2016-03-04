@@ -30,7 +30,7 @@ import java.util.Date;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- * <p/>
+ * <p>
  * View Holder for the Tv Store Recycler View
  */
 public class TVStoreViewHolder extends RecyclerView.ViewHolder
@@ -78,7 +78,7 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
      * c) Year
      * d) Click for More details
      * e) Share Click
-     * f) Image for the movie
+     * f) Image for the tv
      */
     final String tvName;
     if (!AppUiUtils.isStringEmpty(item.getName())) {
@@ -88,17 +88,18 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
     }
     tvNameView.setText(tvName);
     tvRating.setText(String.valueOf(item.getVote_average()));
-
-    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-    try {
-      Date date = dateFormat.parse(item.getFirst_air_date());
-      tvYear.setText(dateFormat.format(date));
-    } catch (ParseException e) {
+    tvRating.setVisibility(View.VISIBLE);
+    if (AppUiUtils.isStringEmpty(item.getFirst_air_date())) {
       tvYear.setVisibility(View.GONE);
-      Log.d(TAG, "Date Format Exception  : " + e.toString());
-    } catch (Exception e) {
-      tvYear.setVisibility(View.GONE);
-      Log.d(TAG, "Exception in reading the date");
+    } else {
+      SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+      try {
+        Date date = dateFormat.parse(item.getFirst_air_date());
+        tvYear.setText(dateFormat.format(date));
+      } catch (ParseException e) {
+        tvYear.setVisibility(View.GONE);
+        Log.d(TAG, "Date Format Exception  : " + e.toString());
+      }
     }
     tvItemContainer.setOnClickListener(new View.OnClickListener() {
       @Override

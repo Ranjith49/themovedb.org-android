@@ -1,7 +1,7 @@
 package com.ran.themoviedb.activities;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -9,45 +9,39 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.fragments.PeopleDetailFragment;
+import com.ran.themoviedb.adapters.MovieDetailPagerAdapter;
+import com.ran.themoviedb.adapters.PeopleDetailPagerAdapter;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.share.ShareContent;
 import com.ran.themoviedb.model.share.ShareContentHelper;
 
-/**
- * Created by ranjith.suda on 2/29/2016.
- */
 public class PeopleDetailActivity extends AppCompatActivity {
 
-  private final int DEFAULT_INVALID_INDEX = -1;
-  int peopleId = DEFAULT_INVALID_INDEX;
+  private ViewPager viewPager;
+  private PeopleDetailPagerAdapter peopleDetailPagerAdapter;
+  private final int PEOPLE_DEFAULT_INVALID_INDEX = -1;
+  int  peopleId= PEOPLE_DEFAULT_INVALID_INDEX;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_people_detail);
-
     initView();
   }
 
   private void initView() {
-
     if (getIntent().hasExtra(TheMovieDbConstants.PEOPLE_ID_KEY)) {
-      peopleId = getIntent().getIntExtra(TheMovieDbConstants.PEOPLE_ID_KEY, DEFAULT_INVALID_INDEX);
+      peopleId = getIntent().getIntExtra(TheMovieDbConstants.PEOPLE_ID_KEY,
+          PEOPLE_DEFAULT_INVALID_INDEX);
     }
 
-    if (peopleId != DEFAULT_INVALID_INDEX) {
-      Bundle bundle = new Bundle();
-      bundle.putInt(TheMovieDbConstants.PEOPLE_ID_KEY, peopleId);
-      PeopleDetailFragment peopleDetailFragment = new PeopleDetailFragment();
-      peopleDetailFragment.setArguments(bundle);
-
-      FragmentTransaction ft = getFragmentManager().beginTransaction();
-      ft.replace(R.id.people_fragment_container, peopleDetailFragment);
-      ft.commit();
+    if (peopleId != PEOPLE_DEFAULT_INVALID_INDEX) {
+      viewPager = (ViewPager) findViewById(R.id.people_viewpager);
+      peopleDetailPagerAdapter = new PeopleDetailPagerAdapter(this, getFragmentManager(), peopleId);
+      viewPager.setAdapter(peopleDetailPagerAdapter);
     } else {
-      Toast.makeText(this, R.string.people_id_error_message, Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, R.string.movie_id_error_message, Toast.LENGTH_SHORT).show();
       finish();
     }
   }
@@ -63,7 +57,7 @@ public class PeopleDetailActivity extends AppCompatActivity {
     switch (item.getItemId()) {
       case R.id.item_share:
         String shareDesc = String.format(getResources().getString(R.string.share_people_desc),
-                TheMovieDbConstants.EMPTY_STRING);
+            TheMovieDbConstants.EMPTY_STRING);
         ShareContent shareContent = new ShareContent(TheMovieDbConstants.EMPTY_STRING,
             shareDesc, peopleId, DisplayStoreType.PERSON_STORE);
         ShareContentHelper.buildShareIntent(this, shareContent,

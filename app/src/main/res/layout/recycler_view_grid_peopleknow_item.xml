@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="Name of the Movie"
+            android:text="Name of the Item"
             android:textAppearance="@android:style/TextAppearance.Medium"
             android:textColor="@color/colorTextPrimary"
             android:textStyle="bold"/>
@@ -60,17 +60,14 @@
             android:text="2015"
             android:textColor="@color/colorTextPrimary"/>
 
-        <TextView
-            android:id="@+id/recycler_item_rating"
+        <ImageView
+            android:id="@+id/recycler_item_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/recycler_item_name"
-            android:drawableLeft="@mipmap/ic_rating"
-            android:gravity="center"
-            android:text="8.0"
-            android:textColor="@color/colorTextPrimary"
+            android:src="@mipmap/ic_action"
             android:visibility="gone"/>
     </RelativeLayout>
 

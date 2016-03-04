@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- *
+ * <p>
  * View Holder for the People Store Recycler View
  */
 public class PeopleSearchViewHolder extends RecyclerView.ViewHolder implements
@@ -67,7 +67,7 @@ public class PeopleSearchViewHolder extends RecyclerView.ViewHolder implements
 
 
   public PeopleSearchViewHolder(View itemView, StoreClickListener storeClickListener,
-                               Context context) {
+                                Context context) {
     super(itemView);
     this.activityContext = context;
     this.storeClickListener = storeClickListener;
@@ -115,6 +115,7 @@ public class PeopleSearchViewHolder extends RecyclerView.ViewHolder implements
      */
     peopleName.setText(item.getName());
     peopleRating.setText(String.valueOf(df.format(item.getPopularity())));
+    peopleRating.setVisibility(View.VISIBLE);
     peopleMoreInfo.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

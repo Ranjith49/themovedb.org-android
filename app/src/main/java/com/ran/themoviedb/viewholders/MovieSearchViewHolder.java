@@ -90,14 +90,19 @@ public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
     }
     movieNameView.setText(movieName);
     movieRating.setText(String.valueOf(item.getVote_average()));
+    movieRating.setVisibility(View.VISIBLE);
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-    try {
-      Date date = dateFormat.parse(item.getRelease_date());
-      movieYear.setText(dateFormat.format(date));
-    } catch (ParseException e) {
+    if (AppUiUtils.isStringEmpty(item.getRelease_date())) {
       movieYear.setVisibility(View.GONE);
-      Log.d(TAG, "Date Format Exception  : " + e.toString());
+    } else {
+      SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+      try {
+        Date date = dateFormat.parse(item.getRelease_date());
+        movieYear.setText(dateFormat.format(date));
+      } catch (ParseException e) {
+        movieYear.setVisibility(View.GONE);
+        Log.d(TAG, "Date Format Exception  : " + e.toString());
+      }
     }
     movieItemContainer.setOnClickListener(new View.OnClickListener() {
       @Override

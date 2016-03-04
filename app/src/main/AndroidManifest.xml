@@ -54,9 +54,6 @@
             android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.HomeActivity"/>
-            <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".activities.SearchActivity"/>
         </activity>
