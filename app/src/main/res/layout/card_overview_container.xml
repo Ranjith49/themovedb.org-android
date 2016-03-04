@@ -8,7 +8,7 @@
         android:id="@+id/overview_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is about the Movie which u are Saying.This generally is intended to be very long.Ideally, the Number of lines should be 3 -4"
+        android:text=""
         android:textColor="@android:color/black"
         android:textStyle="normal"
         android:visibility="gone"/>
@@ -29,7 +29,7 @@
         android:id="@+id/overview_no_seasons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/overview_description"
+        android:layout_below="@id/overview_tagline"
         android:layout_marginTop="8dp"
         android:text="No of the Seasons : 9"
         android:textColor="@android:color/black"

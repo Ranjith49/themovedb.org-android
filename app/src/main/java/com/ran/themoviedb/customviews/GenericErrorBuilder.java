@@ -14,7 +14,7 @@ import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p/>
+ * <p>
  * Utility used to create the Generic Error Layout based on
  * a) {@link com.ran.themoviedb.entities.GenericUIErrorLayoutType}
  * b) {@link com.ran.themoviedb.model.server.entities.UserAPIErrorType}
@@ -67,8 +67,8 @@ public class GenericErrorBuilder {
     errorButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        handler.onRefreshClicked();
         updateVisibilities(false);
+        handler.onRefreshClicked();
       }
     });
     errorImage = (ImageView) errorLayout.findViewById(R.id.error_image_view);

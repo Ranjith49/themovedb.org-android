@@ -2,7 +2,7 @@ package com.ran.themoviedb.model;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p/>
+ * <p>
  * Constants Used across the Application.
  */
 public interface TheMovieDbConstants {
@@ -195,4 +195,5 @@ public interface TheMovieDbConstants {
   String IMAGE_TYPE_KEY = "image_type_key";
   String IMAGE_POSTER_TYPE = "image_poster";
   String IMAGE_BANNER_TYPE = "image_banner";
+  String IMAGE_PERSON_TYPE = "image_person";
 }

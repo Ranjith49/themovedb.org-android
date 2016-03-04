@@ -15,31 +15,26 @@ import com.ran.themoviedb.customviews.GenericErrorBuilder;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
-import com.ran.themoviedb.presenters.AllMovieGenreListPresenter;
 import com.ran.themoviedb.presenters.TheMovieDbConfigPresenter;
-import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.Navigator;
-import com.ran.themoviedb.view_pres_med.AllMovieGenreView;
 import com.ran.themoviedb.view_pres_med.TheMovieDbConfigView;
+
 
 /**
  * Splash Screen launched for every Launch of the App , does the Initial Load
  * i.e Db Config , genre Info etc
  */
 public class SplashActivity extends AppCompatActivity
-    implements TheMovieDbConfigView, AllMovieGenreView, GenericErrorBuilder.Handler {
+    implements TheMovieDbConfigView, GenericErrorBuilder.Handler {
 
   private final String TAG = SplashActivity.class.getSimpleName();
   private final int SPLASH_TIME_MILLS = 1000;
   private final int MESSAGE_SPLASH_TYPE = 100;
-  private boolean isAppConfigRetrieved = false;
-  private boolean isGenreInfoRetrieved = false;
 
   private LinearLayout errorLayout;
   private ProgressBar progressBar;
 
   private TheMovieDbConfigPresenter theMovieDbConfigPresenter;
-  private AllMovieGenreListPresenter allMovieGenreListPresenter;
   private final Handler handler = new SplashHandler();
   private GenericErrorBuilder genericErrorBuilder;
 
@@ -47,7 +42,6 @@ public class SplashActivity extends AppCompatActivity
     @Override
     public void handleMessage(Message msg) {
       super.handleMessage(msg);
-
       switch (msg.what) {
         case MESSAGE_SPLASH_TYPE:
           startPresenters();
@@ -63,8 +57,6 @@ public class SplashActivity extends AppCompatActivity
     setContentView(R.layout.activity_splash);
 
     theMovieDbConfigPresenter = new TheMovieDbConfigPresenter(SplashActivity.this, this,
-        SplashActivity.class.hashCode());
-    allMovieGenreListPresenter = new AllMovieGenreListPresenter(SplashActivity.this, this,
         SplashActivity.class.hashCode());
 
     errorLayout = (LinearLayout) findViewById(R.id.splash_error_layout_container);
@@ -90,44 +82,29 @@ public class SplashActivity extends AppCompatActivity
   private void startPresenters() {
     progressBar.setVisibility(View.VISIBLE);
     theMovieDbConfigPresenter.start();
-    allMovieGenreListPresenter.start();
   }
 
   private void stopPresenters() {
     progressBar.setVisibility(View.GONE);
     theMovieDbConfigPresenter.stop();
-    allMovieGenreListPresenter.stop();
-  }
-
-  private synchronized void callLanguageSelectionScreen() {
-    if (isGenreInfoRetrieved && isAppConfigRetrieved) {
-      if (AppSharedPreferences.getInstance(this).isAppFirstLaunch()) {
-        Navigator.navigateToLanguageScreen(this);
-      } else {
-        Navigator.navigateToAppHome(this);
-      }
-      finish();
-    } else if (isGenreInfoRetrieved && !isAppConfigRetrieved) {
-      Log.d(TAG, "Waiting for the App config");
-    } else if (!isGenreInfoRetrieved && isAppConfigRetrieved) {
-      Log.d(TAG, "Waiting for the Genre Info");
-    } else {
-      genericErrorBuilder.setUserAPIError(UserAPIErrorType.UNEXPECTED_ERROR);
-      progressBar.setVisibility(View.GONE);
-    }
   }
 
   // --- Call Backs from the Initial Request Presenters /Error Layouts----- //
-  @Override
-  public void isMovieGenreResponseRetrieval(boolean success) {
-    isAppConfigRetrieved = success;
-    callLanguageSelectionScreen();
-  }
 
   @Override
   public void isConfigRetrievalSuccess(boolean success) {
-    isGenreInfoRetrieved = success;
-    callLanguageSelectionScreen();
+    if (!success) {
+      Log.d(TAG, "It is not success , Retry till we get it ..");
+      genericErrorBuilder.setUserAPIError(UserAPIErrorType.UNEXPECTED_ERROR);
+      progressBar.setVisibility(View.GONE);
+      return;
+    }
+    Log.d(TAG, "Got the Data Successfully fine");
+    if (AppSharedPreferences.getInstance(this).isAppFirstLaunch()) {
+      Navigator.navigateToLanguageScreen(this);
+    } else {
+      Navigator.navigateToAppHome(this);
+    }
   }
 
   @Override

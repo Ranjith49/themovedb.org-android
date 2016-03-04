@@ -1,7 +1,9 @@
 package com.ran.themoviedb.fragments;
 
 import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleDetailResponse;
 import com.ran.themoviedb.presenters.PeopleDetailPresenter;
 import com.ran.themoviedb.utils.AppUiUtils;
+import com.ran.themoviedb.utils.ImageDownloadUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
 import com.ran.themoviedb.view_pres_med.PeopleDetailView;
 
@@ -30,6 +33,8 @@ import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 2/29/2016.
+ * <p>
+ * People Detail Fragment ..
  */
 public class PeopleDetailFragment extends Fragment
     implements PeopleDetailView, GenericErrorBuilder.Handler {
@@ -47,6 +52,7 @@ public class PeopleDetailFragment extends Fragment
   private ScrollView peopleContainer;
   private LinearLayout peopleErrorLayout;
   private ProgressBar peopleProgressBar;
+  private FloatingActionButton imageDownload;
 
   private GenericErrorBuilder genericErrorBuilder;
   private PeopleDetailPresenter presenter;
@@ -77,6 +83,15 @@ public class PeopleDetailFragment extends Fragment
     peopleDescription = (TextView) view.findViewById(R.id.overview_description);
     peopleImdb = (TextView) view.findViewById(R.id.overview_imdb);
     peopleExternalUrl = (TextView) view.findViewById(R.id.overview_url);
+
+    imageDownload = (FloatingActionButton) view.findViewById(R.id.image_item_download);
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+      // get rid of margins since shadow area is now the margin
+      ViewGroup.MarginLayoutParams p =
+          (ViewGroup.MarginLayoutParams) imageDownload.getLayoutParams();
+      p.setMargins(0, 0, AppUiUtils.dpToPx(getActivity(), 2), 0);
+      imageDownload.setLayoutParams(p);
+    }
   }
 
   private void initializePresenter() {
@@ -93,7 +108,7 @@ public class PeopleDetailFragment extends Fragment
     super.onDestroyView();
   }
 
-  private void processResponse(PeopleDetailResponse response) {
+  private void processResponse(final PeopleDetailResponse response) {
     //Top View  ..
     if (!AppUiUtils.isStringEmpty(response.getName())) {
       peopleName.setText(response.getName());
@@ -108,6 +123,16 @@ public class PeopleDetailFragment extends Fragment
     }
     loadProfileImage(response.getProfile_path());
 
+    //Image Download View ..
+    imageDownload.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        String baseUrl = ImageLoaderUtils.generateOrgImageBaseUrl(getActivity(),
+            TheMovieDbConstants.IMAGE_PERSON_TYPE);
+        ImageDownloadUtils.startDownload(
+            ImageLoaderUtils.buildImageUrl(baseUrl, response.getProfile_path()));
+      }
+    });
     //Over View Container
     if (!AppUiUtils.isStringEmpty(response.getBiography())) {
       peopleDescription.setText(response.getBiography());

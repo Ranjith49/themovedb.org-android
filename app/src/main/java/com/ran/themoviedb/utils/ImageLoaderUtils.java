@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 1/1/2016.
- * <p/>
+ * <p>
  * Utils class related to Image Loading Stuff
  */
 public class ImageLoaderUtils {
@@ -55,12 +55,15 @@ public class ImageLoaderUtils {
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
     String image_url_config;
-    if (imageType.equalsIgnoreCase(TheMovieDbConstants.IMAGE_BANNER_TYPE)) {
+    if (imageType.equalsIgnoreCase(TheMovieDbConstants.IMAGE_BANNER_TYPE)) { //Banner
       image_url_config =
           imagesConfig.getBackdrop_sizes().get(imagesConfig.getBackdrop_sizes().size() - 1);
-    } else {
+    } else if (imageType.equalsIgnoreCase(TheMovieDbConstants.IMAGE_POSTER_TYPE)) { //Poster
       image_url_config =
           imagesConfig.getPoster_sizes().get(imagesConfig.getPoster_sizes().size() - 1);
+    } else { // Profile
+      image_url_config =
+          imagesConfig.getProfile_sizes().get(imagesConfig.getProfile_sizes().size() - 1);
     }
     return image_url.concat(image_url_config);
   }

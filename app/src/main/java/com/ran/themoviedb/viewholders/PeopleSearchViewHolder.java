@@ -106,16 +106,22 @@ public class PeopleSearchViewHolder extends RecyclerView.ViewHolder implements
   public void updateViewItem(Context context, final PeopleSearchResults item) {
 
     /**
-     * a) update the Image
-     * b) update the Name
-     * c) update the Rating
-     * d) Click the More Info and share..
-     *
-     * e) Last update the Rating container ..
+     * a) update the Name
+     * b) update the Rating
+     * c) Click the People Image ,More Info and share..
+     * d) load Image
+     * e) load known For Views ..
      */
     peopleName.setText(item.getName());
     peopleRating.setText(String.valueOf(df.format(item.getPopularity())));
     peopleRating.setVisibility(View.VISIBLE);
+    peopleImage.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        storeClickListener.onStoreItemClick(item.getId(), item.getName(),
+            DisplayStoreType.PERSON_STORE);
+      }
+    });
     peopleMoreInfo.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
