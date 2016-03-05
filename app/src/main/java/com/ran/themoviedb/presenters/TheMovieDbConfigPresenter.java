@@ -5,44 +5,44 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.preloaddb.SnappyDBEntityTypes;
+import com.ran.themoviedb.model.preloaddb.SnappyPreloadData;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TheMovieDbConfigResponse;
 import com.ran.themoviedb.model.server.service.TheMovieDbConfigServiceImpl;
-import com.ran.themoviedb.view_pres_med.TheMovieDbConfigView;
+import com.ran.themoviedb.model.utils.ApplicationUtils;
 
 import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p>
- * Presenter for TheMovieDb Config Values from {@Link TheMovieDbConfigServiceImpl} , propagate to UI
+ * <p/>
+ * Presenter for TheMovieDb Config Values from {@Link TheMovieDbConfigServiceImpl} , save Date
  */
-public class TheMovieDbConfigPresenter extends BasePresenter implements
-    TheMovieDbConfigServiceImpl.Handler {
+public class TheMovieDbConfigPresenter implements TheMovieDbConfigServiceImpl.Handler {
 
-  private Context context;
-  private TheMovieDbConfigView movieDbConfigView;
-  private TheMovieDbConfigServiceImpl service;
-  private int uniqueId;
+  private static TheMovieDbConfigPresenter instance;
 
-
-  public TheMovieDbConfigPresenter(Context context, TheMovieDbConfigView movieDbConfigView, int
-      uniqueId) {
-    this.context = context;
-    this.movieDbConfigView = movieDbConfigView;
-    this.uniqueId = uniqueId;
-    service = new TheMovieDbConfigServiceImpl(this);
+  public synchronized static TheMovieDbConfigPresenter getInstance() {
+    if (instance == null) {
+      instance = new TheMovieDbConfigPresenter();
+    }
+    return instance;
   }
 
-  @Override
-  public void start() {
-    service.request(uniqueId);
+  private TheMovieDbConfigPresenter() {
+    //Nothing to do here ..
   }
 
-  @Override
-  public void stop() {
-    service.cancelRequest(uniqueId);
+  /**
+   * Method to Fetch the MovieDb Configuration at any point of time
+   *
+   * @param uniqueId - Unique id
+   */
+  public void fetchMovieDbConfig(int uniqueId) {
+    new TheMovieDbConfigServiceImpl(this).request(SnappyDBEntityTypes.MOVIE_DB_CONFIG,
+        SnappyPreloadData.MOVIE_DB_CONFIG, uniqueId, new TypeToken<TheMovieDbConfigResponse>() {
+        });
   }
 
   @Override
@@ -51,13 +51,7 @@ public class TheMovieDbConfigPresenter extends BasePresenter implements
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {
     }.getType();
-    AppSharedPreferences.getInstance(context).setMovieImageConfigData(gson.toJson(imagesConfig,
-        type));
-    movieDbConfigView.isConfigRetrievalSuccess(true);
-  }
-
-  @Override
-  public void onConfigError(UserAPIErrorType errorType, int uniqueId) {
-    movieDbConfigView.isConfigRetrievalSuccess(false);
+    AppSharedPreferences.getInstance(ApplicationUtils.getApplication())
+        .setMovieImageConfigData(gson.toJson(imagesConfig, type));
   }
 }

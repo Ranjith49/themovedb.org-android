@@ -1,6 +1,7 @@
 package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.preloaddb.BaseSnappyDBService;
 import com.ran.themoviedb.model.server.api.TheMovieDbConfigAPI;
 import com.ran.themoviedb.model.server.response.TheMovieDbConfigResponse;
 import com.ran.themoviedb.model.utils.RetrofitAdapters;
@@ -12,7 +13,7 @@ import retrofit.Call;
  * Created by ranjith.suda on 12/30/2015.
  * Retrofit Service Implementation for {@see TheMovieDbConfigAPI}
  */
-public class TheMovieDbConfigServiceImpl extends BaseRetrofitService<TheMovieDbConfigResponse> {
+public class TheMovieDbConfigServiceImpl extends BaseSnappyDBService<TheMovieDbConfigResponse> {
 
   private Handler handler;
 
@@ -26,11 +27,6 @@ public class TheMovieDbConfigServiceImpl extends BaseRetrofitService<TheMovieDbC
   }
 
   @Override
-  protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-    handler.onConfigError(errorType, uniqueId);
-  }
-
-  @Override
   protected Call<TheMovieDbConfigResponse> getRetrofitCall() {
     TheMovieDbConfigAPI service =
         RetrofitAdapters.getAppRestAdapter().create(TheMovieDbConfigAPI.class);
@@ -41,8 +37,6 @@ public class TheMovieDbConfigServiceImpl extends BaseRetrofitService<TheMovieDbC
    * Handler CallBack to presenter with Response /Error ..
    */
   public interface Handler {
-    void onConfigReturned(TheMovieDbConfigResponse response, int uniqueId);
-
-    void onConfigError(UserAPIErrorType errorType, int uniqueId);
+     void onConfigReturned(TheMovieDbConfigResponse response, int uniqueId);
   }
 }

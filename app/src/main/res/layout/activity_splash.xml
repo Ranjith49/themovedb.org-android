@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.ran.themoviedb.activities.SplashActivity">
 
-    <!-- Error Layout (Need to add Generic View) -->
-    <LinearLayout
-        android:id="@+id/splash_error_layout_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"/>
-
     <!-- Progress Bar -->
     <ProgressBar
         android:id="@+id/splash_screen_progress"
@@ -23,7 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/splash_screen_bottom_progress_margin"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 
 </RelativeLayout>

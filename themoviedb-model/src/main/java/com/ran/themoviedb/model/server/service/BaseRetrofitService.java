@@ -37,7 +37,7 @@ public abstract class BaseRetrofitService<T> {
 
     @Override
     public void onFailure(Throwable t) {
-
+      handleError(UserAPIErrorType.UNEXPECTED_ERROR, uniqueId);
     }
   };
 
