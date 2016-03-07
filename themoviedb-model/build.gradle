@@ -23,8 +23,6 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-
   //Retrofit + JSON + OkHTTP logger..
   compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
   compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
@@ -35,4 +33,7 @@ dependencies {
   compile 'com.snappydb:snappydb-lib:0.5.2'
   compile 'com.esotericsoftware.kryo:kryo:2.24.0'
   testCompile 'junit:junit:4.12'
+
+  //Google Play Services for In-Mobi Ads
+  compile 'com.google.android.gms:play-services:8.4.0'
 }

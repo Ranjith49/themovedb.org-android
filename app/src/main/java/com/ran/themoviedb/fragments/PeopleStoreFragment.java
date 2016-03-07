@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.adapters.PeopleStoreRecyclerAdapter;
 import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
@@ -48,6 +51,9 @@ public class PeopleStoreFragment extends Fragment
   ProgressBar progressBar;
   LinearLayout errorLayoutHolder;
 
+  //Ad Container..
+  RelativeLayout inMobiAdContainer;
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -59,6 +65,8 @@ public class PeopleStoreFragment extends Fragment
     customRecyclerView = (CustomRecyclerView) view.findViewById(R.id.people_store_recyclerView);
     progressBar = (ProgressBar) view.findViewById(R.id.people_store_error_screen_progress);
     errorLayoutHolder = (LinearLayout) view.findViewById(R.id.people_store_error_layout_container);
+
+    inMobiAdContainer = (RelativeLayout) view.findViewById(R.id.ad_container);
     initializeAdaptersAndPresenters();
     return view;
   }
@@ -108,6 +116,8 @@ public class PeopleStoreFragment extends Fragment
     customRecyclerView.updateRefreshIndicator(false);
     peopleStoreReyclerAdapter.addPeopleStoreData(peopleStoreResponse.getResults(),
         peopleStoreResponse.getPage(), peopleStoreResponse.getTotal_pages());
+
+    InMobiWrapper.showBannerAD(getActivity(), inMobiAdContainer, InMobiAdTypes.BANNER_AD_320_50);
   }
 
   @Override

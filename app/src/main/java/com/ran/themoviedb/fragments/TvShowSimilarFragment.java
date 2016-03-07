@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.adapters.TvShowSimilarRecyclerAdapter;
 import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
@@ -47,6 +50,8 @@ public class TvShowSimilarFragment extends Fragment
   ProgressBar progressBar;
   LinearLayout errorLayoutHolder;
 
+  //Ad Container..
+  RelativeLayout inMobiAdContainer;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,8 +65,8 @@ public class TvShowSimilarFragment extends Fragment
     progressBar = (ProgressBar) view.findViewById(R.id.tv_store_error_screen_progress);
     errorLayoutHolder = (LinearLayout) view.findViewById(R.id.tv_store_error_layout_container);
 
+    inMobiAdContainer = (RelativeLayout) view.findViewById(R.id.ad_container);
     initializeAdaptersAndPresenters();
-
     return view;
   }
 
@@ -100,6 +105,8 @@ public class TvShowSimilarFragment extends Fragment
     customRecyclerView.updateRefreshIndicator(false);
     tvShowSimilarRecyclerAdapter.addTvShowsResultsData(tvShowSimilarDetailsResponse.getResults(),
         tvShowSimilarDetailsResponse.getPage(), tvShowSimilarDetailsResponse.getTotal_pages());
+
+    InMobiWrapper.showBannerAD(getActivity(), inMobiAdContainer, InMobiAdTypes.BANNER_AD_320_50);
   }
 
   @Override

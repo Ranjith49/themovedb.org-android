@@ -27,9 +27,6 @@ public class StoreActivity extends AppCompatActivity {
   private MenuItem searchMenuItem;
   private SearchView searchView;
 
-  //Ad Container..
-  RelativeLayout inMobiAdContainer;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -81,8 +78,7 @@ public class StoreActivity extends AppCompatActivity {
         return false;
       }
     });
-    inMobiAdContainer = (RelativeLayout) findViewById(R.id.ad_container);
-    InMobiWrapper.showBannerAD(this,inMobiAdContainer,InMobiAdTypes.BANNER_AD_320_50);
+
   }
 
   @Override

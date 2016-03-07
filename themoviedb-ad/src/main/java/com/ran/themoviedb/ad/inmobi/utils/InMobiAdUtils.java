@@ -14,7 +14,12 @@ import com.ran.themoviedb.model.utils.ApplicationUtils;
 public class InMobiAdUtils {
 
   public static final long BANNER_PLACEMENT_ID = 1456480209860L;
+  public static final long INTERSTITIAL_PLACEMENT_ID = 1455764375720L;
   public static final int BANNER_REFRESH_INTERVAL = 60; // 1 min
+
+  //Counter for the InMobi Interstitial AD ..
+  public static int INTERSTITIAL_AD_COUNT = 0;
+  public static final int INTERSTITIAL_AD_RESET_COUNTER = 5;
 
   /**
    * Utility Method to build the Relative Layout Params for the In mobi AD's
@@ -51,8 +56,7 @@ public class InMobiAdUtils {
     RelativeLayout.LayoutParams layoutParams =
         new RelativeLayout.LayoutParams(width_banner, height_banner);
     layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-
+    layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
     return layoutParams;
   }
 
@@ -63,7 +67,7 @@ public class InMobiAdUtils {
    * @param dp      -- dp
    * @return -- pixels
    */
-  public static int dpToPx(Context context, float dp) {
+  private static int dpToPx(Context context, float dp) {
     float scale = context.getResources().getDisplayMetrics().density;
     return (int) ((dp * scale) + 0.5f);
   }

@@ -1,5 +1,6 @@
 package com.ran.themoviedb.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.adapters.TvShowDetailPagerAdapter;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
@@ -17,10 +20,10 @@ import com.ran.themoviedb.model.share.ShareContentHelper;
 
 /**
  * Created by ranjith.suda on 2/29/2016.
- * <p>
+ * <p/>
  * Activity responsible for showing the Tv Show Details
  */
-public class TvShowDetailActivity extends AppCompatActivity {
+public class TvShowDetailActivity extends Activity {
 
   private ViewPager viewPager;
   private TvShowDetailPagerAdapter movieDetailPagerAdapter;
@@ -45,6 +48,9 @@ public class TvShowDetailActivity extends AppCompatActivity {
       viewPager = (ViewPager) findViewById(R.id.movie_viewpager);
       movieDetailPagerAdapter = new TvShowDetailPagerAdapter(this, getFragmentManager(), tvShowId);
       viewPager.setAdapter(movieDetailPagerAdapter);
+
+      //Try to show Interstitial AD
+      InMobiWrapper.showInterstitialAD(this, InMobiAdTypes.INTERSTITIAL_AD);
     } else {
       Toast.makeText(this, R.string.tv_id_error_message, Toast.LENGTH_SHORT).show();
       finish();

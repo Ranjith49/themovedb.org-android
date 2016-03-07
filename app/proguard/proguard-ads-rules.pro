@@ -37,4 +37,3 @@
 -keep class com.inmobi.** { *; }
 -dontwarn com.inmobi.**
 -dontwarn com.google.android.gms**
-}

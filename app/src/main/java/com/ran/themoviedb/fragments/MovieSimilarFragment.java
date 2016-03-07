@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.adapters.MovieSimilarRecyclerAdapter;
 import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
@@ -28,7 +31,7 @@ import com.ran.themoviedb.view_pres_med.MovieSimilarView;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- * <p>
+ * <p/>
  * Movie Store Fragment showing the Movies in {@link com.ran.themoviedb.viewholders.MovieStoreViewHolder} and
  * bind data from {@link com.ran.themoviedb.model.server.entities.MovieStoreResults}
  */
@@ -47,6 +50,9 @@ public class MovieSimilarFragment extends Fragment
   ProgressBar progressBar;
   LinearLayout errorLayoutHolder;
 
+  //Ad Container..
+  RelativeLayout inMobiAdContainer;
+
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +66,7 @@ public class MovieSimilarFragment extends Fragment
     progressBar = (ProgressBar) view.findViewById(R.id.movie_store_error_screen_progress);
     errorLayoutHolder = (LinearLayout) view.findViewById(R.id.movie_store_error_layout_container);
 
+    inMobiAdContainer = (RelativeLayout) view.findViewById(R.id.ad_container);
     initializeAdaptersAndPresenters();
 
     return view;
@@ -100,6 +107,8 @@ public class MovieSimilarFragment extends Fragment
     customRecyclerView.updateRefreshIndicator(false);
     movieSimilarRecyclerAdapter.addMovieResultsData(movieStoreResponse.getResults(),
         movieStoreResponse.getPage(), movieStoreResponse.getTotal_pages());
+
+    InMobiWrapper.showBannerAD(getActivity(), inMobiAdContainer, InMobiAdTypes.BANNER_AD_320_50);
   }
 
   @Override

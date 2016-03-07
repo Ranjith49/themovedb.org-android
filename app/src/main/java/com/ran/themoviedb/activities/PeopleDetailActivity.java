@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.adapters.MovieDetailPagerAdapter;
 import com.ran.themoviedb.adapters.PeopleDetailPagerAdapter;
 import com.ran.themoviedb.model.TheMovieDbConstants;
@@ -40,6 +42,9 @@ public class PeopleDetailActivity extends AppCompatActivity {
       viewPager = (ViewPager) findViewById(R.id.people_viewpager);
       peopleDetailPagerAdapter = new PeopleDetailPagerAdapter(this, getFragmentManager(), peopleId);
       viewPager.setAdapter(peopleDetailPagerAdapter);
+
+      //Try to show Interstitial AD
+      InMobiWrapper.showInterstitialAD(this, InMobiAdTypes.INTERSTITIAL_AD);
     } else {
       Toast.makeText(this, R.string.movie_id_error_message, Toast.LENGTH_SHORT).show();
       finish();

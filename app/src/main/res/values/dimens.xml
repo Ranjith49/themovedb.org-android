@@ -109,4 +109,7 @@
     <dimen name="full_image_margins_vertical">8dp</dimen>
     <dimen name="full_image_margins_horizontal">16dp</dimen>
     <dimen name="full_popup_width">240dp</dimen>
+
+    <!--DImens for the Banner AD -->
+    <dimen name="banner_ad_margin_bottom">40dp</dimen>
 </resources>
