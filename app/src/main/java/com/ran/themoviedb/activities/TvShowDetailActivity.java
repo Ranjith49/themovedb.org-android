@@ -23,7 +23,7 @@ import com.ran.themoviedb.model.share.ShareContentHelper;
  * <p/>
  * Activity responsible for showing the Tv Show Details
  */
-public class TvShowDetailActivity extends Activity {
+public class TvShowDetailActivity extends AppCompatActivity {
 
   private ViewPager viewPager;
   private TvShowDetailPagerAdapter movieDetailPagerAdapter;
