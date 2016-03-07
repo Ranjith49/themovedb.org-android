@@ -1,5 +1,7 @@
 package com.ran.themoviedb.model.server.service;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.BaseAPIStatus;
@@ -21,6 +23,7 @@ import retrofit.Retrofit;
  */
 public abstract class BaseRetrofitService<T> {
 
+  private final String TAG = BaseRetrofitService.class.getSimpleName();
   private int uniqueId;
   private Call<T> retrofitCall;
   private Callback<T> callback = new Callback<T>() {
@@ -74,6 +77,7 @@ public abstract class BaseRetrofitService<T> {
   }
 
   public void request(final int uniqueId) {
+    Log.d(TAG, "Request id : " + uniqueId);
     this.uniqueId = uniqueId;
     if (ServerUtils.isConnected(ApplicationUtils.getApplication())) {
       retrofitCall = getRetrofitCall();
@@ -85,6 +89,7 @@ public abstract class BaseRetrofitService<T> {
 
   public void cancelRequest(final int uniqueId) {
     if (this.uniqueId == uniqueId && retrofitCall != null) {
+      Log.d(TAG, "Cancel Request id : " + uniqueId);
       retrofitCall.cancel();
     }
   }

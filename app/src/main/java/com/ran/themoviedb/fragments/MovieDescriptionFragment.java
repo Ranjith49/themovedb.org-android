@@ -36,6 +36,8 @@ import java.util.ArrayList;
 
 /**
  * Fragment to show the MovieDescription
+ *
+ * Created by ranjith.suda on 1/9/2016.
  */
 public class MovieDescriptionFragment extends Fragment implements GenericErrorBuilder.Handler,
     MovieDescriptionView {
