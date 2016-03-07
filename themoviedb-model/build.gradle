@@ -10,10 +10,21 @@ android {
     versionCode 1
     versionName "1.0"
   }
+
+  buildTypes {
+    def LOGGER_ENABLED = "LOGGER_ENABLED"
+    debug {
+      buildConfigField "boolean", LOGGER_ENABLED, 'true'
+    }
+    release {
+      buildConfigField "boolean", LOGGER_ENABLED, 'false'
+    }
+  }
 }
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
+
   //Retrofit + JSON + OkHTTP logger..
   compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
   compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'

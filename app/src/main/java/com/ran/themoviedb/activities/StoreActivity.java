@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.adapters.StoreFragmentPagerAdapter;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
@@ -23,6 +26,9 @@ public class StoreActivity extends AppCompatActivity {
   StoreFragmentPagerAdapter storeFragmentPagerAdapter;
   private MenuItem searchMenuItem;
   private SearchView searchView;
+
+  //Ad Container..
+  RelativeLayout inMobiAdContainer;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,8 @@ public class StoreActivity extends AppCompatActivity {
         return false;
       }
     });
+    inMobiAdContainer = (RelativeLayout) findViewById(R.id.ad_container);
+    InMobiWrapper.showBannerAD(this,inMobiAdContainer,InMobiAdTypes.BANNER_AD_320_50);
   }
 
   @Override

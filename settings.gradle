@@ -1,1 +1,1 @@
-include ':app', ':themoviedb-model'
+include ':app', ':themoviedb-model', ':themoviedb-ad'
