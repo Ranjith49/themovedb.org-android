@@ -88,6 +88,7 @@ public class MovieReviewRecyclerAdapter extends CustomRecyclerView.Adapter<Revie
     final ReviewViewHolder holder_review = (ReviewViewHolder) holder;
     holder_review.review.setText(reviewsDetails.get(position).getContent());
     holder_review.author.setText(reviewsDetails.get(position).getAuthor());
+    holder_review.readMore.setVisibility(View.GONE);
 
     ViewTreeObserver viewTreeObserver = holder_review.review.getViewTreeObserver();
     viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -97,6 +98,7 @@ public class MovieReviewRecyclerAdapter extends CustomRecyclerView.Adapter<Revie
         obs.removeGlobalOnLayoutListener(this);
         //TODO [ranjith , better logic]
         if (holder_review.review.getLineCount() >= 8) {
+          holder_review.readMore.setVisibility(View.VISIBLE);
           holder_review.review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,11 +122,13 @@ public class MovieReviewRecyclerAdapter extends CustomRecyclerView.Adapter<Revie
 
     private TextView author;
     private TextView review;
+    private TextView readMore;
 
     public ReviewViewHolder(View itemView) {
       super(itemView);
       author = (TextView) itemView.findViewById(R.id.recycler_review_author);
       review = (TextView) itemView.findViewById(R.id.recycler_review_text);
+      readMore = (TextView) itemView.findViewById(R.id.recycler_review_readmore);
     }
   }
 }

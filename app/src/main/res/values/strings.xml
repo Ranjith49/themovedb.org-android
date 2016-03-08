@@ -107,6 +107,7 @@
     <string name="image_poster_title">Posters : %1$s</string>
     <string name="image_banner_title">Banners : %1$s</string>
     <string name="video_action_bar_title">Youtube Videos</string>
+    <string name="review_readMore">Read More >></string>
 
     <!--- Strings for the Tv Show Details -->
     <string-array name="tv_details_tabs">

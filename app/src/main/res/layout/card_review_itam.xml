@@ -33,6 +33,19 @@
             android:text="Review in here"
             android:textColor="@color/colorTextPrimary"/>
 
+        <TextView
+            android:id="@+id/recycler_review_readmore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingRight="6dp"
+            android:paddingTop="6dp"
+            android:singleLine="true"
+            android:text="@string/review_readMore"
+            android:textColor="@color/colorAccent"
+            android:textStyle="italic"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

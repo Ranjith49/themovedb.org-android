@@ -89,8 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:alpha="0.9"
-        android:background="@color/colorPrimary"
-        android:visibility="visible"/>
+        android:background="@color/colorPrimary"/>
 
     <!-- Go Up Indicator Shown on Bottom -->
     <android.support.design.widget.FloatingActionButton

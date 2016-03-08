@@ -107,7 +107,6 @@ public class InMobiWrapper {
       @Override
       public void onAdLoadSucceeded(InMobiBanner inMobiBanner) {
         Log.d(TAG, "AD is loaded");
-        parentContainer.setVisibility(View.VISIBLE);
       }
 
       @Override
