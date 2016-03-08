@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * Created by ranjith.suda on 3/7/2016.
- * <p/>
+ * <p>
  * Class Responsible for Wrapping up the calls between InMobi and App
  * Basically does the following :
  * a) Initialize the InMobi SDK.
@@ -107,6 +107,7 @@ public class InMobiWrapper {
       @Override
       public void onAdLoadSucceeded(InMobiBanner inMobiBanner) {
         Log.d(TAG, "AD is loaded");
+        parentContainer.setVisibility(View.VISIBLE);
       }
 
       @Override
@@ -114,6 +115,7 @@ public class InMobiWrapper {
                                  InMobiAdRequestStatus inMobiAdRequestStatus) {
         Log.d(TAG, "On Ad Load Failed id : " + inMobiBanner.getId() + "Status : " +
             inMobiAdRequestStatus.getMessage());
+        parentContainer.setVisibility(View.GONE);
       }
 
       @Override
