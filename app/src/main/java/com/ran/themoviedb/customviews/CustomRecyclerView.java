@@ -20,13 +20,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.utils.AppUiUtils;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- * <p/>
+ * <p>
  * Custom Recycler View Responsible for showing the LINEAR and GRID Type layouts
  * Handles the Response from Retrofit
  * Swipe from Top is handled by it..
@@ -47,6 +49,8 @@ public class CustomRecyclerView extends RelativeLayout {
   private SwipeRefreshLayout swipeRefreshLayout;
   private ScrollListener scrollListener;
   private RecyclerView.LayoutManager layoutManager;
+
+  private RelativeLayout adContainer;
 
   private int height_container = 0;
   private int height_item_recyclerView = 0;
@@ -96,7 +100,7 @@ public class CustomRecyclerView extends RelativeLayout {
       // get rid of margins since shadow area is now the margin
       ViewGroup.MarginLayoutParams p =
           (ViewGroup.MarginLayoutParams) button_move_Up.getLayoutParams();
-      p.setMargins(0, 0, AppUiUtils.dpToPx(context, 8), 0);
+      p.setMargins(0, 0, AppUiUtils.dpToPx(context, 4), 0);
       button_move_Up.setLayoutParams(p);
     }
 
@@ -116,6 +120,9 @@ public class CustomRecyclerView extends RelativeLayout {
     });
 
     height_container = AppUiUtils.getScreenDimens(context)[1];
+
+    //AD container ..
+    adContainer = (RelativeLayout) root.findViewById(R.id.ad_container);
   }
 
   /**
@@ -129,6 +136,9 @@ public class CustomRecyclerView extends RelativeLayout {
     adapter.loadFirstPageIndex(adapter.firstPathIndex);
     scrollListener.reset();
     recyclerView.setAdapter(adapter);
+
+    //AD Initialization..
+    InMobiWrapper.showBannerAD(getContext(), adContainer, InMobiAdTypes.BANNER_AD_320_50);
   }
 
   /**
@@ -152,6 +162,7 @@ public class CustomRecyclerView extends RelativeLayout {
    */
   public void showBottomErrorMessage(UserAPIErrorType errorType, boolean visible) {
     if (visible) {
+      adContainer.setVisibility(GONE);
       switch (errorType) {
         case NETWORK_ERROR:
           bottom_error_message.setText(R.string.error_no_internet_connection);
@@ -166,10 +177,9 @@ public class CustomRecyclerView extends RelativeLayout {
       }
       error_BottomContainer.setVisibility(VISIBLE);
     } else {
+      adContainer.setVisibility(VISIBLE);
       error_BottomContainer.setVisibility(GONE);
     }
-
-
   }
 
   /**

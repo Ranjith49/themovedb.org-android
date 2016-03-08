@@ -7,8 +7,7 @@
     <com.ran.themoviedb.customviews.CustomRecyclerView
         android:id="@+id/tv_store_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/banner_ad_margin_bottom"/>
+        android:layout_height="match_parent"/>
 
     <!-- Error Layout (Need to add Generic View) -->
     <LinearLayout
@@ -25,14 +24,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"/>
-
-    <!-- Banner Ad Container -->
-    <RelativeLayout
-        android:id="@+id/ad_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:alpha="0.8"
-        android:visibility="visible"/>
 
 </FrameLayout>

@@ -82,15 +82,25 @@
         android:indeterminate="true"
         android:visibility="gone"/>
 
+    <!-- Banner Ad Container -->
+    <RelativeLayout
+        android:id="@+id/ad_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.8"
+        android:background="@color/colorPrimary"
+        android:visibility="visible"/>
+
     <!-- Go Up Indicator Shown on Bottom -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/recycler_top_go_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/ad_container"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/floating_button_margin_side_down"
-        android:layout_marginRight="@dimen/floating_button_margin_side_down"
+        android:layout_marginBottom="@dimen/floating_button_margin_down"
+        android:layout_marginRight="@dimen/floating_button_margin_side"
         android:src="@mipmap/ic_action_up"
         android:visibility="gone"
         app:backgroundTint="@color/colorAccent"

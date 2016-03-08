@@ -50,9 +50,6 @@ public class TvShowSimilarFragment extends Fragment
   ProgressBar progressBar;
   LinearLayout errorLayoutHolder;
 
-  //Ad Container..
-  RelativeLayout inMobiAdContainer;
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -65,7 +62,6 @@ public class TvShowSimilarFragment extends Fragment
     progressBar = (ProgressBar) view.findViewById(R.id.tv_store_error_screen_progress);
     errorLayoutHolder = (LinearLayout) view.findViewById(R.id.tv_store_error_layout_container);
 
-    inMobiAdContainer = (RelativeLayout) view.findViewById(R.id.ad_container);
     initializeAdaptersAndPresenters();
     return view;
   }
@@ -105,8 +101,6 @@ public class TvShowSimilarFragment extends Fragment
     customRecyclerView.updateRefreshIndicator(false);
     tvShowSimilarRecyclerAdapter.addTvShowsResultsData(tvShowSimilarDetailsResponse.getResults(),
         tvShowSimilarDetailsResponse.getPage(), tvShowSimilarDetailsResponse.getTotal_pages());
-
-    InMobiWrapper.showBannerAD(getActivity(), inMobiAdContainer, InMobiAdTypes.BANNER_AD_320_50);
   }
 
   @Override

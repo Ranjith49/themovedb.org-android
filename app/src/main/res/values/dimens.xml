@@ -32,7 +32,8 @@
     <dimen name="recycler_bottom_error_layout_imageMargin">8dp</dimen>
     <dimen name="recycler_bottom_progressBar_height">8dp</dimen>
     <dimen name="recycler_bottom_error_layout_buttonHeight">24dp</dimen>
-    <dimen name="floating_button_margin_side_down">16dp</dimen>
+    <dimen name="floating_button_margin_side">16dp</dimen>
+    <dimen name="floating_button_margin_down">8dp</dimen>
 
     <dimen name="recycler_store_item_height">300dp</dimen>
     <dimen name="recycler_store_item_image_height">240dp</dimen>
@@ -109,7 +110,4 @@
     <dimen name="full_image_margins_vertical">8dp</dimen>
     <dimen name="full_image_margins_horizontal">16dp</dimen>
     <dimen name="full_popup_width">240dp</dimen>
-
-    <!--DImens for the Banner AD -->
-    <dimen name="banner_ad_margin_bottom">40dp</dimen>
 </resources>

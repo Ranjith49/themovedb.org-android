@@ -8,7 +8,7 @@ import com.ran.themoviedb.model.utils.ApplicationUtils;
 
 /**
  * Created by ranjith.suda on 3/7/2016.
- * <p/>
+ * <p>
  * Common Utils for the InMobi SDK Ad's
  */
 public class InMobiAdUtils {
@@ -55,7 +55,6 @@ public class InMobiAdUtils {
 
     RelativeLayout.LayoutParams layoutParams =
         new RelativeLayout.LayoutParams(width_banner, height_banner);
-    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
     layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
     return layoutParams;
   }
