@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ran.themoviedb.model.server.response.TheMovieDbConfigResponse;
 import com.ran.themoviedb.model.utils.ApplicationUtils;
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
