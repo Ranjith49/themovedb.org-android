@@ -24,6 +24,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.CastCrewDetailResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.MovieCastCrewPresenter;
 import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.MovieCastCrewView;
@@ -77,8 +78,8 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
   }
 
   private void initializePresenter() {
-    castCrewPresenter = new MovieCastCrewPresenter(getActivity(), this, MovieCastAndCrewFragment
-        .class.hashCode(), movieId);
+    castCrewPresenter = new MovieCastCrewPresenter(getActivity(), this,
+        UniqueIdCreator.getInstance().generateUniqueId(), movieId);
     castCrewPresenter.start();
   }
 

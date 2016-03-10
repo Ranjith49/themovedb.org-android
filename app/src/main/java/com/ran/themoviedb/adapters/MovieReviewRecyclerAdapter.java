@@ -13,6 +13,7 @@ import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.listeners.ReviewClickListener;
 import com.ran.themoviedb.model.server.entities.ReviewsDetail;
 import com.ran.themoviedb.model.server.response.ReviewsDetailResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.MovieReviewPresenter;
 import com.ran.themoviedb.view_pres_med.MovieReviewView;
 
@@ -65,14 +66,14 @@ public class MovieReviewRecyclerAdapter extends CustomRecyclerView.Adapter<Revie
 
     //Start the Presenter , for First Page
     movieReviewPresenter = new MovieReviewPresenter(context, movieReviewView,
-        firstPageIndex, MovieStoreRecyclerAdapter.class.hashCode(), movieId);
+        firstPageIndex, UniqueIdCreator.getInstance().generateUniqueId(), movieId);
     movieReviewPresenter.start();
   }
 
   @Override
   public void loadNextPageIndex(int nextPageIndex) {
     movieReviewPresenter = new MovieReviewPresenter(context, movieReviewView,
-        nextPageIndex, MovieStoreRecyclerAdapter.class.hashCode(), movieId);
+        nextPageIndex, UniqueIdCreator.getInstance().generateUniqueId(), movieId);
     movieReviewPresenter.start();
   }
 

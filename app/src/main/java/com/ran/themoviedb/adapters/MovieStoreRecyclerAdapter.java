@@ -10,6 +10,7 @@ import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.server.entities.MovieStoreResults;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.response.MovieStoreResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.MovieStoreDataPresenter;
 import com.ran.themoviedb.view_pres_med.MovieStoreView;
 import com.ran.themoviedb.viewholders.MovieStoreViewHolder;
@@ -95,7 +96,7 @@ public class MovieStoreRecyclerAdapter extends CustomRecyclerView.Adapter<MovieS
 
     //Start the Presenter , for First Page
     movieStoreDataPresenter = new MovieStoreDataPresenter(context, movieStoreType, firstPageIndex,
-        movieStoreView, MovieStoreRecyclerAdapter.class.hashCode());
+        movieStoreView, UniqueIdCreator.getInstance().generateUniqueId());
     movieStoreDataPresenter.start();
   }
 
@@ -104,7 +105,7 @@ public class MovieStoreRecyclerAdapter extends CustomRecyclerView.Adapter<MovieS
 
     //Start the Presenter for the Next pages ..
     movieStoreDataPresenter = new MovieStoreDataPresenter(context, movieStoreType, nextPageIndex,
-        movieStoreView, MovieStoreRecyclerAdapter.class.hashCode());
+        movieStoreView, UniqueIdCreator.getInstance().generateUniqueId());
     movieStoreDataPresenter.start();
   }
 }

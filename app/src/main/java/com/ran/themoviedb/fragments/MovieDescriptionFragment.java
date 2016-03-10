@@ -26,6 +26,7 @@ import com.ran.themoviedb.model.server.entities.ProductionCompany;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieDetailResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.MovieDescriptionPresenter;
 import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
@@ -104,7 +105,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
         .CENTER, movieErrorLayout, this);
     presenter = new MovieDescriptionPresenter(getActivity(), this, movieId,
-        MovieDescriptionFragment.class.getName().hashCode());
+        UniqueIdCreator.getInstance().generateUniqueId());
     presenter.start();
   }
 

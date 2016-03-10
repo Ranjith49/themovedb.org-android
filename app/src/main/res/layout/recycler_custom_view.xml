@@ -32,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/recycler_bottom_error_layout_sideMargins"
-        android:layout_marginRight="@dimen/recycler_bottom_error_layout_sideMargins"
+        android:background="@color/color_text_white"
         android:orientation="horizontal"
+        android:paddingLeft="@dimen/recycler_bottom_error_layout_sideMargins"
+        android:paddingRight="@dimen/recycler_bottom_error_layout_sideMargins"
         android:visibility="gone">
 
 
@@ -54,7 +55,8 @@
             android:layout_marginLeft="@dimen/recycler_bottom_error_layout_imageMargin"
             android:layout_toRightOf="@id/recycler_error_image_view"
             android:text="@string/error_unexpected_error"
-            android:textAppearance="@android:style/TextAppearance.Medium"/>
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/colorTextPrimary"/>
 
         <Button
             android:id="@+id/recycler_error_button_view"
@@ -96,7 +98,7 @@
         android:id="@+id/recycler_top_go_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/ad_container"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/floating_button_margin_down"
         android:layout_marginRight="@dimen/floating_button_margin_side"

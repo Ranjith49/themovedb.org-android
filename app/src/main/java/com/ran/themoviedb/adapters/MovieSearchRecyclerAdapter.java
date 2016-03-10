@@ -9,6 +9,7 @@ import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.server.entities.MovieSearchResults;
 import com.ran.themoviedb.model.server.response.MovieSearchResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.MovieSearchDataPresenter;
 import com.ran.themoviedb.view_pres_med.MovieSearchView;
 import com.ran.themoviedb.viewholders.MovieSearchViewHolder;
@@ -70,7 +71,7 @@ public class MovieSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Movie
 
     //Start the Presenter , for First Page
     movieSearchDataPresenter = new MovieSearchDataPresenter(context, firstPageIndex,
-        query, movieSearchView, MovieSearchRecyclerAdapter.class.hashCode());
+        query, movieSearchView, UniqueIdCreator.getInstance().generateUniqueId());
     movieSearchDataPresenter.start();
   }
 
@@ -78,7 +79,7 @@ public class MovieSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Movie
   public void loadNextPageIndex(int nextPageIndex) {
     //Start the Presenter , for First Page
     movieSearchDataPresenter = new MovieSearchDataPresenter(context, nextPageIndex,
-        query, movieSearchView, MovieSearchRecyclerAdapter.class.hashCode());
+        query, movieSearchView, UniqueIdCreator.getInstance().generateUniqueId());
     movieSearchDataPresenter.start();
   }
 

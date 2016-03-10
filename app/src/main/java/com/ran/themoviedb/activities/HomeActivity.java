@@ -24,6 +24,7 @@ import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.PeopleStoreType;
 import com.ran.themoviedb.model.server.entities.TVShowStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.HomeScreenDataPresenter;
 import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.HomeScreenView;
@@ -70,9 +71,9 @@ public class HomeActivity extends AppCompatActivity
     contentLayout = (LinearLayout) findViewById(R.id.home_screen_content);
     contentLayout.setVisibility(View.GONE);
     dataPresenter =
-        new HomeScreenDataPresenter(HomeActivity.this, this, HomeActivity.class.hashCode(),
-            MovieStoreType.MOVIE_POPULAR,
-            TVShowStoreType.TV_POPULAR,
+        new HomeScreenDataPresenter(HomeActivity.this, this,
+            UniqueIdCreator.getInstance().generateUniqueId(),
+            MovieStoreType.MOVIE_POPULAR, TVShowStoreType.TV_POPULAR,
             PeopleStoreType.PEOPLE_POPULAR);
     genericErrorBuilder = new GenericErrorBuilder(HomeActivity.this, GenericUIErrorLayoutType
         .CENTER, errorLayout, this);

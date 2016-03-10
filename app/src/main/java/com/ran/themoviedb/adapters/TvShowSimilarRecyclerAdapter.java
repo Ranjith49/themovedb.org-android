@@ -9,6 +9,7 @@ import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.server.entities.TvShowStoreResults;
 import com.ran.themoviedb.model.server.response.TvShowSimilarDetailsResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.TvShowSimilarDataPresenter;
 import com.ran.themoviedb.view_pres_med.TvShowSimilarView;
 import com.ran.themoviedb.viewholders.StoreViewHolders;
@@ -90,7 +91,7 @@ public class TvShowSimilarRecyclerAdapter
 
     //Start the Presenter , for First Page
     tvShowSimilarDataPresenter = new TvShowSimilarDataPresenter(context, tvShowSimilarView,
-        firstPageIndex, TvShowSimilarRecyclerAdapter.class.hashCode(), tvShowId);
+        firstPageIndex, UniqueIdCreator.getInstance().generateUniqueId(), tvShowId);
     tvShowSimilarDataPresenter.start();
   }
 
@@ -99,7 +100,7 @@ public class TvShowSimilarRecyclerAdapter
 
     //Start the Presenter for the Next pages ..
     tvShowSimilarDataPresenter = new TvShowSimilarDataPresenter(context, tvShowSimilarView,
-        nextPageIndex, TvShowSimilarRecyclerAdapter.class.hashCode(), tvShowId);
+        nextPageIndex, UniqueIdCreator.getInstance().generateUniqueId(), tvShowId);
     tvShowSimilarDataPresenter.start();
   }
 }

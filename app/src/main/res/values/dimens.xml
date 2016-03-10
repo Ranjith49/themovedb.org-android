@@ -33,7 +33,7 @@
     <dimen name="recycler_bottom_progressBar_height">8dp</dimen>
     <dimen name="recycler_bottom_error_layout_buttonHeight">24dp</dimen>
     <dimen name="floating_button_margin_side">16dp</dimen>
-    <dimen name="floating_button_margin_down">8dp</dimen>
+    <dimen name="floating_button_margin_down">32dp</dimen>
 
     <dimen name="recycler_store_item_height">300dp</dimen>
     <dimen name="recycler_store_item_image_height">240dp</dimen>

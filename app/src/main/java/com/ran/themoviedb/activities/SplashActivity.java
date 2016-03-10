@@ -8,6 +8,7 @@ import android.view.Window;
 
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.TheMovieDbConfigPresenter;
 import com.ran.themoviedb.utils.Navigator;
 
@@ -43,7 +44,8 @@ public class SplashActivity extends AppCompatActivity {
     setContentView(R.layout.activity_splash);
 
     //Start Presenter to fetch the MovieDb Config..
-    TheMovieDbConfigPresenter.getInstance().fetchMovieDbConfig(SplashActivity.class.hashCode());
+    TheMovieDbConfigPresenter.getInstance().fetchMovieDbConfig(
+        UniqueIdCreator.getInstance().generateUniqueId());
   }
 
   @Override

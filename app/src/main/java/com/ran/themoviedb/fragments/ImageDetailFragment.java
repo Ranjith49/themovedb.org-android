@@ -31,6 +31,7 @@ import com.ran.themoviedb.model.server.entities.ImageDetails;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.entities.VideoDetails;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.ImagePresenter;
 import com.ran.themoviedb.presenters.VideoPresenter;
 import com.ran.themoviedb.utils.VideoPopupCreator;
@@ -108,11 +109,13 @@ public class ImageDetailFragment extends Fragment
 
 
   private void initializePresenter() {
-    imagePresenter = new ImagePresenter(getActivity(), this, ImageDetailFragment.class.hashCode(),
-        id, displayStoreType);
+    imagePresenter =
+        new ImagePresenter(getActivity(), this, UniqueIdCreator.getInstance().generateUniqueId(),
+            id, displayStoreType);
     imagePresenter.start();
-    videoPresenter = new VideoPresenter(getActivity(), this, ImageDetailFragment.class.hashCode(),
-        id, displayStoreType);
+    videoPresenter =
+        new VideoPresenter(getActivity(), this, UniqueIdCreator.getInstance().generateUniqueId(),
+            id, displayStoreType);
     videoPresenter.start();
   }
 

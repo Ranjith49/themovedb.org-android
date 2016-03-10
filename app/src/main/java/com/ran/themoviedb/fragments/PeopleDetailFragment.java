@@ -23,6 +23,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleDetailResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.PeopleDetailPresenter;
 import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.ImageDownloadUtils;
@@ -98,7 +99,7 @@ public class PeopleDetailFragment extends Fragment
     genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
         .CENTER, peopleErrorLayout, this);
     presenter = new PeopleDetailPresenter(getActivity(), this, peopleId,
-        PeopleDetailFragment.class.getName().hashCode());
+        UniqueIdCreator.getInstance().generateUniqueId());
     presenter.start();
   }
 

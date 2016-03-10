@@ -100,7 +100,7 @@ public class CustomRecyclerView extends RelativeLayout {
       // get rid of margins since shadow area is now the margin
       ViewGroup.MarginLayoutParams p =
           (ViewGroup.MarginLayoutParams) button_move_Up.getLayoutParams();
-      p.setMargins(0, 0, AppUiUtils.dpToPx(context, 4), 0);
+      p.setMargins(0, 0, AppUiUtils.dpToPx(context, 16), 0);
       button_move_Up.setLayoutParams(p);
     }
 

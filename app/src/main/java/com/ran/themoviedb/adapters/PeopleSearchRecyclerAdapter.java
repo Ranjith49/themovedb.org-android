@@ -9,6 +9,7 @@ import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.server.entities.PeopleSearchResults;
 import com.ran.themoviedb.model.server.response.PeopleSearchResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.PeopleSearchDataPresenter;
 import com.ran.themoviedb.view_pres_med.PeopleSearchView;
 import com.ran.themoviedb.viewholders.PeopleSearchViewHolder;
@@ -70,7 +71,7 @@ public class PeopleSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Peop
 
     //Start the Presenter , for First Page
     peopleSearchDataPresenter = new PeopleSearchDataPresenter(context, firstPageIndex,
-        query, peopleSearchView, PeopleSearchRecyclerAdapter.class.hashCode());
+        query, peopleSearchView, UniqueIdCreator.getInstance().generateUniqueId());
     peopleSearchDataPresenter.start();
   }
 
@@ -78,7 +79,7 @@ public class PeopleSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Peop
   public void loadNextPageIndex(int nextPageIndex) {
     //Start the Presenter , for Next Page
     peopleSearchDataPresenter = new PeopleSearchDataPresenter(context, nextPageIndex,
-        query, peopleSearchView, TvSearchRecyclerAdapter.class.hashCode());
+        query, peopleSearchView, UniqueIdCreator.getInstance().generateUniqueId());
     peopleSearchDataPresenter.start();
   }
 

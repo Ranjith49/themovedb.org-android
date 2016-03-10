@@ -10,6 +10,7 @@ import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.server.entities.TVShowStoreType;
 import com.ran.themoviedb.model.server.entities.TvShowStoreResults;
 import com.ran.themoviedb.model.server.response.TVShowStoreResponse;
+import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.TvStoreDataPresenter;
 import com.ran.themoviedb.view_pres_med.TvStoreView;
 import com.ran.themoviedb.viewholders.StoreViewHolders;
@@ -73,7 +74,7 @@ public class TvStoreRecyclerAdapter extends CustomRecyclerView.Adapter<TVShowSto
 
     //Start the Presenter , for First Page
     tvStoreDataPresenter = new TvStoreDataPresenter(context, tvStoreType, firstPageIndex,
-        tvStoreView, TvStoreRecyclerAdapter.class.hashCode());
+        tvStoreView, UniqueIdCreator.getInstance().generateUniqueId());
     tvStoreDataPresenter.start();
   }
 
@@ -81,7 +82,7 @@ public class TvStoreRecyclerAdapter extends CustomRecyclerView.Adapter<TVShowSto
   public void loadNextPageIndex(int nextPageIndex) {
     //Start the Presenter for the Next pages ..
     tvStoreDataPresenter = new TvStoreDataPresenter(context, tvStoreType, nextPageIndex,
-        tvStoreView, TvStoreRecyclerAdapter.class.hashCode());
+        tvStoreView, UniqueIdCreator.getInstance().generateUniqueId());
     tvStoreDataPresenter.start();
   }
 
