@@ -2,9 +2,9 @@ package com.ran.themoviedb.model.server.api;
 
 import com.ran.themoviedb.model.server.response.PeopleStoreResponse;
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by ranjith.suda on 1/1/2016.

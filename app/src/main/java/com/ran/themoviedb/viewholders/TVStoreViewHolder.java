@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
@@ -30,7 +31,7 @@ import java.util.Date;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- * <p>
+ * <p/>
  * View Holder for the Tv Store Recycler View
  */
 public class TVStoreViewHolder extends RecyclerView.ViewHolder
@@ -45,7 +46,6 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
   private LinearLayout tvItemContainer;
   private String DATE_FORMAT = "yyyy-MM-dd";
   private final String TAG = MovieStoreViewHolder.class.getSimpleName();
-  private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
   private final Context activityContext;
 
   public TVStoreViewHolder(View itemView, StoreClickListener storeClickListener, Context
@@ -131,7 +131,8 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getPoster_sizes().get(INDEX_POSTER_SIZE);
+    String image_url_config =
+        imagesConfig.getPoster_sizes().get(TheMovieDbConstants.INDEX_POSTER_SIZE);
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, tvImage,

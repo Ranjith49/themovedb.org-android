@@ -110,8 +110,6 @@ public class MovieReviewRecyclerAdapter extends CustomRecyclerView.Adapter<Revie
         }
       }
     });
-
-
   }
 
   @Override

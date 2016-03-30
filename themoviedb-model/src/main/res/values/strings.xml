@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="download_success_toast">Image downloaded successfully</string>
+    <string name="download_success_toast">Image saved in your Gallery</string>
     <string name="download_failure_toast">Image download failed</string>
 
     <string name="download_notification_title">Downloading Image %1$s</string>

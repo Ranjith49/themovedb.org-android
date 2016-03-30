@@ -5,10 +5,10 @@ import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
 import com.ran.themoviedb.model.server.response.TvShowSimilarDetailsResponse;
 import com.ran.themoviedb.model.server.response.VideoDetailResponse;
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by ranjith.suda on 2/29/2016.

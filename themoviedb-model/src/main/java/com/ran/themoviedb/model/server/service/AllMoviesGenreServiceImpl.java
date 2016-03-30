@@ -6,7 +6,7 @@ import com.ran.themoviedb.model.server.response.AllMovieGenreListResponse;
 import com.ran.themoviedb.model.utils.RetrofitAdapters;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 
-import retrofit.Call;
+import retrofit2.Call;
 
 /**
  * Created by ranjith.suda on 12/29/2015.

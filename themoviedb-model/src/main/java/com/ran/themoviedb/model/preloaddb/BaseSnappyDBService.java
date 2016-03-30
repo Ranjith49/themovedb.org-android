@@ -11,10 +11,10 @@ import com.snappydb.SnappydbException;
 
 import java.lang.reflect.Type;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by ranjith.suda on 3/5/2016.
@@ -37,9 +37,9 @@ public abstract class BaseSnappyDBService<T> {
   private Call<T> retrofitCall;
   private Callback<T> callback = new Callback<T>() {
     @Override
-    public void onResponse(Response<T> response, Retrofit retrofit) {
+    public void onResponse(Call<T> call, Response<T> response) {
       if (response != null) {
-        if (response.isSuccess()) {
+        if (response.code() == 200) {
           processApiResponse(response.body());
         } else {
           Log.d(TAG, "API Response is not Success , ignore");
@@ -48,7 +48,7 @@ public abstract class BaseSnappyDBService<T> {
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<T> call, Throwable t) {
       Log.d(TAG, "API Response is a failure case , ignore");
     }
   };

@@ -1,11 +1,10 @@
 package com.ran.themoviedb.model.utils;
 
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.logging.HttpLoggingInterceptor;
-
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
@@ -42,13 +41,13 @@ public class RetrofitAdapters {
   }
 
   private OkHttpClient buildOkHttpClient() {
-    OkHttpClient okHttpClient = new OkHttpClient();
+    OkHttpClient.Builder builder = new OkHttpClient.Builder();
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     if (DEBUG) {
-      interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+      interceptor.setLevel(HttpLoggingInterceptor.Level.);
     }
-    okHttpClient.interceptors().add(interceptor);
-    return okHttpClient;
+    builder.interceptors().add(interceptor);
+    return builder.build();
   }
 
   /**

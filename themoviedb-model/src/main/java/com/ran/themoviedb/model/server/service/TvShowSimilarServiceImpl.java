@@ -6,7 +6,7 @@ import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TvShowSimilarDetailsResponse;
 import com.ran.themoviedb.model.utils.RetrofitAdapters;
 
-import retrofit.Call;
+import retrofit2.Call;
 
 /**
  * Created by ranjith.suda on 1/11/2016.

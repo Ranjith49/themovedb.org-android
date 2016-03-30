@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -53,7 +52,7 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
   private MovieGenericCastCrewAdapter castAdapter;
   private MovieGenericCastCrewAdapter crewAdapter;
 
-  private final int INDEX_PROFILE_SIZE = 1; //Todo [ranjith ,do better logic]
+  private final int CAST_CREW_PROFILE_INDEX = 1; //Todo [ranjith ,do better logic]
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,7 +98,7 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getProfile_sizes().get(INDEX_PROFILE_SIZE);
+    String image_url_config = imagesConfig.getProfile_sizes().get(CAST_CREW_PROFILE_INDEX);
 
     return image_url.concat(image_url_config);
   }

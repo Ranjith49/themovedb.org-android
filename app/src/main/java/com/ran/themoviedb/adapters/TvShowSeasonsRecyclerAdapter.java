@@ -28,7 +28,6 @@ public class TvShowSeasonsRecyclerAdapter extends RecyclerView.Adapter {
 
   private final Context context;
   private final ArrayList<TvShowSeasons> tvShowSeasons;
-  private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
 
   public TvShowSeasonsRecyclerAdapter(ArrayList<TvShowSeasons> list, Context context) {
     this.tvShowSeasons = list;
@@ -105,7 +104,8 @@ public class TvShowSeasonsRecyclerAdapter extends RecyclerView.Adapter {
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getPoster_sizes().get(INDEX_POSTER_SIZE);
+    String image_url_config =
+        imagesConfig.getPoster_sizes().get(TheMovieDbConstants.INDEX_POSTER_SIZE);
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(context, view, ImageLoaderUtils

@@ -32,7 +32,7 @@ import java.util.Date;
 
 /**
  * Created by ranjith.suda on 3/4/2016.
- * <p>
+ * <p/>
  * Recycler Adapter for the PeopleKnow For Fragment
  */
 public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
@@ -40,7 +40,6 @@ public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
   private Context context;
   private ArrayList<PeopleKnowForData> peopleKnowForData;
   private StoreClickListener storeClickListener;
-  private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
   private final String DATE_FORMAT = "yyyy-MM-dd";
 
   public PeopleKnowForRecyclerAdapter(Context context, ArrayList<PeopleKnowForData>
@@ -147,7 +146,8 @@ public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getPoster_sizes().get(INDEX_POSTER_SIZE);
+    String image_url_config =
+        imagesConfig.getPoster_sizes().get(TheMovieDbConstants.INDEX_POSTER_SIZE);
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(context, imageView,

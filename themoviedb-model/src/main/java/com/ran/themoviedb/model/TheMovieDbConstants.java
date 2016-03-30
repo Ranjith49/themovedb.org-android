@@ -2,7 +2,7 @@ package com.ran.themoviedb.model;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
- * <p>
+ * <p/>
  * Constants Used across the Application.
  */
 public interface TheMovieDbConstants {
@@ -196,4 +196,22 @@ public interface TheMovieDbConstants {
   String IMAGE_POSTER_TYPE = "image_poster";
   String IMAGE_BANNER_TYPE = "image_banner";
   String IMAGE_PERSON_TYPE = "image_person";
+
+  /**
+   * Index of the Poster in the Images
+   * //TODO[ranjith , do better logic]
+   */
+  int INDEX_POSTER_SIZE = 2;
+
+  /**
+   * Index of the Banner in the Images
+   * //TODO[ranjith , do better logic]
+   */
+  int INDEX_BANNER_SIZE = 1;
+
+  /**
+   * Index of the Profile in the Images
+   * //TODO[ranjith , do better logic]
+   */
+  int INDEX_PROFILE_SIZE = 2;
 }

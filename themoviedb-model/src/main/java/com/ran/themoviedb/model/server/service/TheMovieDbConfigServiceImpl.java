@@ -7,7 +7,7 @@ import com.ran.themoviedb.model.server.response.TheMovieDbConfigResponse;
 import com.ran.themoviedb.model.utils.RetrofitAdapters;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 
-import retrofit.Call;
+import retrofit2.Call;
 
 /**
  * Created by ranjith.suda on 12/30/2015.

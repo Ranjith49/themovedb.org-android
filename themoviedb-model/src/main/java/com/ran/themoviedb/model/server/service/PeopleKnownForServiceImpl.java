@@ -2,14 +2,11 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.api.PeopleDetailsAPI;
-import com.ran.themoviedb.model.server.api.TvShowDetailsAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
-import com.ran.themoviedb.model.server.response.PeopleDetailResponse;
 import com.ran.themoviedb.model.server.response.PeopleKnownForResponse;
-import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
 import com.ran.themoviedb.model.utils.RetrofitAdapters;
 
-import retrofit.Call;
+import retrofit2.Call;
 
 /**
  * Created by ranjith.suda on 2/29/2016.

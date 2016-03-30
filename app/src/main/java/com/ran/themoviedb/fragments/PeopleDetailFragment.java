@@ -34,7 +34,7 @@ import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 2/29/2016.
- * <p>
+ * <p/>
  * People Detail Fragment ..
  */
 public class PeopleDetailFragment extends Fragment
@@ -58,8 +58,6 @@ public class PeopleDetailFragment extends Fragment
   private GenericErrorBuilder genericErrorBuilder;
   private PeopleDetailPresenter presenter;
   private int peopleId;
-  private final int INDEX_PROFILE_SIZE = 2; //Todo [ranjith ,do better logic]
-
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -165,7 +163,8 @@ public class PeopleDetailFragment extends Fragment
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getProfile_sizes().get(INDEX_PROFILE_SIZE);
+    String image_url_config =
+        imagesConfig.getProfile_sizes().get(TheMovieDbConstants.INDEX_PROFILE_SIZE);
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(getActivity(), peoplePoster,

@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 /**
  * Fragment to show the MovieDescription
- *
+ * <p/>
  * Created by ranjith.suda on 1/9/2016.
  */
 public class MovieDescriptionFragment extends Fragment implements GenericErrorBuilder.Handler,
@@ -67,8 +67,6 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
   private GenericErrorBuilder genericErrorBuilder;
   private MovieDescriptionPresenter presenter;
   private int movieId;
-  private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
-
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -256,7 +254,8 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getPoster_sizes().get(INDEX_POSTER_SIZE);
+    String image_url_config =
+        imagesConfig.getPoster_sizes().get(TheMovieDbConstants.INDEX_POSTER_SIZE);
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(getActivity(), moviePoster, ImageLoaderUtils

@@ -66,8 +66,6 @@ public class ImageDetailFragment extends Fragment
   private VideoPresenter videoPresenter;
   private ImageDetailAdapter imagePosterAdapter;
   private ImageDetailAdapter imageBannerAdapter;
-  private final int INDEX_BANNER_SIZE = 1; //Todo [ranjith ,do better logic]
-  private final int INDEX_POSTER_SIZE = 2; //Todo [ranjith ,do better logic]
   private DisplayStoreType displayStoreType;
 
   private ArrayList<VideoDetails> videoDetails;
@@ -136,7 +134,8 @@ public class ImageDetailFragment extends Fragment
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getPoster_sizes().get(INDEX_POSTER_SIZE);
+    String image_url_config =
+        imagesConfig.getPoster_sizes().get(TheMovieDbConstants.INDEX_BANNER_SIZE);
 
     return image_url.concat(image_url_config);
   }
@@ -151,7 +150,8 @@ public class ImageDetailFragment extends Fragment
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getBackdrop_sizes().get(INDEX_BANNER_SIZE);
+    String image_url_config =
+        imagesConfig.getBackdrop_sizes().get(TheMovieDbConstants.INDEX_BANNER_SIZE);
 
     return image_url.concat(image_url_config);
   }
@@ -231,7 +231,6 @@ public class ImageDetailFragment extends Fragment
 
   @Override
   public void onVideoClickItem(String videoId, String videoKey) {
-    //TODO [Ideally handle the No ActivityFound Exception ]
     try {
       String youtubeUrl = TheMovieDbConstants.YOUTUBE_BASE_URL.concat(videoKey);
       Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl));

@@ -4,9 +4,9 @@ import com.ran.themoviedb.model.server.response.MovieSearchResponse;
 import com.ran.themoviedb.model.server.response.PeopleSearchResponse;
 import com.ran.themoviedb.model.server.response.TvShowSearchResponse;
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by ranjith.suda on 1/4/2016.

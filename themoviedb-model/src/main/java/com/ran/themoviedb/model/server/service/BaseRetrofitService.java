@@ -9,10 +9,10 @@ import com.ran.themoviedb.model.utils.ApplicationUtils;
 import com.ran.themoviedb.model.utils.ServerUtils;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -28,18 +28,17 @@ public abstract class BaseRetrofitService<T> {
   private Call<T> retrofitCall;
   private Callback<T> callback = new Callback<T>() {
     @Override
-    public void onResponse(Response<T> response, Retrofit retrofit) {
+    public void onResponse(Call<T> call, Response<T> response) {
       if (response != null) {
-        if (response.isSuccess()) {
+        if (response.code() == 200) {
           handleApiResponse(response.body(), uniqueId);
         } else {
           handleApiErrorCases(response);
         }
       }
     }
-
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<T> call, Throwable t) {
       handleError(UserAPIErrorType.UNEXPECTED_ERROR, uniqueId);
     }
   };

@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
@@ -44,8 +45,6 @@ public class TvSearchViewHolder extends RecyclerView.ViewHolder implements
   private LinearLayout tvItemContainer;
   private String DATE_FORMAT = "yyyy-MM-dd";
   private final String TAG = TvSearchViewHolder.class.getSimpleName();
-
-  private final int INDEX_BANNER_SIZE = 1; //Todo [ranjith ,do better logic]
   private final Context activityContext;
 
   public TvSearchViewHolder(View itemView, StoreClickListener storeClickListener, Context context) {
@@ -127,7 +126,8 @@ public class TvSearchViewHolder extends RecyclerView.ViewHolder implements
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getBackdrop_sizes().get(INDEX_BANNER_SIZE);
+    String image_url_config =
+        imagesConfig.getBackdrop_sizes().get(TheMovieDbConstants.INDEX_BANNER_SIZE);
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, tvImage,

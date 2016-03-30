@@ -17,8 +17,8 @@
 #}
 
 # Retrofit  Proguard Rules as specified ..
--dontwarn retrofit.**
--keep class retrofit.** { *; }
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
 
@@ -42,9 +42,9 @@
     java.lang.Object readResolve();
 }
 
-# OkHttp
+# OKhttp3 
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class com.squareup.okhttp.** { *; }
--keep interface com.squareup.okhttp.** { *; }
--dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp3 .** { *; }
+-keep interface com.squareup.okhttp3 .** { *; }
+-dontwarn com.squareup.okhttp3 .**

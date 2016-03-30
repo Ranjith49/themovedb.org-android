@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
 import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/3/2016.
- * <p>
+ * <p/>
  * View Holder for the People Store Recycler View
  */
 public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
@@ -41,7 +42,6 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
   private TextView peopleRating;
   private TextView peopleMoreInfo;
   private FloatingActionButton peopleShare;
-  private final int INDEX_PROFILE_SIZE = 2; //Todo [ranjith ,do better logic]
   private final int INDEX_POSTER_KNOWN_FOR_SIZE = 0; //Todo [ranjith ,do better logic]
   private final int MAX_KNOWN_FOR = 3;
   DecimalFormat df = new DecimalFormat("####0.00");
@@ -254,7 +254,8 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
 
     TheMovieDbImagesConfig imagesConfig = gson.fromJson(image_pref_json, type);
     String image_url = imagesConfig.getBase_url();
-    String image_url_config = imagesConfig.getProfile_sizes().get(INDEX_PROFILE_SIZE);
+    String image_url_config =
+        imagesConfig.getProfile_sizes().get(TheMovieDbConstants.INDEX_PROFILE_SIZE);
     String IMAGE_BASE_URL = image_url.concat(image_url_config);
 
     ImageLoaderUtils.loadImageWithPlaceHolder(activityContext, peopleImage,
