@@ -56,16 +56,17 @@
     </RelativeLayout>
 
     <!-- Continue Button -->
-    <Button android:id="@+id/language_screen_continue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
-            android:text="@string/language_continue"
-            android:textColor="@color/color_text_white"
-            android:textStyle="bold"/>
+    <Button
+        android:id="@+id/language_screen_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:text="@string/language_continue"
+        android:textColor="@color/color_text_white"
+        android:textStyle="bold"/>
 
     <!-- List of languages -->
     <ListView

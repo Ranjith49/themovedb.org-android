@@ -1,6 +1,8 @@
 package com.ran.themoviedb.model.utils;
 
+import com.ran.themoviedb.model.BuildConfig;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -16,7 +18,7 @@ public class RetrofitAdapters {
 
   private static volatile RetrofitAdapters instance = null;
   private Retrofit appAdapter;
-  private static final boolean DEBUG = true;
+  private static final boolean DEBUG = BuildConfig.LOGGER_ENABLED;
 
   private static RetrofitAdapters getInstance() {
     if (instance == null) {
@@ -44,7 +46,7 @@ public class RetrofitAdapters {
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     if (DEBUG) {
-      interceptor.setLevel(HttpLoggingInterceptor.Level.);
+      interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     }
     builder.interceptors().add(interceptor);
     return builder.build();

@@ -21,6 +21,9 @@
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
 
 
 # Application classes that will be serialized/deserialized over Gson
@@ -45,6 +48,6 @@
 # OKhttp3 
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class com.squareup.okhttp3 .** { *; }
--keep interface com.squareup.okhttp3 .** { *; }
--dontwarn com.squareup.okhttp3 .**
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
