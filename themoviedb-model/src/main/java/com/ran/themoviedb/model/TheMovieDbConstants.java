@@ -13,6 +13,11 @@ public interface TheMovieDbConstants {
   int AUTH_HTTP_RESPONSE_CODE = 401;
 
   /**
+   * HTTP OK Response Code ..
+   */
+  int OK_HTTP_RESPONSE_CODE = 200;
+
+  /**
    * Application Base URL for Retrieving REST Data
    * Ex: a) https://api.themoviedb.org/3/configuration?api_key=57a2fe1fb88623756080330e465f20f7
    * b) https://api.themoviedb.org/3/configuration?api_key=57a2fe1fb88623756080330e465f20f7

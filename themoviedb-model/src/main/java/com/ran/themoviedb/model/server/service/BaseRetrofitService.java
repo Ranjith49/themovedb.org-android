@@ -5,14 +5,13 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.BaseAPIStatus;
+import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.utils.ApplicationUtils;
 import com.ran.themoviedb.model.utils.ServerUtils;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 /**
@@ -30,13 +29,14 @@ public abstract class BaseRetrofitService<T> {
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
       if (response != null) {
-        if (response.code() == 200) {
+        if (response.code() == TheMovieDbConstants.OK_HTTP_RESPONSE_CODE) {
           handleApiResponse(response.body(), uniqueId);
         } else {
           handleApiErrorCases(response);
         }
       }
     }
+
     @Override
     public void onFailure(Call<T> call, Throwable t) {
       handleError(UserAPIErrorType.UNEXPECTED_ERROR, uniqueId);
@@ -50,7 +50,6 @@ public abstract class BaseRetrofitService<T> {
      * b) TypeCase to Base API Status , and pass to UI method
      *    if fails , Throw Unexpected Error
      */
-
     if (response.errorBody() == null) {
       handleError(UserAPIErrorType.UNEXPECTED_ERROR, uniqueId);
     } else {
