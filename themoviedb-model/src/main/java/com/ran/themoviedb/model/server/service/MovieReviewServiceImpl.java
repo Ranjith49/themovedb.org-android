@@ -1,10 +1,10 @@
 package com.ran.themoviedb.model.server.service;
 
+import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.api.MovieDetailsAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.ReviewsDetailResponse;
-import com.ran.themoviedb.model.utils.RetrofitAdapters;
 
 import retrofit2.Call;
 
@@ -13,44 +13,45 @@ import retrofit2.Call;
  */
 public class MovieReviewServiceImpl extends BaseRetrofitService<ReviewsDetailResponse> {
 
-  private Handler handler;
-  private int movieId;
-  private String movieLang;
-  private int pageIndex;
+    private Handler handler;
+    private int movieId;
+    private String movieLang;
+    private int pageIndex;
 
-  public MovieReviewServiceImpl(Handler handler, int id, String lang,int pageIndex) {
-    this.movieId = id;
-    this.movieLang = lang;
-    this.handler = handler;
-    this.pageIndex = pageIndex;
-  }
-
-  @Override
-  protected void handleApiResponse(ReviewsDetailResponse response, int uniqueId) {
-    if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
-      handler.onMovieError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
-    } else {
-      handler.onMovieReviewResponse(response, uniqueId);
+    public MovieReviewServiceImpl(Handler handler, int id, String lang, int pageIndex) {
+        this.movieId = id;
+        this.movieLang = lang;
+        this.handler = handler;
+        this.pageIndex = pageIndex;
     }
-  }
 
-  @Override
-  protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-    handler.onMovieError(errorType, uniqueId);
-  }
+    @Override
+    protected void handleApiResponse(ReviewsDetailResponse response, int uniqueId) {
+        if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
+            handler.onMovieError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
+        } else {
+            handler.onMovieReviewResponse(response, uniqueId);
+        }
+    }
 
-  @Override
-  protected Call<ReviewsDetailResponse> getRetrofitCall() {
-    MovieDetailsAPI service = RetrofitAdapters.getAppRestAdapter().create(MovieDetailsAPI.class);
-    return service.getReviewDetails(movieId, pageIndex, TheMovieDbConstants.APP_API_KEY, movieLang);
-  }
+    @Override
+    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
+        handler.onMovieError(errorType, uniqueId);
+    }
 
-  /**
-   * Handler CallBack to presenter with Response /Error ..
-   */
-  public interface Handler {
-    void onMovieReviewResponse(ReviewsDetailResponse response, int uniqueId);
+    @Override
+    protected Call<ReviewsDetailResponse> getRetrofitCall() {
+        return NetworkSDK.getInstance()
+                .getMovieDetailsAPI()
+                .getReviewDetails(movieId, pageIndex, TheMovieDbConstants.APP_API_KEY, movieLang);
+    }
 
-    void onMovieError(UserAPIErrorType errorType, int uniqueId);
-  }
+    /**
+     * Handler CallBack to presenter with Response /Error ..
+     */
+    public interface Handler {
+        void onMovieReviewResponse(ReviewsDetailResponse response, int uniqueId);
+
+        void onMovieError(UserAPIErrorType errorType, int uniqueId);
+    }
 }

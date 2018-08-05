@@ -1,10 +1,10 @@
 package com.ran.themoviedb.model.server.service;
 
+import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.api.SearchAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TvShowSearchResponse;
-import com.ran.themoviedb.model.utils.RetrofitAdapters;
 
 import retrofit2.Call;
 
@@ -13,43 +13,44 @@ import retrofit2.Call;
  */
 public class TvShowSearchServiceImpl extends BaseRetrofitService<TvShowSearchResponse> {
 
-  private Handler handler;
-  private int pageIndex;
-  private String query;
+    private Handler handler;
+    private int pageIndex;
+    private String query;
 
-  public TvShowSearchServiceImpl(Handler handler, int page, String query) {
-    this.handler = handler;
-    this.pageIndex = page;
-    this.query = query;
-  }
-
-  @Override
-  protected void handleApiResponse(TvShowSearchResponse response, int uniqueId) {
-    if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
-      handler.onTvSearchAPIError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
-    } else {
-      handler.onTvSearchResponse(response, uniqueId);
+    public TvShowSearchServiceImpl(Handler handler, int page, String query) {
+        this.handler = handler;
+        this.pageIndex = page;
+        this.query = query;
     }
-  }
 
-  @Override
-  protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-    handler.onTvSearchAPIError(errorType, uniqueId);
-  }
+    @Override
+    protected void handleApiResponse(TvShowSearchResponse response, int uniqueId) {
+        if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
+            handler.onTvSearchAPIError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
+        } else {
+            handler.onTvSearchResponse(response, uniqueId);
+        }
+    }
 
-  @Override
-  protected Call<TvShowSearchResponse> getRetrofitCall() {
-    SearchAPI searchAPI = RetrofitAdapters.getAppRestAdapter().create(SearchAPI.class);
-    return searchAPI.getTvSearchResults(TheMovieDbConstants.APP_API_KEY, pageIndex, query);
-  }
+    @Override
+    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
+        handler.onTvSearchAPIError(errorType, uniqueId);
+    }
 
-  /**
-   * Handler callbacks for the Presenter ..
-   */
-  public interface Handler {
+    @Override
+    protected Call<TvShowSearchResponse> getRetrofitCall() {
+        return NetworkSDK.getInstance()
+                .getSearchAPI()
+                .getTvSearchResults(TheMovieDbConstants.APP_API_KEY, pageIndex, query);
+    }
 
-    void onTvSearchResponse(TvShowSearchResponse response, int uniqueId);
+    /**
+     * Handler callbacks for the Presenter ..
+     */
+    public interface Handler {
 
-    void onTvSearchAPIError(UserAPIErrorType errorType, int uniqueId);
-  }
+        void onTvSearchResponse(TvShowSearchResponse response, int uniqueId);
+
+        void onTvSearchAPIError(UserAPIErrorType errorType, int uniqueId);
+    }
 }
