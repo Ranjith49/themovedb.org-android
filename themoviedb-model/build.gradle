@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 23
-  buildToolsVersion "25.0.0"
+  compileSdkVersion 27
+  buildToolsVersion "25.0.2"
 
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 23
+    targetSdkVersion 26
     versionCode 1
     versionName "1.0"
   }
@@ -20,19 +20,21 @@ android {
       buildConfigField "boolean", LOGGER_ENABLED, 'false'
     }
   }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-  //Retrofit + JSON + OkHTTP logger..
-  compile 'com.squareup.retrofit2:retrofit:2.1.0'
-  compile 'com.squareup.retrofit2:converter-gson:2.0.0'
-  compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
-  compile 'com.google.code.gson:gson:2.5'
-  compile 'com.squareup.okhttp3:okhttp:3.4.1'
-
-
-  //Snappy DB
-  compile 'com.snappydb:snappydb-lib:0.5.2'
-  compile 'com.esotericsoftware.kryo:kryo:2.24.0'
-  testCompile 'junit:junit:4.12'
+    //Retrofit + JSON + OkHTTP logger..
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+    //Snappy DB
+    compile 'com.snappydb:snappydb-lib:0.5.2'
+    compile 'com.esotericsoftware.kryo:kryo:2.24.0'
+    testCompile 'junit:junit:4.12'
 }
