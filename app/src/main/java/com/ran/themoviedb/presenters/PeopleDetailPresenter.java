@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 import com.ran.themoviedb.model.server.response.PeopleDetailResponse;
 import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
 import com.ran.themoviedb.model.server.service.PeopleDetailServiceImpl;
@@ -11,46 +12,53 @@ import com.ran.themoviedb.model.server.service.TvShowDetailServiceImpl;
 import com.ran.themoviedb.view_pres_med.PeopleDetailView;
 import com.ran.themoviedb.view_pres_med.TvShowDetailView;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by ranjith.suda on 2/29/2016.
  */
-public class PeopleDetailPresenter extends BasePresenter
-    implements PeopleDetailServiceImpl.Handler {
+public class PeopleDetailPresenter extends BasePresenter {
 
-  private PeopleDetailView peopleDetailView;
-  private String peopleLang;
-  private PeopleDetailServiceImpl service;
-  private int uniqueId;
+    private PeopleDetailView peopleDetailView;
+    private String peopleLang;
+    private PeopleDetailServiceImpl service;
 
-  public PeopleDetailPresenter(Context context, PeopleDetailView peopleDetailView, int peopleId,
-                               int uniqueId) {
-    this.peopleDetailView = peopleDetailView;
-    this.peopleLang = AppSharedPreferences.getInstance(context).getAppLanguageData();
-    this.uniqueId = uniqueId;
-    service = new PeopleDetailServiceImpl(this, peopleId, peopleLang);
-  }
+    public PeopleDetailPresenter(Context context, PeopleDetailView peopleDetailView, int peopleId) {
+        super();
+        this.peopleDetailView = peopleDetailView;
+        this.peopleLang = AppSharedPreferences.getInstance(context).getAppLanguageData();
+        service = new PeopleDetailServiceImpl(peopleId, peopleLang);
+    }
 
-  @Override
-  public void start() {
-    peopleDetailView.showProgressBar(true);
-    service.request(uniqueId);
-  }
+    @Override
+    public void start() {
+        peopleDetailView.showProgressBar(true);
+        disposable.add(service.requestData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onPeopleDetailResponse, this::onPeopleDetailError));
+    }
 
-  @Override
-  public void stop() {
-    service.cancelRequest(uniqueId);
-    peopleDetailView.showProgressBar(false);
-  }
+    @Override
+    public void stop() {
+        cancelReq();
+        peopleDetailView.showProgressBar(false);
+    }
 
-  @Override
-  public void onPeopleDetailResponse(PeopleDetailResponse response, int uniqueId) {
-    peopleDetailView.showProgressBar(false);
-    peopleDetailView.onPeopleDetailResponse(response);
-  }
+    private void onPeopleDetailResponse(PeopleDetailResponse response) {
+        peopleDetailView.showProgressBar(false);
+        peopleDetailView.onPeopleDetailResponse(response);
+    }
 
-  @Override
-  public void onPeopleDetailError(UserAPIErrorType errorType, int uniqueId) {
-    peopleDetailView.showProgressBar(false);
-    peopleDetailView.onPeopleDetailError(errorType);
-  }
+
+    private void onPeopleDetailError(Throwable error) {
+        peopleDetailView.showProgressBar(false);
+        if (error instanceof UserAPIErrorException) {
+            peopleDetailView.onPeopleDetailError(((UserAPIErrorException) error).getApiErrorType());
+        } else {
+            peopleDetailView.onPeopleDetailError(UserAPIErrorType.UNEXPECTED_ERROR);
+        }
+
+    }
 }

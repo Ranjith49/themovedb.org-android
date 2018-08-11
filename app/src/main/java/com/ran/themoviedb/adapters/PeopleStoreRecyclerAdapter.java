@@ -20,89 +20,87 @@ import java.util.ArrayList;
 
 /**
  * Created by ranjith.suda on 1/4/2016.
- *
+ * <p>
  * Recycler View Adapter responsible for showing the People Store {@link PeopleStoreResponse}
  */
 public class PeopleStoreRecyclerAdapter extends CustomRecyclerView.Adapter<PeopleStoreResponse> {
 
-  private ArrayList<PeopleStoreResults> peopleStoreResults = new ArrayList<>();
-  private final PeopleStoreView peopleStoreView;
-  private final PeopleStoreType peopleStoreType;
-  private final int INVALID_NEXT_PAGE_INDEX = -1;
-  private PeopleStoreDataPresenter peopleStoreDataPresenter;
-  private Context context;
-  private StoreClickListener storeClickListener;
+    private ArrayList<PeopleStoreResults> peopleStoreResults = new ArrayList<>();
+    private final PeopleStoreView peopleStoreView;
+    private final PeopleStoreType peopleStoreType;
+    private final int INVALID_NEXT_PAGE_INDEX = -1;
+    private PeopleStoreDataPresenter peopleStoreDataPresenter;
+    private Context context;
+    private StoreClickListener storeClickListener;
 
-  //Update the Current Page after we get from Server
-  private int currentPage;
-  private int totalPages;
+    //Update the Current Page after we get from Server
+    private int currentPage;
+    private int totalPages;
 
-  public PeopleStoreRecyclerAdapter(Context context, int firstPageIndex,
-                                    PeopleStoreType peopleStoreType,
-                                    PeopleStoreView peopleStoreView,
-                                    StoreClickListener storeClickListener) {
-    super(context, firstPageIndex);
-    this.context = context;
-    this.peopleStoreType = peopleStoreType;
-    this.peopleStoreView = peopleStoreView;
-    this.storeClickListener = storeClickListener;
-  }
-
-  public void addPeopleStoreData(ArrayList<PeopleStoreResults> storeResults, int currentPage,
-                                 int totalPages) {
-    this.currentPage = currentPage;
-    this.totalPages = totalPages;
-    if (currentPage < totalPages) {
-      setNextPageIndex(++currentPage);
-    } else {
-      setNextPageIndex(INVALID_NEXT_PAGE_INDEX);
+    public PeopleStoreRecyclerAdapter(Context context, int firstPageIndex,
+                                      PeopleStoreType peopleStoreType,
+                                      PeopleStoreView peopleStoreView,
+                                      StoreClickListener storeClickListener) {
+        super(context, firstPageIndex);
+        this.context = context;
+        this.peopleStoreType = peopleStoreType;
+        this.peopleStoreView = peopleStoreView;
+        this.storeClickListener = storeClickListener;
     }
-    peopleStoreResults.addAll(storeResults);
-    notifyDataSetChanged();
-  }
 
-  public void onDestroyView() {
-    //Make any final Calls to be stopped here ..
-    if (peopleStoreDataPresenter != null) {
-      peopleStoreDataPresenter.stop();
+    public void addPeopleStoreData(ArrayList<PeopleStoreResults> storeResults, int currentPage,
+                                   int totalPages) {
+        this.currentPage = currentPage;
+        this.totalPages = totalPages;
+        if (currentPage < totalPages) {
+            setNextPageIndex(++currentPage);
+        } else {
+            setNextPageIndex(INVALID_NEXT_PAGE_INDEX);
+        }
+        peopleStoreResults.addAll(storeResults);
+        notifyDataSetChanged();
     }
-  }
 
-  @Override
-  public void loadFirstPageIndex(int firstPageIndex) {
-    peopleStoreResults.clear();
-    notifyDataSetChanged();
+    public void onDestroyView() {
+        //Make any final Calls to be stopped here ..
+        if (peopleStoreDataPresenter != null) {
+            peopleStoreDataPresenter.stop();
+        }
+    }
 
-    //Start the Presenter , for First Page
-    peopleStoreDataPresenter =
-        new PeopleStoreDataPresenter(context, peopleStoreType, firstPageIndex, peopleStoreView,
-            UniqueIdCreator.getInstance().generateUniqueId());
-    peopleStoreDataPresenter.start();
-  }
+    @Override
+    public void loadFirstPageIndex(int firstPageIndex) {
+        peopleStoreResults.clear();
+        notifyDataSetChanged();
 
-  @Override
-  public void loadNextPageIndex(int nextPageIndex) {
-    //Start the Presenter for the Next pages ..
-    peopleStoreDataPresenter = new PeopleStoreDataPresenter(context, peopleStoreType, nextPageIndex,
-        peopleStoreView, UniqueIdCreator.getInstance().generateUniqueId());
-    peopleStoreDataPresenter.start();
-  }
+        //Start the Presenter , for First Page
+        peopleStoreDataPresenter =
+                new PeopleStoreDataPresenter(context, peopleStoreType, firstPageIndex, peopleStoreView);
+        peopleStoreDataPresenter.start();
+    }
 
-  @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return StoreViewHolders.getStoreViewHolder(context, parent, DisplayStoreType.PERSON_STORE,
-        storeClickListener);
-  }
+    @Override
+    public void loadNextPageIndex(int nextPageIndex) {
+        //Start the Presenter for the Next pages ..
+        peopleStoreDataPresenter = new PeopleStoreDataPresenter(context, peopleStoreType, nextPageIndex, peopleStoreView);
+        peopleStoreDataPresenter.start();
+    }
 
-  @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    PeopleStoreResults peopleStoreResultItem = peopleStoreResults.get(position);
-    PeopleStoreViewHolder peopleStoreViewHolder = (PeopleStoreViewHolder) holder;
-    peopleStoreViewHolder.updateViewItem(context, peopleStoreResultItem);
-  }
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return StoreViewHolders.getStoreViewHolder(context, parent, DisplayStoreType.PERSON_STORE,
+                storeClickListener);
+    }
 
-  @Override
-  public int getItemCount() {
-    return peopleStoreResults.size();
-  }
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        PeopleStoreResults peopleStoreResultItem = peopleStoreResults.get(position);
+        PeopleStoreViewHolder peopleStoreViewHolder = (PeopleStoreViewHolder) holder;
+        peopleStoreViewHolder.updateViewItem(context, peopleStoreResultItem);
+    }
+
+    @Override
+    public int getItemCount() {
+        return peopleStoreResults.size();
+    }
 }

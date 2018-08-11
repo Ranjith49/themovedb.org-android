@@ -7,7 +7,9 @@ import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieStoreResponse;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by ranjith.suda on 1/1/2016.
@@ -16,31 +18,19 @@ import retrofit2.Call;
  */
 public class MovieStoreServiceImpl extends BaseRetrofitService<MovieStoreResponse> {
 
-    private Handler handler;
     private MovieStoreType movieStoreType;
     private int pageIndex;
     private String language;
 
-    public MovieStoreServiceImpl(Handler handler, MovieStoreType storeType, int page,
-                                 String language) {
-        this.handler = handler;
+    public MovieStoreServiceImpl(MovieStoreType storeType, int page, String language) {
         this.movieStoreType = storeType;
         this.pageIndex = page;
         this.language = language;
     }
 
-    @Override
-    protected void handleApiResponse(MovieStoreResponse response, int uniqueId) {
-        handler.onMovieStoreResponse(response, uniqueId);
-    }
 
     @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onMovieStoreAPIError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<MovieStoreResponse> getRetrofitCall() {
+    protected Observable<Response<MovieStoreResponse>> getDataObservable() {
         switch (movieStoreType) {
             case MOVIE_POPULAR:
                 return NetworkSDK.getInstance()
@@ -65,13 +55,8 @@ public class MovieStoreServiceImpl extends BaseRetrofitService<MovieStoreRespons
         }
     }
 
-    /**
-     * Handler callbacks for the Presenter ..
-     */
-    public interface Handler {
-
-        void onMovieStoreResponse(MovieStoreResponse response, int uniqueId);
-
-        void onMovieStoreAPIError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected MovieStoreResponse transformResponseIfReq(MovieStoreResponse sourceInput) {
+        return sourceInput;
     }
 }

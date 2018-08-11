@@ -6,46 +6,36 @@ import com.ran.themoviedb.model.server.api.PeopleDetailsAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleKnownForResponse;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
- * Created by ranjith.suda on 2/29/2016.
+ * People Known For Service
+ *
+ * @author ranjithsuda
  */
 public class PeopleKnownForServiceImpl extends BaseRetrofitService<PeopleKnownForResponse> {
 
-    private Handler handler;
     private int peopleId;
     private String language;
 
-    public PeopleKnownForServiceImpl(Handler handler, int tvShowId, String language) {
-        this.handler = handler;
+    public PeopleKnownForServiceImpl(int tvShowId, String language) {
         this.peopleId = tvShowId;
         this.language = language;
     }
 
-    @Override
-    protected void handleApiResponse(PeopleKnownForResponse response, int uniqueId) {
-        handler.onPeopleKnownForResponse(response, uniqueId);
-    }
 
     @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onPeopleKnownForError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<PeopleKnownForResponse> getRetrofitCall() {
+    protected Observable<Response<PeopleKnownForResponse>> getDataObservable() {
         return NetworkSDK.getInstance()
                 .getPeopleDetailsAPI()
                 .getPeopleKnownForResponse(peopleId, TheMovieDbConstants.APP_API_KEY, language);
     }
 
-    /**
-     * Handler CallBack to presenter with Response /Error ..
-     */
-    public interface Handler {
-        void onPeopleKnownForResponse(PeopleKnownForResponse response, int uniqueId);
-
-        void onPeopleKnownForError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected PeopleKnownForResponse transformResponseIfReq(PeopleKnownForResponse sourceInput) {
+        return sourceInput;
     }
+
 }

@@ -2,56 +2,43 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.api.MovieDetailsAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.ReviewsDetailResponse;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
- * Created by ranjith.suda on 1/11/2016.
+ * MovieReview Service Impl
+ *
+ * @author ranjithsuda
  */
 public class MovieReviewServiceImpl extends BaseRetrofitService<ReviewsDetailResponse> {
 
-    private Handler handler;
     private int movieId;
     private String movieLang;
     private int pageIndex;
 
-    public MovieReviewServiceImpl(Handler handler, int id, String lang, int pageIndex) {
+    public MovieReviewServiceImpl(int id, String lang, int pageIndex) {
         this.movieId = id;
         this.movieLang = lang;
-        this.handler = handler;
         this.pageIndex = pageIndex;
     }
 
-    @Override
-    protected void handleApiResponse(ReviewsDetailResponse response, int uniqueId) {
-        if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
-            handler.onMovieError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
-        } else {
-            handler.onMovieReviewResponse(response, uniqueId);
-        }
-    }
 
     @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onMovieError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<ReviewsDetailResponse> getRetrofitCall() {
+    protected Observable<Response<ReviewsDetailResponse>> getDataObservable() {
         return NetworkSDK.getInstance()
                 .getMovieDetailsAPI()
                 .getReviewDetails(movieId, pageIndex, TheMovieDbConstants.APP_API_KEY, movieLang);
     }
 
-    /**
-     * Handler CallBack to presenter with Response /Error ..
-     */
-    public interface Handler {
-        void onMovieReviewResponse(ReviewsDetailResponse response, int uniqueId);
-
-        void onMovieError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected ReviewsDetailResponse transformResponseIfReq(ReviewsDetailResponse sourceInput) {
+        if (sourceInput == null || sourceInput.getResults() == null || sourceInput.getResults().size() <= 0) {
+            throw new UserAPIErrorException(UserAPIErrorType.NOCONTENT_ERROR);
+        }
+        return sourceInput;
     }
 }

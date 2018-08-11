@@ -2,11 +2,12 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.api.AllGenreListAPI;
 import com.ran.themoviedb.model.server.response.AllMovieGenreListResponse;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
  * Created by ranjith.suda on 12/29/2015.
@@ -15,35 +16,22 @@ import retrofit2.Call;
  */
 public class AllMoviesGenreServiceImpl extends BaseRetrofitService<AllMovieGenreListResponse> {
 
-    private Handler handler;
+    public AllMoviesGenreServiceImpl() {
 
-    public AllMoviesGenreServiceImpl(Handler handler) {
-        this.handler = handler;
     }
 
     @Override
-    protected void handleApiResponse(AllMovieGenreListResponse response, int uniqueId) {
-        handler.onAllMovieGenreListRetrieved(response, uniqueId);
-    }
-
-    @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onAllMovieGenreAPIError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<AllMovieGenreListResponse> getRetrofitCall() {
+    protected Observable<Response<AllMovieGenreListResponse>> getDataObservable() {
         return NetworkSDK.getInstance()
                 .getGenreListAPI()
                 .getMovieGenreList(TheMovieDbConstants.APP_API_KEY);
     }
 
-    /**
-     * Handler CallBack to presenter with Response /Error ..
-     */
-    public interface Handler {
-        void onAllMovieGenreListRetrieved(AllMovieGenreListResponse response, int uniqueId);
-
-        void onAllMovieGenreAPIError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected AllMovieGenreListResponse transformResponseIfReq(AllMovieGenreListResponse sourceInput) {
+        if (sourceInput == null || sourceInput.getGenres() == null || sourceInput.getGenres().isEmpty()) {
+            throw new UserAPIErrorException(UserAPIErrorType.NOCONTENT_ERROR);
+        }
+        return sourceInput;
     }
 }

@@ -6,46 +6,35 @@ import com.ran.themoviedb.model.server.api.TvShowDetailsAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
- * Created by ranjith.suda on 2/29/2016.
+ * TV Show Detail Service Impl
+ *
+ * @author ranjithsuda
  */
 public class TvShowDetailServiceImpl extends BaseRetrofitService<TvShowDetailResponse> {
 
-    private Handler handler;
     private int tvShowId;
     private String language;
 
-    public TvShowDetailServiceImpl(Handler handler, int tvShowId, String language) {
-        this.handler = handler;
+    public TvShowDetailServiceImpl(int tvShowId, String language) {
         this.tvShowId = tvShowId;
         this.language = language;
     }
 
-    @Override
-    protected void handleApiResponse(TvShowDetailResponse response, int uniqueId) {
-        handler.onTvShowDetailResponse(response, uniqueId);
-    }
 
     @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onTvShowError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<TvShowDetailResponse> getRetrofitCall() {
+    protected Observable<Response<TvShowDetailResponse>> getDataObservable() {
         return NetworkSDK.getInstance()
                 .getTvShowDetailsAPI()
                 .getTvShowBasicDetails(tvShowId, TheMovieDbConstants.APP_API_KEY, language);
     }
 
-    /**
-     * Handler CallBack to presenter with Response /Error ..
-     */
-    public interface Handler {
-        void onTvShowDetailResponse(TvShowDetailResponse response, int uniqueId);
-
-        void onTvShowError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected TvShowDetailResponse transformResponseIfReq(TvShowDetailResponse sourceInput) {
+        return sourceInput;
     }
 }

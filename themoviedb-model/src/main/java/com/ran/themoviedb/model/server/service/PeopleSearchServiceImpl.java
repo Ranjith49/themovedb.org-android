@@ -2,55 +2,40 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.api.SearchAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleSearchResponse;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
- * Created by ranjith.suda on 1/4/2016.
+ * People Search Service Impl
+ *
+ * @author ranjithsuda
  */
 public class PeopleSearchServiceImpl extends BaseRetrofitService<PeopleSearchResponse> {
 
-    private Handler handler;
     private int pageIndex;
     private String query;
 
-    public PeopleSearchServiceImpl(Handler handler, int page, String query) {
-        this.handler = handler;
+    public PeopleSearchServiceImpl(int page, String query) {
         this.pageIndex = page;
         this.query = query;
     }
 
     @Override
-    protected void handleApiResponse(PeopleSearchResponse response, int uniqueId) {
-        if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
-            handler.onPeopleSearchAPIError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
-        } else {
-            handler.onPeopleSearchResponse(response, uniqueId);
-        }
-    }
-
-    @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onPeopleSearchAPIError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<PeopleSearchResponse> getRetrofitCall() {
+    protected Observable<Response<PeopleSearchResponse>> getDataObservable() {
         return NetworkSDK.getInstance()
                 .getSearchAPI()
                 .getPeopleSearchResults(TheMovieDbConstants.APP_API_KEY, pageIndex, query);
     }
 
-    /**
-     * Handler callbacks for the Presenter ..
-     */
-    public interface Handler {
-
-        void onPeopleSearchResponse(PeopleSearchResponse response, int uniqueId);
-
-        void onPeopleSearchAPIError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected PeopleSearchResponse transformResponseIfReq(PeopleSearchResponse sourceInput) {
+        if (sourceInput == null || sourceInput.getResults() == null || sourceInput.getResults().size() <= 0) {
+            throw new UserAPIErrorException(UserAPIErrorType.NOCONTENT_ERROR);
+        }
+        return sourceInput;
     }
 }

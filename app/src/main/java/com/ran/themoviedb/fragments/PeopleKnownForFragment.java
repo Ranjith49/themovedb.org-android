@@ -67,8 +67,7 @@ public class PeopleKnownForFragment extends Fragment
   private void initializePresenter() {
     genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
         .CENTER, errorLayoutHolder, this);
-    peopleKnowForPresenter = new PeopleKnowForPresenter(getActivity(), this, peopleId,
-        UniqueIdCreator.getInstance().generateUniqueId());
+    peopleKnowForPresenter = new PeopleKnowForPresenter(getActivity(), this, peopleId);
     peopleKnowForPresenter.start();
   }
 

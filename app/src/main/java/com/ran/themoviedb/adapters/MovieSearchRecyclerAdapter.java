@@ -70,16 +70,14 @@ public class MovieSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Movie
     notifyDataSetChanged();
 
     //Start the Presenter , for First Page
-    movieSearchDataPresenter = new MovieSearchDataPresenter(context, firstPageIndex,
-        query, movieSearchView, UniqueIdCreator.getInstance().generateUniqueId());
+    movieSearchDataPresenter = new MovieSearchDataPresenter(context, firstPageIndex, query, movieSearchView);
     movieSearchDataPresenter.start();
   }
 
   @Override
   public void loadNextPageIndex(int nextPageIndex) {
     //Start the Presenter , for First Page
-    movieSearchDataPresenter = new MovieSearchDataPresenter(context, nextPageIndex,
-        query, movieSearchView, UniqueIdCreator.getInstance().generateUniqueId());
+    movieSearchDataPresenter = new MovieSearchDataPresenter(context, nextPageIndex, query, movieSearchView);
     movieSearchDataPresenter.start();
   }
 

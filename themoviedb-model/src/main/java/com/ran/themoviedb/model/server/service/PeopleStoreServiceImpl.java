@@ -7,37 +7,29 @@ import com.ran.themoviedb.model.server.entities.PeopleStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleStoreResponse;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
- * Created by ranjith.suda on 1/1/2016.
+ * People Store Service Impl
+ *
+ * @author ranjithsuda
  */
 public class PeopleStoreServiceImpl extends BaseRetrofitService<PeopleStoreResponse> {
 
-    private Handler handler;
     private PeopleStoreType peopleStoreType;
     private int pageIndex;
     private String language;
 
-    public PeopleStoreServiceImpl(Handler handler, PeopleStoreType storeType, int page, String lang) {
-        this.handler = handler;
+    public PeopleStoreServiceImpl(PeopleStoreType storeType, int page, String lang) {
         this.peopleStoreType = storeType;
         this.pageIndex = page;
         this.language = lang;
     }
 
     @Override
-    protected void handleApiResponse(PeopleStoreResponse response, int uniqueId) {
-        handler.onPeopleStoreResponseRetrieved(response, uniqueId);
-    }
-
-    @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onPeopleStoreAPIError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<PeopleStoreResponse> getRetrofitCall() {
+    protected Observable<Response<PeopleStoreResponse>> getDataObservable() {
         switch (peopleStoreType) {
             case PEOPLE_POPULAR:
             default:
@@ -47,12 +39,8 @@ public class PeopleStoreServiceImpl extends BaseRetrofitService<PeopleStoreRespo
         }
     }
 
-    /**
-     * Handler call Back for the Presenters
-     */
-    public interface Handler {
-        void onPeopleStoreResponseRetrieved(PeopleStoreResponse response, int uniqueId);
-
-        void onPeopleStoreAPIError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected PeopleStoreResponse transformResponseIfReq(PeopleStoreResponse sourceInput) {
+        return sourceInput;
     }
 }

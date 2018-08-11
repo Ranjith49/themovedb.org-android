@@ -2,13 +2,13 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.api.MovieDetailsAPI;
-import com.ran.themoviedb.model.server.api.TvShowDetailsAPI;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.ImageDetailResponse;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
  * Created by ranjith.suda on 1/17/2016.
@@ -18,32 +18,16 @@ public class ImageServiceImpl extends BaseRetrofitService<ImageDetailResponse> {
     private int id;
     private String language;
     private DisplayStoreType storeType;
-    private Handler handler;
 
-    public ImageServiceImpl(int id, DisplayStoreType storeType, Handler handler, String language) {
+    public ImageServiceImpl(int id, DisplayStoreType storeType, String language) {
         this.id = id;
         this.language = language;
         this.storeType = storeType;
-        this.handler = handler;
     }
 
-    @Override
-    protected void handleApiResponse(ImageDetailResponse response, int uniqueId) {
-        if (response == null ||
-                (response.getBackdrops().size() <= 0 && response.getPosters().size() <= 0)) {
-            handler.onImageError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
-        } else {
-            handler.onImageResponse(response, uniqueId);
-        }
-    }
 
     @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onImageError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<ImageDetailResponse> getRetrofitCall() {
+    protected Observable<Response<ImageDetailResponse>> getDataObservable() {
         switch (storeType) {
             case MOVIE_STORE:
                 return NetworkSDK.getInstance()
@@ -54,15 +38,15 @@ public class ImageServiceImpl extends BaseRetrofitService<ImageDetailResponse> {
                         .getTvShowDetailsAPI()
                         .getTvShowImageDetails(id, TheMovieDbConstants.APP_API_KEY);
             default:
-                return null;
+                return Observable.empty();
         }
     }
 
-    public interface Handler {
-
-        void onImageResponse(ImageDetailResponse response, int uniqueId);
-
-        void onImageError(UserAPIErrorType errorType, int uniqueId);
-
+    @Override
+    protected ImageDetailResponse transformResponseIfReq(ImageDetailResponse sourceInput) {
+        if (sourceInput == null || (sourceInput.getBackdrops().size() <= 0 && sourceInput.getPosters().size() <= 0)) {
+            throw new UserAPIErrorException(UserAPIErrorType.NOCONTENT_ERROR);
+        }
+        return sourceInput;
     }
 }

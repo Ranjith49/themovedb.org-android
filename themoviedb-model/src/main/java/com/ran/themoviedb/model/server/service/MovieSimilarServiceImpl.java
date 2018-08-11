@@ -2,56 +2,43 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.api.MovieDetailsAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieSimilarDetailsResponse;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
- * Created by ranjith.suda on 1/11/2016.
+ * Similar Movies Service Impl
+ *
+ * @author ranjithsuda
  */
 public class MovieSimilarServiceImpl extends BaseRetrofitService<MovieSimilarDetailsResponse> {
 
-    private Handler handler;
     private int movieId;
     private String movieLang;
     private int pageIndex;
 
-    public MovieSimilarServiceImpl(Handler handler, int id, String lang, int pageIndex) {
+    public MovieSimilarServiceImpl(int id, String lang, int pageIndex) {
         this.movieId = id;
         this.movieLang = lang;
-        this.handler = handler;
         this.pageIndex = pageIndex;
     }
 
-    @Override
-    protected void handleApiResponse(MovieSimilarDetailsResponse response, int uniqueId) {
-        if (response == null || response.getResults() == null || response.getResults().size() <= 0) {
-            handler.onSimilarMovieError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
-        } else {
-            handler.onSimilarMoviesResponse(response, uniqueId);
-        }
-    }
 
     @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onSimilarMovieError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<MovieSimilarDetailsResponse> getRetrofitCall() {
+    protected Observable<Response<MovieSimilarDetailsResponse>> getDataObservable() {
         return NetworkSDK.getInstance()
                 .getMovieDetailsAPI()
                 .getSimilarMovies(movieId, pageIndex, TheMovieDbConstants.APP_API_KEY, movieLang);
     }
 
-    /**
-     * Handler CallBack to presenter with Response /Error ..
-     */
-    public interface Handler {
-        void onSimilarMoviesResponse(MovieSimilarDetailsResponse response, int uniqueId);
-
-        void onSimilarMovieError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected MovieSimilarDetailsResponse transformResponseIfReq(MovieSimilarDetailsResponse sourceInput) {
+        if (sourceInput == null || sourceInput.getResults() == null || sourceInput.getResults().size() <= 0) {
+            throw new UserAPIErrorException(UserAPIErrorType.NOCONTENT_ERROR);
+        }
+        return sourceInput;
     }
 }

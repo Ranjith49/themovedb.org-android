@@ -21,37 +21,38 @@ import java.lang.reflect.Type;
  */
 public class TheMovieDbConfigPresenter implements TheMovieDbConfigServiceImpl.Handler {
 
-  private static TheMovieDbConfigPresenter instance;
+    private static TheMovieDbConfigPresenter instance;
 
-  public synchronized static TheMovieDbConfigPresenter getInstance() {
-    if (instance == null) {
-      instance = new TheMovieDbConfigPresenter();
+    public synchronized static TheMovieDbConfigPresenter getInstance() {
+        if (instance == null) {
+            instance = new TheMovieDbConfigPresenter();
+        }
+        return instance;
     }
-    return instance;
-  }
 
-  private TheMovieDbConfigPresenter() {
-    //Nothing to do here ..
-  }
+    private TheMovieDbConfigPresenter() {
+        //Nothing to do here ..
+    }
 
-  /**
-   * Method to Fetch the MovieDb Configuration at any point of time
-   *
-   * @param uniqueId - Unique id
-   */
-  public void fetchMovieDbConfig(int uniqueId) {
-    new TheMovieDbConfigServiceImpl(this).request(SnappyDBEntityTypes.MOVIE_DB_CONFIG,
-        SnappyPreloadData.MOVIE_DB_CONFIG, uniqueId, new TypeToken<TheMovieDbConfigResponse>() {
-        });
-  }
+    /**
+     * Method to Fetch the MovieDb Configuration at any point of time
+     *
+     * @param uniqueId - Unique id
+     */
+    public void fetchMovieDbConfig(int uniqueId) {
+        new TheMovieDbConfigServiceImpl(this)
+                .request(SnappyDBEntityTypes.MOVIE_DB_CONFIG,
+                        SnappyPreloadData.MOVIE_DB_CONFIG, uniqueId, new TypeToken<TheMovieDbConfigResponse>() {
+                        });
+    }
 
-  @Override
-  public void onConfigReturned(TheMovieDbConfigResponse response, int uniqueId) {
-    TheMovieDbImagesConfig imagesConfig = response.getImages();
-    Gson gson = new Gson();
-    Type type = new TypeToken<TheMovieDbImagesConfig>() {
-    }.getType();
-    AppSharedPreferences.getInstance(ApplicationUtils.getApplication())
-        .setMovieImageConfigData(gson.toJson(imagesConfig, type));
-  }
+    @Override
+    public void onConfigReturned(TheMovieDbConfigResponse response, int uniqueId) {
+        TheMovieDbImagesConfig imagesConfig = response.getImages();
+        Gson gson = new Gson();
+        Type type = new TypeToken<TheMovieDbImagesConfig>() {
+        }.getType();
+        AppSharedPreferences.getInstance(ApplicationUtils.getApplication())
+                .setMovieImageConfigData(gson.toJson(imagesConfig, type));
+    }
 }

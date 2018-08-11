@@ -22,82 +22,80 @@ import java.util.ArrayList;
  */
 public class TvSearchRecyclerAdapter extends CustomRecyclerView.Adapter<TvShowSearchResponse> {
 
-  private ArrayList<TvShowSearchResults> tvShowSearchResults = new ArrayList<>();
-  private final TvSearchView tvSearchView;
-  private final String query;
-  private final int INVALID_NEXT_PAGE_INDEX = -1;
-  private TvSearchDataPresenter tvSearchDataPresenter;
-  private Context context;
-  private StoreClickListener storeClickListener;
+    private ArrayList<TvShowSearchResults> tvShowSearchResults = new ArrayList<>();
+    private final TvSearchView tvSearchView;
+    private final String query;
+    private final int INVALID_NEXT_PAGE_INDEX = -1;
+    private TvSearchDataPresenter tvSearchDataPresenter;
+    private Context context;
+    private StoreClickListener storeClickListener;
 
-  //Update the Current Page after we get from Server
-  private int currentPage;
-  private int totalPages;
+    //Update the Current Page after we get from Server
+    private int currentPage;
+    private int totalPages;
 
-  public TvSearchRecyclerAdapter(Context context, int firstPageIndex,
-                                 String query, TvSearchView tvSearchView,
-                                 StoreClickListener storeClickListener) {
-    super(context, firstPageIndex);
-    this.context = context;
-    this.query = query;
-    this.tvSearchView = tvSearchView;
-    this.storeClickListener = storeClickListener;
-  }
-
-  public void addTvSearchResults(ArrayList<TvShowSearchResults> storeResults, int currentPage,
-                                 int totalPages) {
-    this.currentPage = currentPage;
-    this.totalPages = totalPages;
-    if (currentPage < totalPages) {
-      setNextPageIndex(++currentPage);
-    } else {
-      setNextPageIndex(INVALID_NEXT_PAGE_INDEX);
+    public TvSearchRecyclerAdapter(Context context, int firstPageIndex,
+                                   String query, TvSearchView tvSearchView,
+                                   StoreClickListener storeClickListener) {
+        super(context, firstPageIndex);
+        this.context = context;
+        this.query = query;
+        this.tvSearchView = tvSearchView;
+        this.storeClickListener = storeClickListener;
     }
-    tvShowSearchResults.addAll(storeResults);
-    notifyDataSetChanged();
-  }
 
-  public void onDestroyView() {
-    //Make any final Calls to be stopped here ..
-    if (tvSearchDataPresenter != null) {
-      tvSearchDataPresenter.stop();
+    public void addTvSearchResults(ArrayList<TvShowSearchResults> storeResults, int currentPage,
+                                   int totalPages) {
+        this.currentPage = currentPage;
+        this.totalPages = totalPages;
+        if (currentPage < totalPages) {
+            setNextPageIndex(++currentPage);
+        } else {
+            setNextPageIndex(INVALID_NEXT_PAGE_INDEX);
+        }
+        tvShowSearchResults.addAll(storeResults);
+        notifyDataSetChanged();
     }
-  }
 
-  @Override
-  public void loadFirstPageIndex(int firstPageIndex) {
-    tvShowSearchResults.clear();
-    notifyDataSetChanged();
+    public void onDestroyView() {
+        //Make any final Calls to be stopped here ..
+        if (tvSearchDataPresenter != null) {
+            tvSearchDataPresenter.stop();
+        }
+    }
 
-    //Start the Presenter , for First Page
-    tvSearchDataPresenter = new TvSearchDataPresenter(context, firstPageIndex,
-        query, tvSearchView, UniqueIdCreator.getInstance().generateUniqueId());
-    tvSearchDataPresenter.start();
-  }
+    @Override
+    public void loadFirstPageIndex(int firstPageIndex) {
+        tvShowSearchResults.clear();
+        notifyDataSetChanged();
 
-  @Override
-  public void loadNextPageIndex(int nextPageIndex) {
-    //Start the Presenter , for Next Page
-    tvSearchDataPresenter = new TvSearchDataPresenter(context, nextPageIndex,
-        query, tvSearchView, UniqueIdCreator.getInstance().generateUniqueId());
-    tvSearchDataPresenter.start();
-  }
+        //Start the Presenter , for First Page
+        tvSearchDataPresenter = new TvSearchDataPresenter(context, firstPageIndex, query, tvSearchView);
+        tvSearchDataPresenter.start();
+    }
 
-  @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return SearchViewHolders.getSearchViewHolder(context, parent, DisplayStoreType.TV_STORE,
-        storeClickListener);
-  }
+    @Override
+    public void loadNextPageIndex(int nextPageIndex) {
+        //Start the Presenter , for Next Page
+        tvSearchDataPresenter = new TvSearchDataPresenter(context, nextPageIndex, query, tvSearchView);
+        tvSearchDataPresenter.start();
+    }
 
-  @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    TvShowSearchResults tvShowSearchResultsItem = tvShowSearchResults.get(position);
-    TvSearchViewHolder tvSearchViewHolder = (TvSearchViewHolder) holder;
-    tvSearchViewHolder.updateViewItem(context, tvShowSearchResultsItem);
-  }
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return SearchViewHolders.getSearchViewHolder(context, parent, DisplayStoreType.TV_STORE,
+                storeClickListener);
+    }
 
-  @Override
-  public int getItemCount() {
-    return tvShowSearchResults.size();
-  }
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        TvShowSearchResults tvShowSearchResultsItem = tvShowSearchResults.get(position);
+        TvSearchViewHolder tvSearchViewHolder = (TvSearchViewHolder) holder;
+        tvSearchViewHolder.updateViewItem(context, tvShowSearchResultsItem);
+    }
+
+    @Override
+    public int getItemCount() {
+        return tvShowSearchResults.size();
+    }
 }

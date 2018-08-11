@@ -5,6 +5,7 @@ import android.content.Context;
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.fragments.MovieReviewsFragment;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 import com.ran.themoviedb.model.server.response.MovieSimilarDetailsResponse;
 import com.ran.themoviedb.model.server.response.TvShowSimilarDetailsResponse;
 import com.ran.themoviedb.model.server.service.MovieSimilarServiceImpl;
@@ -12,49 +13,57 @@ import com.ran.themoviedb.model.server.service.TvShowSimilarServiceImpl;
 import com.ran.themoviedb.view_pres_med.MovieSimilarView;
 import com.ran.themoviedb.view_pres_med.TvShowSimilarView;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by ranjith.suda on 1/11/2016.
  */
-public class TvShowSimilarDataPresenter extends BasePresenter
-    implements TvShowSimilarServiceImpl.Handler {
+public class TvShowSimilarDataPresenter extends BasePresenter {
 
-  private TvShowSimilarView tvShowSimilarView;
-  private final int pageIndex;
-  private final int uniqueId;
-  private final TvShowSimilarServiceImpl service;
+    private TvShowSimilarView tvShowSimilarView;
+    private final int pageIndex;
+    private final TvShowSimilarServiceImpl service;
 
-  public TvShowSimilarDataPresenter(Context context, TvShowSimilarView tvShowSimilarView,
-                                    int pageIndex, int uniqueId, int movieId) {
-    this.pageIndex = pageIndex;
-    this.uniqueId = uniqueId;
-    this.tvShowSimilarView = tvShowSimilarView;
-    service = new TvShowSimilarServiceImpl(this, movieId,
-        AppSharedPreferences.getInstance(context).getAppLanguageData(), pageIndex);
-  }
+    public TvShowSimilarDataPresenter(Context context, TvShowSimilarView tvShowSimilarView,
+                                      int pageIndex, int movieId) {
+        super();
+        this.pageIndex = pageIndex;
+        this.tvShowSimilarView = tvShowSimilarView;
+        service = new TvShowSimilarServiceImpl(movieId,
+                AppSharedPreferences.getInstance(context).getAppLanguageData(), pageIndex);
+    }
 
-  @Override
-  public void start() {
-    tvShowSimilarView.showProgressBar(true, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
-    service.request(uniqueId);
-  }
+    @Override
+    public void start() {
+        tvShowSimilarView.showProgressBar(true, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+        disposable.add(service.requestData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onSimilarTvShowsResponse, this::onSimilarTVShowsError));
+    }
 
-  @Override
-  public void stop() {
-    service.cancelRequest(uniqueId);
-    tvShowSimilarView.showProgressBar(false, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
-  }
+    @Override
+    public void stop() {
+        cancelReq();
+        tvShowSimilarView.showProgressBar(false, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+    }
 
-  @Override
-  public void onSimilarTvShowsResponse(TvShowSimilarDetailsResponse response, int uniqueId) {
-    tvShowSimilarView.similarTvShowsResponse(response,
-        pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
-    tvShowSimilarView.showProgressBar(false, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
-  }
+    private void onSimilarTvShowsResponse(TvShowSimilarDetailsResponse response) {
+        tvShowSimilarView.similarTvShowsResponse(response,
+                pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+        tvShowSimilarView.showProgressBar(false, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+    }
 
-  @Override
-  public void onSimilarTVShowsError(UserAPIErrorType errorType, int uniqueId) {
-    tvShowSimilarView.similarTvShowsError(errorType,
-        pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
-    tvShowSimilarView.showProgressBar(false, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
-  }
+    private void onSimilarTVShowsError(Throwable throwable) {
+        if (throwable instanceof UserAPIErrorException) {
+            tvShowSimilarView.similarTvShowsError(((UserAPIErrorException) throwable).getApiErrorType(),
+                    pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+        } else {
+            tvShowSimilarView.similarTvShowsError(UserAPIErrorType.UNEXPECTED_ERROR,
+                    pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+        }
+
+        tvShowSimilarView.showProgressBar(false, pageIndex == MovieReviewsFragment.FIRST_PAGE_INDEX);
+    }
 }

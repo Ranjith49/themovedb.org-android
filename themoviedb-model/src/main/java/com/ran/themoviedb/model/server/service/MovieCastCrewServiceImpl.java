@@ -2,56 +2,41 @@ package com.ran.themoviedb.model.server.service;
 
 import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.api.MovieDetailsAPI;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.CastCrewDetailResponse;
+import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 
-import retrofit2.Call;
+
+import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
- * Created by ranjith.suda on 1/11/2016.
+ * Move Cast Service Impl
+ *
+ * @author ranjithsuda
  */
 public class MovieCastCrewServiceImpl extends BaseRetrofitService<CastCrewDetailResponse> {
 
-    private Handler handler;
     private int movieId;
     private String movieLang;
 
-    public MovieCastCrewServiceImpl(Handler handler, int id, String lang) {
+    public MovieCastCrewServiceImpl(int id, String lang) {
         this.movieId = id;
         this.movieLang = lang;
-        this.handler = handler;
     }
 
     @Override
-    protected void handleApiResponse(CastCrewDetailResponse response, int uniqueId) {
-        if (response == null ||
-                (response.getCrew() == null || response.getCrew().size() < 0) &&
-                        (response.getCast() == null || response.getCast().size() < 0)) {
-            handler.onCastCrewError(UserAPIErrorType.NOCONTENT_ERROR, uniqueId);
-        } else {
-            handler.onCastCrewResponse(response, uniqueId);
-        }
-    }
-
-    @Override
-    protected void handleError(UserAPIErrorType errorType, int uniqueId) {
-        handler.onCastCrewError(errorType, uniqueId);
-    }
-
-    @Override
-    protected Call<CastCrewDetailResponse> getRetrofitCall() {
+    protected Observable<Response<CastCrewDetailResponse>> getDataObservable() {
         return NetworkSDK.getInstance()
                 .getMovieDetailsAPI()
                 .getCastCrewDetails(movieId, TheMovieDbConstants.APP_API_KEY, movieLang);
     }
 
-    /**
-     * Handler CallBack to presenter with Response /Error ..
-     */
-    public interface Handler {
-        void onCastCrewResponse(CastCrewDetailResponse response, int uniqueId);
-
-        void onCastCrewError(UserAPIErrorType errorType, int uniqueId);
+    @Override
+    protected CastCrewDetailResponse transformResponseIfReq(CastCrewDetailResponse sourceInput) {
+        if (sourceInput == null || (sourceInput.getCrew() == null || sourceInput.getCrew().size() < 0) && (sourceInput.getCast() == null || sourceInput.getCast().size() < 0)) {
+            throw new UserAPIErrorException(UserAPIErrorType.NOCONTENT_ERROR);
+        }
+        return sourceInput;
     }
 }

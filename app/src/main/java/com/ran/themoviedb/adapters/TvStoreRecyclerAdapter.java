@@ -73,16 +73,14 @@ public class TvStoreRecyclerAdapter extends CustomRecyclerView.Adapter<TVShowSto
     notifyDataSetChanged();
 
     //Start the Presenter , for First Page
-    tvStoreDataPresenter = new TvStoreDataPresenter(context, tvStoreType, firstPageIndex,
-        tvStoreView, UniqueIdCreator.getInstance().generateUniqueId());
+    tvStoreDataPresenter = new TvStoreDataPresenter(context, tvStoreType, firstPageIndex, tvStoreView);
     tvStoreDataPresenter.start();
   }
 
   @Override
   public void loadNextPageIndex(int nextPageIndex) {
     //Start the Presenter for the Next pages ..
-    tvStoreDataPresenter = new TvStoreDataPresenter(context, tvStoreType, nextPageIndex,
-        tvStoreView, UniqueIdCreator.getInstance().generateUniqueId());
+    tvStoreDataPresenter = new TvStoreDataPresenter(context, tvStoreType, nextPageIndex, tvStoreView);
     tvStoreDataPresenter.start();
   }
 
