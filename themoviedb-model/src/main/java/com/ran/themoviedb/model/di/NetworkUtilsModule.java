@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.gson.Gson;
+
 import javax.inject.Named;
 
 import dagger.Module;
@@ -28,5 +30,10 @@ public class NetworkUtilsModule {
 
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+    @Provides
+    public Gson providesGson() {
+        return new Gson();
     }
 }

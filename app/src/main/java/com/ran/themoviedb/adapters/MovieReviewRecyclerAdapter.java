@@ -13,7 +13,6 @@ import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.listeners.ReviewClickListener;
 import com.ran.themoviedb.model.server.entities.ReviewsDetail;
 import com.ran.themoviedb.model.server.response.ReviewsDetailResponse;
-import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.MovieReviewPresenter;
 import com.ran.themoviedb.view_pres_med.MovieReviewView;
 

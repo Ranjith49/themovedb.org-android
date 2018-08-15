@@ -1,6 +1,6 @@
 package com.ran.themoviedb.presenters;
 
-import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -14,14 +14,20 @@ import com.ran.themoviedb.model.utils.ApplicationUtils;
 
 import java.lang.reflect.Type;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by ranjith.suda on 12/30/2015.
  * <p/>
  * Presenter for TheMovieDb Config Values from {@Link TheMovieDbConfigServiceImpl} , save Date
  */
-public class TheMovieDbConfigPresenter implements TheMovieDbConfigServiceImpl.Handler {
+public class TheMovieDbConfigPresenter {
+
+    private static final String TAG = TheMovieDbConfigPresenter.class.getSimpleName();
 
     private static TheMovieDbConfigPresenter instance;
+    private final TypeToken<TheMovieDbConfigResponse> typeToken;
 
     public synchronized static TheMovieDbConfigPresenter getInstance() {
         if (instance == null) {
@@ -31,28 +37,31 @@ public class TheMovieDbConfigPresenter implements TheMovieDbConfigServiceImpl.Ha
     }
 
     private TheMovieDbConfigPresenter() {
-        //Nothing to do here ..
+        typeToken = new TypeToken<TheMovieDbConfigResponse>() {
+        };
     }
 
     /**
      * Method to Fetch the MovieDb Configuration at any point of time
-     *
-     * @param uniqueId - Unique id
      */
-    public void fetchMovieDbConfig(int uniqueId) {
-        new TheMovieDbConfigServiceImpl(this)
-                .request(SnappyDBEntityTypes.MOVIE_DB_CONFIG,
-                        SnappyPreloadData.MOVIE_DB_CONFIG, uniqueId, new TypeToken<TheMovieDbConfigResponse>() {
-                        });
+    public void fetchMovieDbConfig() {
+        new TheMovieDbConfigServiceImpl()
+                .requestData(SnappyDBEntityTypes.MOVIE_DB_CONFIG, SnappyPreloadData.MOVIE_DB_CONFIG,typeToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onConfigReturned, this::onConfigError);
     }
 
-    @Override
-    public void onConfigReturned(TheMovieDbConfigResponse response, int uniqueId) {
+    private void onConfigReturned(TheMovieDbConfigResponse response) {
         TheMovieDbImagesConfig imagesConfig = response.getImages();
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {
         }.getType();
         AppSharedPreferences.getInstance(ApplicationUtils.getApplication())
                 .setMovieImageConfigData(gson.toJson(imagesConfig, type));
+    }
+
+    private void onConfigError(Throwable throwable) {
+        Log.e(TAG, "config error", throwable);
     }
 }

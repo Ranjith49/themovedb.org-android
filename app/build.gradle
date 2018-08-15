@@ -30,7 +30,7 @@ android {
     debug {
       minifyEnabled false
       shrinkResources false
-      multiDexEnabled false
+      multiDexEnabled true
       proguardFile '../app/proguard/proguard-square-rules.pro'
       proguardFile '../app/proguard/proguard-glide-rules.pro'
       proguardFile '../app/proguard/proguard-ads-rules.pro'
@@ -41,7 +41,7 @@ android {
     release {
       minifyEnabled true
       shrinkResources true
-      multiDexEnabled false
+      multiDexEnabled true
       proguardFile '../app/proguard/proguard-square-rules.pro'
       proguardFile '../app/proguard/proguard-glide-rules.pro'
       proguardFile '../app/proguard/proguard-ads-rules.pro'

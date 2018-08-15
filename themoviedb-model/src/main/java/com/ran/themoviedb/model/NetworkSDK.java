@@ -2,6 +2,7 @@ package com.ran.themoviedb.model;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.ran.themoviedb.model.di.DaggerNetworkComponent;
 import com.ran.themoviedb.model.di.NetworkDIConstants;
 import com.ran.themoviedb.model.server.api.AllGenreListAPI;
@@ -60,6 +61,9 @@ public class NetworkSDK {
     @Named(NetworkDIConstants.NETWORK_IS_CONNECTED)
     @Inject
     Provider<Boolean> isNwConnected;
+
+    @Inject
+    Provider<Gson> gsonProvider;
 
     private NetworkSDK() {
         //Nothing to do ..
@@ -122,5 +126,9 @@ public class NetworkSDK {
 
     public Boolean getIsNwConnected() {
         return isNwConnected.get();
+    }
+
+    public Gson getGson() {
+        return gsonProvider.get();
     }
 }

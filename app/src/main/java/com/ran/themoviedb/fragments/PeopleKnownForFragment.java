@@ -23,7 +23,6 @@ import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleKnownForResponse;
 import com.ran.themoviedb.model.share.ShareContent;
 import com.ran.themoviedb.model.share.ShareContentHelper;
-import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.PeopleKnowForPresenter;
 import com.ran.themoviedb.utils.Navigator;
 import com.ran.themoviedb.view_pres_med.PeopleKnowForView;

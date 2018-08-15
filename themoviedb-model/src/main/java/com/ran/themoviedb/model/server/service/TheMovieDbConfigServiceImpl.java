@@ -3,10 +3,10 @@ package com.ran.themoviedb.model.server.service;
 import com.ran.themoviedb.model.NetworkSDK;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.preloaddb.BaseSnappyDBService;
-import com.ran.themoviedb.model.server.api.TheMovieDbConfigAPI;
 import com.ran.themoviedb.model.server.response.TheMovieDbConfigResponse;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
  * Created by ranjith.suda on 12/30/2015.
@@ -14,28 +14,14 @@ import retrofit2.Call;
  */
 public class TheMovieDbConfigServiceImpl extends BaseSnappyDBService<TheMovieDbConfigResponse> {
 
-    private Handler handler;
-
-    public TheMovieDbConfigServiceImpl(Handler handler) {
-        this.handler = handler;
+    public TheMovieDbConfigServiceImpl() {
+        super();
     }
 
     @Override
-    protected void handleApiResponse(TheMovieDbConfigResponse response, int uniqueId) {
-        handler.onConfigReturned(response, uniqueId);
-    }
-
-    @Override
-    protected Call<TheMovieDbConfigResponse> getRetrofitCall() {
+    protected Observable<Response<TheMovieDbConfigResponse>> getResponseOfType() {
         return NetworkSDK.getInstance()
                 .getTheMovieDbConfigAPI()
                 .getAppConfig(TheMovieDbConstants.APP_API_KEY);
-    }
-
-    /**
-     * Handler CallBack to presenter with Response /Error ..
-     */
-    public interface Handler {
-        void onConfigReturned(TheMovieDbConfigResponse response, int uniqueId);
     }
 }

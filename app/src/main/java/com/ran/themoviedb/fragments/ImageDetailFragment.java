@@ -31,7 +31,6 @@ import com.ran.themoviedb.model.server.entities.ImageDetails;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.entities.VideoDetails;
-import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.ImagePresenter;
 import com.ran.themoviedb.presenters.VideoPresenter;
 import com.ran.themoviedb.utils.VideoPopupCreator;

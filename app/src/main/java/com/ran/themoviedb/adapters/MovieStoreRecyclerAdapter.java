@@ -5,12 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.ran.themoviedb.customviews.CustomRecyclerView;
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.listeners.StoreClickListener;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.MovieStoreResults;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.response.MovieStoreResponse;
-import com.ran.themoviedb.model.utils.UniqueIdCreator;
 import com.ran.themoviedb.presenters.MovieStoreDataPresenter;
 import com.ran.themoviedb.view_pres_med.MovieStoreView;
 import com.ran.themoviedb.viewholders.MovieStoreViewHolder;

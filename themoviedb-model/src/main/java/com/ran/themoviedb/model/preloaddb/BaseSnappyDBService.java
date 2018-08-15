@@ -2,19 +2,16 @@ package com.ran.themoviedb.model.preloaddb;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ran.themoviedb.model.NetworkSDK;
+import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.utils.ApplicationUtils;
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
 
-import java.lang.reflect.Type;
-
-import retrofit2.Call;
-import retrofit2.Callback;
+import io.reactivex.Observable;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by ranjith.suda on 3/5/2016.
@@ -29,105 +26,82 @@ import retrofit2.Retrofit;
  */
 public abstract class BaseSnappyDBService<T> {
 
-  private final String TAG = BaseSnappyDBService.class.getSimpleName();
-  private DB snappyDB;
-  private SnappyDBEntityTypes snappyDBEntityTypes;
-  private TypeToken typeToken;
-  private int uniqueId;
-  private Call<T> retrofitCall;
-  private Callback<T> callback = new Callback<T>() {
-    @Override
-    public void onResponse(Call<T> call, Response<T> response) {
-      if (response != null) {
-        if (response.code() == 200) {
-          processApiResponse(response.body());
-        } else {
-          Log.d(TAG, "API Response is not Success , ignore");
+    private final String TAG = BaseSnappyDBService.class.getSimpleName();
+    private DB snappyDB;
+    private SnappyDBEntityTypes snappyDBEntityType;
+    private TypeToken typeToken;
+
+    public BaseSnappyDBService() {
+        try {
+            snappyDB = DBFactory.open(ApplicationUtils.getApplication());
+        } catch (SnappydbException e) {
+            Log.e(TAG, "Ex " + e);
         }
-      }
     }
 
-    @Override
-    public void onFailure(Call<T> call, Throwable t) {
-      Log.d(TAG, "API Response is a failure case , ignore");
-    }
-  };
+    public Observable<T> requestData(SnappyDBEntityTypes snappyDBEntityType, String preloadData, TypeToken typeToken) {
+        this.snappyDBEntityType = snappyDBEntityType;
+        this.typeToken = typeToken;
 
-  /**
-   * Internal Method to process the API response and send back the Response
-   *
-   * @param response -- response
-   */
-  private void processApiResponse(T response) {
-    Gson gson = new Gson();
-    try {
-      snappyDB.put(snappyDBEntityTypes.name(), gson.toJson(response, typeToken.getType()));
-    } catch (SnappydbException exception) {
-      Log.d(TAG, exception.toString());
-    }
-    handleApiResponse(response, uniqueId);
-  }
+        Observable<T> dbData = getDBData(preloadData)
+                .map(s -> NetworkSDK.getInstance().getGson().fromJson(s, typeToken.getType()));
 
-  /**
-   * Make Request for the Data , prefetch DB and then Retrofit call
-   *
-   * @param snappyDBEntityType -- Entity Type
-   * @param preloadData        -- Preload data for the Entity Type
-   * @param uniqueId           -- Unique Id of Request
-   * @param typeToken          -- Type Token for Reflection
-   */
-  public void request(SnappyDBEntityTypes snappyDBEntityType, String preloadData, int uniqueId,
-                      TypeToken typeToken) {
-    this.uniqueId = uniqueId;
-    this.snappyDBEntityTypes = snappyDBEntityType;
-    this.typeToken = typeToken;
-    try {
-      snappyDB = DBFactory.open(ApplicationUtils.getApplication());
-      Gson gson = new Gson();
-      String dbResponse;
-      if (snappyDB.exists(snappyDBEntityType.name())) {
-        Log.d(TAG, "Reading from DataBase");
-        dbResponse = snappyDB.get(snappyDBEntityType.name(), String.class);
-      } else {
-        dbResponse = preloadData;
-      }
-      //Creating the Response for UI ..
-      T apiResponse = gson.fromJson(dbResponse, typeToken.getType());
-      handleApiResponse(apiResponse, uniqueId);
-    } catch (SnappydbException exception) {
-      Log.d(TAG, exception.toString());
+        Observable<T> nwData = getResponseOfType()
+                .map(this::getSuccessResOrThrowEx)
+                .map(this::writeToDb);
+
+        return Observable.concat(dbData, nwData);
     }
 
-    //Make the Normal Retrofit Request as Usual..
-    retrofitCall = getRetrofitCall();
-    retrofitCall.enqueue(callback);
-  }
-
-  /**
-   * Cancel Request -- Cancel Retrofit Request
-   *
-   * @param uniqueId -- Id
-   */
-  public void cancelRequest(final int uniqueId) {
-    Log.d(TAG, "Cancel Request for Base Snappy Service");
-    if (this.uniqueId == uniqueId && retrofitCall != null) {
-      retrofitCall.cancel();
+    private T writeToDb(T data) {
+        try {
+            String input = NetworkSDK.getInstance().getGson().toJson(data, typeToken.getType());
+            Log.d(TAG, input);
+            snappyDB.put(snappyDBEntityType.name(), input.getBytes());
+        } catch (SnappydbException exception) {
+            Log.d(TAG, exception.toString());
+        }
+        return data;
     }
-  }
 
-  /**
-   * Child Class Need to Implement this for Response on Success
-   *
-   * @param response -- Response of Type T
-   * @param uniqueId -- Id of the Request
-   */
-  protected abstract void handleApiResponse(T response, int uniqueId);
+    private T getSuccessResOrThrowEx(Response<T> rawResponse) {
+        if (rawResponse == null) {
+            throw new RuntimeException("No Response from Server");
+        }
 
-  /**
-   * Child Class Need to Implement for Retrofit Call implementation
-   *
-   * @return -- Return the Retrofit Call Interface for Execution
-   */
-  protected abstract Call<T> getRetrofitCall();
+        if (rawResponse.code() == TheMovieDbConstants.OK_HTTP_RESPONSE_CODE || rawResponse.body() == null) {
+            return rawResponse.body();
+        } else {
+            throw new RuntimeException("Not OK Response // Body is empty .. ");
+        }
+    }
+
+    private Observable<String> getDBData(String preloadData) {
+        if (snappyDB == null) {
+            return Observable.just(preloadData);
+        }
+
+        try {
+            String dbResponse;
+            if (snappyDB.exists(snappyDBEntityType.name())) {
+                Log.d(TAG, "Reading from DataBase");
+                dbResponse = new String(snappyDB.getBytes(snappyDBEntityType.name()));
+            } else {
+                dbResponse = preloadData;
+            }
+            return Observable.just(dbResponse);
+        } catch (SnappydbException ex) {
+            Log.e(TAG, "snappy ex  :" + ex);
+            return Observable.just(preloadData);
+        }
+    }
+
+
+    /**
+     * Child Class Need to Implement for Retrofit Call implementation
+     *
+     * @return -- Return the Retrofit Call Interface for Execution
+     */
+    protected abstract Observable<Response<T>> getResponseOfType();
 
 }
