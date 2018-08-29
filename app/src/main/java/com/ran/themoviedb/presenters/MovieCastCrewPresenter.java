@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 import com.ran.themoviedb.model.server.response.CastCrewDetailResponse;
@@ -17,14 +17,13 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MovieCastCrewPresenter extends BasePresenter {
 
-    private MovieCastCrewView movieCastCrewView;
     private final MovieCastCrewServiceImpl service;
+    private MovieCastCrewView movieCastCrewView;
 
     public MovieCastCrewPresenter(Context context, MovieCastCrewView movieCastCrewView, int movieId) {
         super();
         this.movieCastCrewView = movieCastCrewView;
-        service = new MovieCastCrewServiceImpl(movieId,
-                AppSharedPreferences.getInstance(context).getAppLanguageData());
+        service = new MovieCastCrewServiceImpl(movieId, TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
     }
 
     @Override

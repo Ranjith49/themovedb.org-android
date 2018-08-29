@@ -1,14 +1,16 @@
 package com.ran.themoviedb;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
-import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
-import com.ran.themoviedb.model.NetworkSDK;
-import com.ran.themoviedb.model.di.DaggerNetworkComponent;
-import com.ran.themoviedb.model.utils.ApplicationUtils;
 import com.crashlytics.android.Crashlytics;
+import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
+import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.di.DaggerAppComponent;
+import com.ran.themoviedb.model.NetworkSDK;
+import com.ran.themoviedb.model.utils.ApplicationUtils;
+
+import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -19,6 +21,14 @@ import io.fabric.sdk.android.Fabric;
  */
 public class TheMovieDbAppController extends MultiDexApplication {
 
+    private static TheMovieDbAppController APP_INSTANCE;
+    @Inject
+    public AppSharedPreferences appSharedPreferences;
+
+    public static TheMovieDbAppController getAppInstance() {
+        return APP_INSTANCE;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -27,6 +37,14 @@ public class TheMovieDbAppController extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        APP_INSTANCE = this;
+
+        // App Component ..
+        DaggerAppComponent.builder()
+                .setContext(this)
+                .build()
+                .injectTo(this);
 
         // Build the Network component ..
         NetworkSDK.getInstance().initialize(this);

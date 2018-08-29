@@ -20,9 +20,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.adapters.ImageDetailAdapter;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.listeners.VideoPopupClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;
@@ -87,16 +87,16 @@ public class ImageDetailFragment extends Fragment
                             DisplayStoreType.getStoreName(DisplayStoreType.MOVIE_STORE)));
         }
 
-        image_container = (LinearLayout) view.findViewById(R.id.image_container);
-        image_poster_count = (TextView) view.findViewById(R.id.image_poster_title);
-        image_banner_count = (TextView) view.findViewById(R.id.image_banner_title);
-        image_poster_container = (LinearLayout) view.findViewById(R.id.image_poster_container);
-        image_banner_container = (LinearLayout) view.findViewById(R.id.image_banner_container);
-        image_poster_recycler = (RecyclerView) view.findViewById(R.id.image_poster_recycler);
-        image_banner_recycler = (RecyclerView) view.findViewById(R.id.image_banner_recycler);
-        progressBar = (ProgressBar) view.findViewById(R.id.image_screen_progress);
+        image_container = view.findViewById(R.id.image_container);
+        image_poster_count = view.findViewById(R.id.image_poster_title);
+        image_banner_count = view.findViewById(R.id.image_banner_title);
+        image_poster_container = view.findViewById(R.id.image_poster_container);
+        image_banner_container = view.findViewById(R.id.image_banner_container);
+        image_poster_recycler = view.findViewById(R.id.image_poster_recycler);
+        image_banner_recycler = view.findViewById(R.id.image_banner_recycler);
+        progressBar = view.findViewById(R.id.image_screen_progress);
         errorLayoutHolder =
-                (LinearLayout) view.findViewById(R.id.image_error_layout_container);
+                view.findViewById(R.id.image_error_layout_container);
         genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
                 .CENTER, errorLayoutHolder, this);
 
@@ -120,8 +120,7 @@ public class ImageDetailFragment extends Fragment
     }
 
     private String generateImagePosterBaseUrl() {
-        String image_pref_json =
-                AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+        String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {
@@ -136,8 +135,7 @@ public class ImageDetailFragment extends Fragment
     }
 
     private String generateImageBannerBaseUrl() {
-        String image_pref_json =
-                AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+        String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {

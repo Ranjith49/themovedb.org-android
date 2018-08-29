@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
@@ -67,20 +67,20 @@ public class TvShowDetailFragment extends Fragment implements GenericErrorBuilde
     }
 
     private void initView() {
-        tvContainer = (ScrollView) view.findViewById(R.id.tv_scroll_view);
-        tvErrorLayout = (LinearLayout) view.findViewById(R.id.genre_error_layout_container);
-        tvProgressBar = (ProgressBar) view.findViewById(R.id.tv_description_progress);
+        tvContainer = view.findViewById(R.id.tv_scroll_view);
+        tvErrorLayout = view.findViewById(R.id.genre_error_layout_container);
+        tvProgressBar = view.findViewById(R.id.tv_description_progress);
 
-        tvPoster = (ImageView) view.findViewById(R.id.tvShow_poster);
-        tvTitle = (TextView) view.findViewById(R.id.tv_show_name);
-        tvRating = (TextView) view.findViewById(R.id.tv_show_rating);
-        tvInitialAirDate = (TextView) view.findViewById(R.id.tv_show_date);
-        tvRunningTime = (TextView) view.findViewById(R.id.tv_show_runtime);
+        tvPoster = view.findViewById(R.id.tvShow_poster);
+        tvTitle = view.findViewById(R.id.tv_show_name);
+        tvRating = view.findViewById(R.id.tv_show_rating);
+        tvInitialAirDate = view.findViewById(R.id.tv_show_date);
+        tvRunningTime = view.findViewById(R.id.tv_show_runtime);
 
-        tvDescription = (TextView) view.findViewById(R.id.overview_description);
-        tvSeasons = (TextView) view.findViewById(R.id.overview_no_seasons);
-        tvEpisodes = (TextView) view.findViewById(R.id.overview_no_episodes);
-        tvExternalUrl = (TextView) view.findViewById(R.id.overview_url);
+        tvDescription = view.findViewById(R.id.overview_description);
+        tvSeasons = view.findViewById(R.id.overview_no_seasons);
+        tvEpisodes = view.findViewById(R.id.overview_no_episodes);
+        tvExternalUrl = view.findViewById(R.id.overview_url);
     }
 
     private void initializePresenter() {
@@ -147,8 +147,7 @@ public class TvShowDetailFragment extends Fragment implements GenericErrorBuilde
      * @param url -- Url passed
      */
     private void loadImage(String url) {
-        String image_pref_json =
-                AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+        String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {

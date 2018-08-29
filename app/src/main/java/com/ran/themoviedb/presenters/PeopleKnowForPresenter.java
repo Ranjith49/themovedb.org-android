@@ -2,18 +2,12 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
-import com.ran.themoviedb.model.server.response.PeopleDetailResponse;
 import com.ran.themoviedb.model.server.response.PeopleKnownForResponse;
-import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
-import com.ran.themoviedb.model.server.service.PeopleDetailServiceImpl;
 import com.ran.themoviedb.model.server.service.PeopleKnownForServiceImpl;
-import com.ran.themoviedb.model.server.service.TvShowDetailServiceImpl;
-import com.ran.themoviedb.view_pres_med.PeopleDetailView;
 import com.ran.themoviedb.view_pres_med.PeopleKnowForView;
-import com.ran.themoviedb.view_pres_med.TvShowDetailView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,7 +24,7 @@ public class PeopleKnowForPresenter extends BasePresenter {
     public PeopleKnowForPresenter(Context context, PeopleKnowForView peopleKnowForView, int peopleId) {
         super();
         this.peopleKnowForView = peopleKnowForView;
-        this.peopleLang = AppSharedPreferences.getInstance(context).getAppLanguageData();
+        this.peopleLang = TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData();
         service = new PeopleKnownForServiceImpl(peopleId, peopleLang);
     }
 

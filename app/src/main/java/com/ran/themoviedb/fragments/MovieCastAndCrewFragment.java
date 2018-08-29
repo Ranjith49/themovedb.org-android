@@ -13,9 +13,9 @@ import android.widget.ProgressBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.adapters.MovieGenericCastCrewAdapter;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.entities.MovieCastCrewType;
 import com.ran.themoviedb.listeners.CastCrewListener;
@@ -36,6 +36,7 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
         MovieCastCrewView, CastCrewListener {
 
 
+    private final int CAST_CREW_PROFILE_INDEX = 1; //Todo [ranjith ,do better logic]
     private View view;
     private LinearLayout cast_crew_container;
     private LinearLayout cast_container;
@@ -46,12 +47,9 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
     private GenericErrorBuilder genericErrorBuilder;
     private LinearLayout errorLayoutHolder;
     private int movieId;
-
     private MovieCastCrewPresenter castCrewPresenter;
     private MovieGenericCastCrewAdapter castAdapter;
     private MovieGenericCastCrewAdapter crewAdapter;
-
-    private final int CAST_CREW_PROFILE_INDEX = 1; //Todo [ranjith ,do better logic]
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,14 +57,14 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
         view = inflater.inflate(R.layout.fragment_movie_castcrew, container, false);
         movieId = getArguments().getInt(TheMovieDbConstants.MOVIE_ID_KEY);
 
-        cast_crew_container = (LinearLayout) view.findViewById(R.id.movie_cast_crew_container);
-        cast_container = (LinearLayout) view.findViewById(R.id.movie_cast_container);
-        crew_container = (LinearLayout) view.findViewById(R.id.movie_crew_container);
-        cast_recycler = (RecyclerView) view.findViewById(R.id.movie_cast_recycler);
-        crew_recycler = (RecyclerView) view.findViewById(R.id.movie_crew_recycler);
-        progressBar = (ProgressBar) view.findViewById(R.id.movie_cast_crew_error_screen_progress);
+        cast_crew_container = view.findViewById(R.id.movie_cast_crew_container);
+        cast_container = view.findViewById(R.id.movie_cast_container);
+        crew_container = view.findViewById(R.id.movie_crew_container);
+        cast_recycler = view.findViewById(R.id.movie_cast_recycler);
+        crew_recycler = view.findViewById(R.id.movie_crew_recycler);
+        progressBar = view.findViewById(R.id.movie_cast_crew_error_screen_progress);
         errorLayoutHolder =
-                (LinearLayout) view.findViewById(R.id.movie_cast_crew_error_layout_container);
+                view.findViewById(R.id.movie_cast_crew_error_layout_container);
         genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
                 .CENTER, errorLayoutHolder, this);
 
@@ -87,8 +85,7 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
     }
 
     private String generateImageBaseUrl() {
-        String image_pref_json =
-                AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+        String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {

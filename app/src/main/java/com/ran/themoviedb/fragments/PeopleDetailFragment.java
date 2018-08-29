@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
@@ -69,20 +69,20 @@ public class PeopleDetailFragment extends Fragment
     }
 
     private void initView() {
-        peopleContainer = (ScrollView) view.findViewById(R.id.people_scroll_view);
-        peopleErrorLayout = (LinearLayout) view.findViewById(R.id.genre_error_layout_container);
-        peopleProgressBar = (ProgressBar) view.findViewById(R.id.people_description_progress);
+        peopleContainer = view.findViewById(R.id.people_scroll_view);
+        peopleErrorLayout = view.findViewById(R.id.genre_error_layout_container);
+        peopleProgressBar = view.findViewById(R.id.people_description_progress);
 
-        peoplePoster = (ImageView) view.findViewById(R.id.people_poster);
-        peopleName = (TextView) view.findViewById(R.id.people_name);
-        peopleRating = (TextView) view.findViewById(R.id.people_rating);
-        peopleBirthDate = (TextView) view.findViewById(R.id.people_birthdate);
+        peoplePoster = view.findViewById(R.id.people_poster);
+        peopleName = view.findViewById(R.id.people_name);
+        peopleRating = view.findViewById(R.id.people_rating);
+        peopleBirthDate = view.findViewById(R.id.people_birthdate);
 
-        peopleDescription = (TextView) view.findViewById(R.id.overview_description);
-        peopleImdb = (TextView) view.findViewById(R.id.overview_imdb);
-        peopleExternalUrl = (TextView) view.findViewById(R.id.overview_url);
+        peopleDescription = view.findViewById(R.id.overview_description);
+        peopleImdb = view.findViewById(R.id.overview_imdb);
+        peopleExternalUrl = view.findViewById(R.id.overview_url);
 
-        imageDownload = (FloatingActionButton) view.findViewById(R.id.image_item_download);
+        imageDownload = view.findViewById(R.id.image_item_download);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // get rid of margins since shadow area is now the margin
             ViewGroup.MarginLayoutParams p =
@@ -152,8 +152,7 @@ public class PeopleDetailFragment extends Fragment
      * Helper Method to Load the Image in the View ..
      */
     private void loadProfileImage(String url) {
-        String image_pref_json =
-                AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+        String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {

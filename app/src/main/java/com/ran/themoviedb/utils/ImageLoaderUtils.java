@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 
@@ -46,7 +46,7 @@ public class ImageLoaderUtils {
    * @return -- Full Original Image Url
    */
   public static String generateOrgImageBaseUrl(Context context, String imageType) {
-    String image_pref_json = AppSharedPreferences.getInstance(context).getMovieImageConfigData();
+    String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {

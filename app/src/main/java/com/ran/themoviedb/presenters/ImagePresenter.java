@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
@@ -20,13 +20,13 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ImagePresenter extends BasePresenter {
 
-    private ImageDisplayView imageDisplayView;
     private final ImageServiceImpl service;
+    private ImageDisplayView imageDisplayView;
 
     public ImagePresenter(Context context, ImageDisplayView imageDisplayView, int id, DisplayStoreType storeType) {
         super();
         this.imageDisplayView = imageDisplayView;
-        service = new ImageServiceImpl(id, storeType, AppSharedPreferences.getInstance(context).getAppLanguageData());
+        service = new ImageServiceImpl(id, storeType, TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
     }
 
     @Override

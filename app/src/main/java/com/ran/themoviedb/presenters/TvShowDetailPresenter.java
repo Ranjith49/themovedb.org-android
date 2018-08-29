@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
@@ -25,7 +25,7 @@ public class TvShowDetailPresenter extends BasePresenter {
     public TvShowDetailPresenter(Context context, TvShowDetailView tvShowDetailView, int tvShowId) {
         super();
         this.tvShowDetailView = tvShowDetailView;
-        this.tvShowLang = AppSharedPreferences.getInstance(context).getAppLanguageData();
+        this.tvShowLang = TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData();
         service = new TvShowDetailServiceImpl(tvShowId, tvShowLang);
     }
 

@@ -14,11 +14,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
-import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
+import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.PeopleStoreKnownFor;
 import com.ran.themoviedb.model.server.entities.PeopleStoreResults;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
@@ -37,19 +37,17 @@ import java.util.ArrayList;
 public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
     StoreUpdateViewHolder<PeopleStoreResults> {
 
+  private final int INDEX_POSTER_KNOWN_FOR_SIZE = 0; //Todo [ranjith ,do better logic]
+  private final int MAX_KNOWN_FOR = 3;
+  private final Context activityContext;
+  private final StoreClickListener storeClickListener;
+  DecimalFormat df = new DecimalFormat("####0.00");
   private TextView peopleName;
   private ImageView peopleImage;
   private TextView peopleRating;
   private TextView peopleMoreInfo;
   private FloatingActionButton peopleShare;
-  private final int INDEX_POSTER_KNOWN_FOR_SIZE = 0; //Todo [ranjith ,do better logic]
-  private final int MAX_KNOWN_FOR = 3;
-  DecimalFormat df = new DecimalFormat("####0.00");
-
-  private final Context activityContext;
   private View view;
-  private final StoreClickListener storeClickListener;
-
   //Known For Layouts ..
   private RelativeLayout known1_Layout;
   private ImageView known1_Image;
@@ -74,11 +72,11 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
     this.storeClickListener = storeClickListener;
     this.view = itemView;
 
-    peopleImage = (ImageView) view.findViewById(R.id.recycler_item_image);
-    peopleName = (TextView) view.findViewById(R.id.recycler_item_name);
-    peopleRating = (TextView) view.findViewById(R.id.recycler_item_rating);
-    peopleMoreInfo = (TextView) view.findViewById(R.id.recycler_item_more);
-    peopleShare = (FloatingActionButton) view.findViewById(R.id.recycler_item_share);
+    peopleImage = view.findViewById(R.id.recycler_item_image);
+    peopleName = view.findViewById(R.id.recycler_item_name);
+    peopleRating = view.findViewById(R.id.recycler_item_rating);
+    peopleMoreInfo = view.findViewById(R.id.recycler_item_more);
+    peopleShare = view.findViewById(R.id.recycler_item_share);
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       // get rid of margins since shadow area is now the margin
       ViewGroup.MarginLayoutParams p =
@@ -87,20 +85,20 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
       peopleShare.setLayoutParams(p);
     }
 
-    known1_Layout = (RelativeLayout) view.findViewById(R.id.recycler_knownFor_1_container);
-    known1_Image = (ImageView) view.findViewById(R.id.recycler_knownFor_1);
-    known1_Name = (TextView) view.findViewById(R.id.recycler_knownFor_1_name);
-    known1_Rating = (TextView) view.findViewById(R.id.recycler_knownFor_1_rating);
+    known1_Layout = view.findViewById(R.id.recycler_knownFor_1_container);
+    known1_Image = view.findViewById(R.id.recycler_knownFor_1);
+    known1_Name = view.findViewById(R.id.recycler_knownFor_1_name);
+    known1_Rating = view.findViewById(R.id.recycler_knownFor_1_rating);
 
-    known2_Layout = (RelativeLayout) view.findViewById(R.id.recycler_knownFor_2_container);
-    known2_Image = (ImageView) view.findViewById(R.id.recycler_knownFor_2);
-    known2_Name = (TextView) view.findViewById(R.id.recycler_knownFor_2_name);
-    known2_Rating = (TextView) view.findViewById(R.id.recycler_knownFor_2_rating);
+    known2_Layout = view.findViewById(R.id.recycler_knownFor_2_container);
+    known2_Image = view.findViewById(R.id.recycler_knownFor_2);
+    known2_Name = view.findViewById(R.id.recycler_knownFor_2_name);
+    known2_Rating = view.findViewById(R.id.recycler_knownFor_2_rating);
 
-    known3_Layout = (RelativeLayout) view.findViewById(R.id.recycler_knownFor_3_container);
-    known3_Image = (ImageView) view.findViewById(R.id.recycler_knownFor_3);
-    known3_Name = (TextView) view.findViewById(R.id.recycler_knownFor_3_name);
-    known3_Rating = (TextView) view.findViewById(R.id.recycler_knownFor_3_rating);
+    known3_Layout = view.findViewById(R.id.recycler_knownFor_3_container);
+    known3_Image = view.findViewById(R.id.recycler_knownFor_3);
+    known3_Name = view.findViewById(R.id.recycler_knownFor_3_name);
+    known3_Rating = view.findViewById(R.id.recycler_knownFor_3_rating);
   }
 
 
@@ -158,8 +156,7 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
       return;
     }
 
-    String image_pref_json =
-        AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+    String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {
@@ -245,8 +242,7 @@ public class PeopleStoreViewHolder extends RecyclerView.ViewHolder implements
    * Helper Method to Load the Image in the View ..
    */
   private void loadProfileImage(PeopleStoreResults item) {
-    String image_pref_json =
-        AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+    String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {

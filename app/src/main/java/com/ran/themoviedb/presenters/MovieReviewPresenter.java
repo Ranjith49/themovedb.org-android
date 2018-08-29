@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.fragments.MovieReviewsFragment;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
@@ -18,16 +18,16 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MovieReviewPresenter extends BasePresenter {
 
-    private MovieReviewView movieReviewView;
     private final int pageIndex;
     private final MovieReviewServiceImpl service;
+    private MovieReviewView movieReviewView;
 
     public MovieReviewPresenter(Context context, MovieReviewView movieReviewView, int pageIndex, int movieId) {
         super();
         this.pageIndex = pageIndex;
         this.movieReviewView = movieReviewView;
         service = new MovieReviewServiceImpl(movieId,
-                AppSharedPreferences.getInstance(context).getAppLanguageData(), pageIndex);
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData(), pageIndex);
     }
 
     @Override

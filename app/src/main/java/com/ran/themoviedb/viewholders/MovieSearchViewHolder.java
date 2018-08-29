@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
-import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
+import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.MovieSearchResults;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.utils.AppUiUtils;
@@ -35,6 +35,8 @@ import java.util.Date;
 public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
     StoreUpdateViewHolder<MovieSearchResults> {
 
+  private final String TAG = MovieStoreViewHolder.class.getSimpleName();
+  private final Context activityContext;
   private TextView movieNameView;
   private TextView movieRating;
   private TextView movieYear;
@@ -44,8 +46,6 @@ public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
   private StoreClickListener storeClickListener;
   private LinearLayout movieItemContainer;
   private String DATE_FORMAT = "yyyy-MM-dd";
-  private final String TAG = MovieStoreViewHolder.class.getSimpleName();
-  private final Context activityContext;
 
 
   public MovieSearchViewHolder(View itemView, StoreClickListener storeClickListener,
@@ -55,11 +55,11 @@ public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
     this.activityContext = context;
     this.view = itemView;
     this.storeClickListener = storeClickListener;
-    movieImage = (ImageView) view.findViewById(R.id.recycler_item_image);
-    movieRating = (TextView) view.findViewById(R.id.recycler_item_rating);
-    movieYear = (TextView) view.findViewById(R.id.recycler_item_year);
-    movieNameView = (TextView) view.findViewById(R.id.recycler_item_name);
-    movieShare = (FloatingActionButton) view.findViewById(R.id.recycler_item_share);
+    movieImage = view.findViewById(R.id.recycler_item_image);
+    movieRating = view.findViewById(R.id.recycler_item_rating);
+    movieYear = view.findViewById(R.id.recycler_item_year);
+    movieNameView = view.findViewById(R.id.recycler_item_name);
+    movieShare = view.findViewById(R.id.recycler_item_share);
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       // get rid of margins since shadow area is now the margin
       ViewGroup.MarginLayoutParams p =
@@ -67,7 +67,7 @@ public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
       p.setMargins(0, 0, AppUiUtils.dpToPx(context, 8), 0);
       movieShare.setLayoutParams(p);
     }
-    movieItemContainer = (LinearLayout) view.findViewById(R.id.recycler_search_container);
+    movieItemContainer = view.findViewById(R.id.recycler_search_container);
   }
 
 
@@ -125,7 +125,7 @@ public class MovieSearchViewHolder extends RecyclerView.ViewHolder implements
    */
   private void loadImage(MovieSearchResults item) {
     String image_pref_json =
-        AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+            TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {

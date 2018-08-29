@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.fragments.TvStoreFragment;
 import com.ran.themoviedb.model.server.entities.TVShowStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
@@ -30,7 +30,7 @@ public class TvStoreDataPresenter extends BasePresenter {
         this.tvStoreView = tvStoreView;
         this.pageIndex = pageIndex;
         tvService = new TVShowStoreServiceImpl(tvStoreType, pageIndex,
-                AppSharedPreferences.getInstance(context).getAppLanguageData());
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
     }
 
     @Override

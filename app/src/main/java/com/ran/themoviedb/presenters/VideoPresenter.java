@@ -3,7 +3,7 @@ package com.ran.themoviedb.presenters;
 import android.content.Context;
 import android.util.Log;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.VideoDetails;
 import com.ran.themoviedb.model.server.response.VideoDetailResponse;
@@ -27,7 +27,8 @@ public class VideoPresenter extends BasePresenter {
     public VideoPresenter(Context context, VideoDisplayView videoDisplayView, int id, DisplayStoreType storeType) {
         super();
         this.videoDisplayView = videoDisplayView;
-        service = new VideoServiceImpl(id, storeType, AppSharedPreferences.getInstance(context).getAppLanguageData());
+        service = new VideoServiceImpl(id, storeType,
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
     }
 
     @Override

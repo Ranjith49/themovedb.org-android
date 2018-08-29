@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.response.AllMovieGenreListResponse;
 import com.ran.themoviedb.model.server.service.AllMoviesGenreServiceImpl;
 import com.ran.themoviedb.view_pres_med.AllMovieGenreView;
@@ -51,7 +51,7 @@ public class AllMovieGenreListPresenter extends BasePresenter {
         Gson gson = new Gson();
         Type type = new TypeToken<AllMovieGenreListResponse>() {
         }.getType();
-        AppSharedPreferences.getInstance(context).setGenreListData(gson.toJson(response, type));
+        TheMovieDbAppController.getAppInstance().appSharedPreferences.setGenreListData(gson.toJson(response, type));
         allMovieGenreView.isMovieGenreResponseRetrieval(true);
     }
 

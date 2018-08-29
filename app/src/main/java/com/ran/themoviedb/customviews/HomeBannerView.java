@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
@@ -26,37 +26,16 @@ import java.util.ArrayList;
  */
 public class HomeBannerView extends RelativeLayout {
 
+  private final int MESSAGE_IMAGE_LOAD = 100;
+  private final int INDEX_BACK_DROP_SIZE = 0;
   ImageView imageBanner;
   TextView textBottom;
   private Context context;
   private String IMAGE_BASE_URL;
   private Handler imageHandler;
   private ArrayList<String> bannerUrls;
-
-  private final int MESSAGE_IMAGE_LOAD = 100;
-  private final int INDEX_BACK_DROP_SIZE = 0;
   private int MAX_BAN = 5;
   private int currentIndex = -1;
-
-  private class ImageHandler extends Handler {
-    @Override
-    public void handleMessage(Message msg) {
-      super.handleMessage(msg);
-
-      switch (msg.what) {
-        case MESSAGE_IMAGE_LOAD:
-          currentIndex = (++currentIndex) % MAX_BAN; //Todo [Ranjith ,Better logic ]
-          ImageLoaderUtils.loadImageWithPlaceHolder(context, imageBanner,
-              ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, bannerUrls.get(currentIndex)),
-              R.drawable.image_error_placeholder);
-
-          //Send to load again
-          imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
-              TheMovieDbConstants.HOME_BANNER_MILLS_SECS);
-          break;
-      }
-    }
-  }
 
   public HomeBannerView(Context context) {
     super(context);
@@ -73,7 +52,6 @@ public class HomeBannerView extends RelativeLayout {
     initView(context);
   }
 
-
   /**
    * Initialize the View
    *
@@ -81,7 +59,7 @@ public class HomeBannerView extends RelativeLayout {
    */
   private void initView(Context context) {
     this.context = context;
-    String image_pref_json = AppSharedPreferences.getInstance(context).getMovieImageConfigData();
+    String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {
@@ -96,8 +74,8 @@ public class HomeBannerView extends RelativeLayout {
   @Override
   protected void onFinishInflate() {
     super.onFinishInflate();
-    imageBanner = (ImageView) findViewById(R.id.home_banner_image);
-    textBottom = (TextView) findViewById(R.id.home_banner_bottom_name);
+    imageBanner = findViewById(R.id.home_banner_image);
+    textBottom = findViewById(R.id.home_banner_bottom_name);
   }
 
   /**
@@ -155,6 +133,26 @@ public class HomeBannerView extends RelativeLayout {
   public void resetHandler() {
     if (imageHandler != null) {
       imageHandler = null;
+    }
+  }
+
+  private class ImageHandler extends Handler {
+    @Override
+    public void handleMessage(Message msg) {
+      super.handleMessage(msg);
+
+      switch (msg.what) {
+        case MESSAGE_IMAGE_LOAD:
+          currentIndex = (++currentIndex) % MAX_BAN; //Todo [Ranjith ,Better logic ]
+          ImageLoaderUtils.loadImageWithPlaceHolder(context, imageBanner,
+                  ImageLoaderUtils.buildImageUrl(IMAGE_BASE_URL, bannerUrls.get(currentIndex)),
+                  R.drawable.image_error_placeholder);
+
+          //Send to load again
+          imageHandler.sendEmptyMessageDelayed(MESSAGE_IMAGE_LOAD,
+                  TheMovieDbConstants.HOME_BANNER_MILLS_SECS);
+          break;
+      }
     }
   }
 }

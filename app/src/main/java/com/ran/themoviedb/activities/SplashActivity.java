@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.presenters.TheMovieDbConfigPresenter;
 import com.ran.themoviedb.utils.Navigator;
 
@@ -23,18 +23,6 @@ public class SplashActivity extends AppCompatActivity {
   private final int MESSAGE_SPLASH_TYPE = 100;
 
   private final Handler handler = new SplashHandler();
-
-  private class SplashHandler extends Handler {
-    @Override
-    public void handleMessage(Message msg) {
-      super.handleMessage(msg);
-      switch (msg.what) {
-        case MESSAGE_SPLASH_TYPE:
-          onSplashLoadTimeComplete();
-          break;
-      }
-    }
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +48,23 @@ public class SplashActivity extends AppCompatActivity {
   }
 
   private void onSplashLoadTimeComplete() {
-    if (AppSharedPreferences.getInstance(this).isAppFirstLaunch()) {
+    if (TheMovieDbAppController.getAppInstance().appSharedPreferences.isAppFirstLaunch()) {
       Navigator.navigateToLanguageScreen(this);
     } else {
       Navigator.navigateToAppHome(this);
     }
     finish();
+  }
+
+  private class SplashHandler extends Handler {
+    @Override
+    public void handleMessage(Message msg) {
+      super.handleMessage(msg);
+      switch (msg.what) {
+        case MESSAGE_SPLASH_TYPE:
+          onSplashLoadTimeComplete();
+          break;
+      }
+    }
   }
 }

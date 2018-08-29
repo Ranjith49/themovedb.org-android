@@ -2,15 +2,12 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 import com.ran.themoviedb.model.server.response.PeopleDetailResponse;
-import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
 import com.ran.themoviedb.model.server.service.PeopleDetailServiceImpl;
-import com.ran.themoviedb.model.server.service.TvShowDetailServiceImpl;
 import com.ran.themoviedb.view_pres_med.PeopleDetailView;
-import com.ran.themoviedb.view_pres_med.TvShowDetailView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -27,7 +24,7 @@ public class PeopleDetailPresenter extends BasePresenter {
     public PeopleDetailPresenter(Context context, PeopleDetailView peopleDetailView, int peopleId) {
         super();
         this.peopleDetailView = peopleDetailView;
-        this.peopleLang = AppSharedPreferences.getInstance(context).getAppLanguageData();
+        this.peopleLang = TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData();
         service = new PeopleDetailServiceImpl(peopleId, peopleLang);
     }
 

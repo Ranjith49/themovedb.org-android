@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.entities.LanguageType;
 
 /**
@@ -54,12 +54,12 @@ public class LanguageBaseAdapter extends BaseAdapter {
     if (convertView == null) {
       convertView = layoutInflater.inflate(R.layout.list_language_item, null);
     }
-    langText = (TextView) convertView.findViewById(R.id.language_list_text);
+    langText = convertView.findViewById(R.id.language_list_text);
     langText.setText(langDisplayNames[position]);
-    langImage = (ImageView) convertView.findViewById(R.id.language_list_item_image);
+    langImage = convertView.findViewById(R.id.language_list_item_image);
     langImage.setImageResource(getFlagIcon(langCodes[position]));
-    langStatusImage = (ImageView) convertView.findViewById(R.id.language_list_item_choose);
-    if (AppSharedPreferences.getInstance(context).getAppLanguageData().equalsIgnoreCase
+    langStatusImage = convertView.findViewById(R.id.language_list_item_choose);
+    if (TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData().equalsIgnoreCase
         (langCodes[position])) {
       langStatusImage.setVisibility(View.VISIBLE);
     } else {

@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.fragments.PeopleStoreFragment;
 import com.ran.themoviedb.model.server.entities.PeopleStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
@@ -33,7 +33,7 @@ public class PeopleStoreDataPresenter extends BasePresenter {
         this.peopleStoreView = peopleStoreView;
         this.pageIndex = pageIndex;
         serviceImpl = new PeopleStoreServiceImpl(peopleStoreType, pageIndex,
-                AppSharedPreferences.getInstance(context).getAppLanguageData());
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
     }
 
     @Override

@@ -17,8 +17,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.MovieGenre;
@@ -78,24 +78,24 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     }
 
     private void initView() {
-        movieContainer = (ScrollView) view.findViewById(R.id.movie_scroll_view);
-        movieErrorLayout = (LinearLayout) view.findViewById(R.id.genre_error_layout_container);
-        movieFetchProgressBar = (ProgressBar) view.findViewById(R.id.movie_description_progress);
+        movieContainer = view.findViewById(R.id.movie_scroll_view);
+        movieErrorLayout = view.findViewById(R.id.genre_error_layout_container);
+        movieFetchProgressBar = view.findViewById(R.id.movie_description_progress);
 
-        moviePoster = (ImageView) view.findViewById(R.id.movie_poster);
-        movieTitle = (TextView) view.findViewById(R.id.movie_name);
-        movieRating = (TextView) view.findViewById(R.id.movie_rating);
-        movieReleaseDate = (TextView) view.findViewById(R.id.movie_date);
-        movieRunningTime = (TextView) view.findViewById(R.id.movie_runtime);
+        moviePoster = view.findViewById(R.id.movie_poster);
+        movieTitle = view.findViewById(R.id.movie_name);
+        movieRating = view.findViewById(R.id.movie_rating);
+        movieReleaseDate = view.findViewById(R.id.movie_date);
+        movieRunningTime = view.findViewById(R.id.movie_runtime);
 
-        movieDescription = (TextView) view.findViewById(R.id.overview_description);
-        movieTagLine = (TextView) view.findViewById(R.id.overview_tagline);
-        movieExternalUrl = (TextView) view.findViewById(R.id.overview_url);
-        movieBudget = (TextView) view.findViewById(R.id.overview_price);
-        movieImdbUrl = (TextView) view.findViewById(R.id.overview_imdb);
+        movieDescription = view.findViewById(R.id.overview_description);
+        movieTagLine = view.findViewById(R.id.overview_tagline);
+        movieExternalUrl = view.findViewById(R.id.overview_url);
+        movieBudget = view.findViewById(R.id.overview_price);
+        movieImdbUrl = view.findViewById(R.id.overview_imdb);
 
-        movie_genre_container = (LinearLayout) view.findViewById(R.id.genre_list);
-        movie_production_container = (LinearLayout) view.findViewById(R.id.production_list);
+        movie_genre_container = view.findViewById(R.id.genre_list);
+        movie_production_container = view.findViewById(R.id.production_list);
     }
 
     private void initializePresenter() {
@@ -243,8 +243,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
      * @param url -- Url passed
      */
     private void loadImage(String url) {
-        String image_pref_json =
-                AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+        String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {

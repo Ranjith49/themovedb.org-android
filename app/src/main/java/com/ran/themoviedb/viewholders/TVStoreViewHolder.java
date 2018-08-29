@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
-import com.ran.themoviedb.model.TheMovieDbConstants;
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.listeners.StoreUpdateViewHolder;
+import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.TvShowStoreResults;
 import com.ran.themoviedb.utils.AppUiUtils;
@@ -36,6 +36,8 @@ import java.util.Date;
  */
 public class TVStoreViewHolder extends RecyclerView.ViewHolder
     implements StoreUpdateViewHolder<TvShowStoreResults> {
+  private final String TAG = MovieStoreViewHolder.class.getSimpleName();
+  private final Context activityContext;
   private TextView tvNameView;
   private TextView tvRating;
   private TextView tvYear;
@@ -45,8 +47,6 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
   private StoreClickListener storeClickListener;
   private LinearLayout tvItemContainer;
   private String DATE_FORMAT = "yyyy-MM-dd";
-  private final String TAG = MovieStoreViewHolder.class.getSimpleName();
-  private final Context activityContext;
 
   public TVStoreViewHolder(View itemView, StoreClickListener storeClickListener, Context
       context) {
@@ -54,11 +54,11 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
     this.activityContext = context;
     this.view = itemView;
     this.storeClickListener = storeClickListener;
-    tvImage = (ImageView) view.findViewById(R.id.recycler_item_image);
-    tvRating = (TextView) view.findViewById(R.id.recycler_item_rating);
-    tvYear = (TextView) view.findViewById(R.id.recycler_item_year);
-    tvNameView = (TextView) view.findViewById(R.id.recycler_item_name);
-    tvShare = (FloatingActionButton) view.findViewById(R.id.recycler_item_share);
+    tvImage = view.findViewById(R.id.recycler_item_image);
+    tvRating = view.findViewById(R.id.recycler_item_rating);
+    tvYear = view.findViewById(R.id.recycler_item_year);
+    tvNameView = view.findViewById(R.id.recycler_item_name);
+    tvShare = view.findViewById(R.id.recycler_item_share);
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       // get rid of margins since shadow area is now the margin
       ViewGroup.MarginLayoutParams p =
@@ -66,7 +66,7 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
       p.setMargins(0, 0, AppUiUtils.dpToPx(context, 8), 0);
       tvShare.setLayoutParams(p);
     }
-    tvItemContainer = (LinearLayout) view.findViewById(R.id.recycler_item_container);
+    tvItemContainer = view.findViewById(R.id.recycler_item_container);
   }
 
   @Override
@@ -123,7 +123,7 @@ public class TVStoreViewHolder extends RecyclerView.ViewHolder
    */
   private void loadImage(TvShowStoreResults item) {
     String image_pref_json =
-        AppSharedPreferences.getInstance(view.getContext()).getMovieImageConfigData();
+            TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {

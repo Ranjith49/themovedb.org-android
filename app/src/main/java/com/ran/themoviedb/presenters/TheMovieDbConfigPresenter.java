@@ -4,13 +4,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.preloaddb.SnappyDBEntityTypes;
 import com.ran.themoviedb.model.preloaddb.SnappyPreloadData;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.response.TheMovieDbConfigResponse;
 import com.ran.themoviedb.model.server.service.TheMovieDbConfigServiceImpl;
-import com.ran.themoviedb.model.utils.ApplicationUtils;
 
 import java.lang.reflect.Type;
 
@@ -29,16 +28,16 @@ public class TheMovieDbConfigPresenter {
     private static TheMovieDbConfigPresenter instance;
     private final TypeToken<TheMovieDbConfigResponse> typeToken;
 
+    private TheMovieDbConfigPresenter() {
+        typeToken = new TypeToken<TheMovieDbConfigResponse>() {
+        };
+    }
+
     public synchronized static TheMovieDbConfigPresenter getInstance() {
         if (instance == null) {
             instance = new TheMovieDbConfigPresenter();
         }
         return instance;
-    }
-
-    private TheMovieDbConfigPresenter() {
-        typeToken = new TypeToken<TheMovieDbConfigResponse>() {
-        };
     }
 
     /**
@@ -57,8 +56,7 @@ public class TheMovieDbConfigPresenter {
         Gson gson = new Gson();
         Type type = new TypeToken<TheMovieDbImagesConfig>() {
         }.getType();
-        AppSharedPreferences.getInstance(ApplicationUtils.getApplication())
-                .setMovieImageConfigData(gson.toJson(imagesConfig, type));
+        TheMovieDbAppController.getAppInstance().appSharedPreferences.setMovieImageConfigData(gson.toJson(imagesConfig, type));
     }
 
     private void onConfigError(Throwable throwable) {

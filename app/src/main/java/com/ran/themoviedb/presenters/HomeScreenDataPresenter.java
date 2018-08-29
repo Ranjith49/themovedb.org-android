@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.MovieStoreResults;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.PeopleStoreResults;
@@ -48,11 +48,11 @@ public class HomeScreenDataPresenter extends BasePresenter {
         this.homeScreenView = homeScreenView;
 
         movieService = new MovieStoreServiceImpl(movieStoreType, PAGE_INDEX,
-                AppSharedPreferences.getInstance(context).getAppLanguageData());
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
         peopleService = new PeopleStoreServiceImpl(peopleStoreType, PAGE_INDEX,
-                AppSharedPreferences.getInstance(context).getAppLanguageData());
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
         tvService = new TVShowStoreServiceImpl(tvShowStoreType, PAGE_INDEX,
-                AppSharedPreferences.getInstance(context).getAppLanguageData());
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
 
     }
 

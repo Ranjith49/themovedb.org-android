@@ -2,15 +2,12 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.fragments.MovieReviewsFragment;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
-import com.ran.themoviedb.model.server.response.MovieSimilarDetailsResponse;
 import com.ran.themoviedb.model.server.response.TvShowSimilarDetailsResponse;
-import com.ran.themoviedb.model.server.service.MovieSimilarServiceImpl;
 import com.ran.themoviedb.model.server.service.TvShowSimilarServiceImpl;
-import com.ran.themoviedb.view_pres_med.MovieSimilarView;
 import com.ran.themoviedb.view_pres_med.TvShowSimilarView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,9 +18,9 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class TvShowSimilarDataPresenter extends BasePresenter {
 
-    private TvShowSimilarView tvShowSimilarView;
     private final int pageIndex;
     private final TvShowSimilarServiceImpl service;
+    private TvShowSimilarView tvShowSimilarView;
 
     public TvShowSimilarDataPresenter(Context context, TvShowSimilarView tvShowSimilarView,
                                       int pageIndex, int movieId) {
@@ -31,7 +28,7 @@ public class TvShowSimilarDataPresenter extends BasePresenter {
         this.pageIndex = pageIndex;
         this.tvShowSimilarView = tvShowSimilarView;
         service = new TvShowSimilarServiceImpl(movieId,
-                AppSharedPreferences.getInstance(context).getAppLanguageData(), pageIndex);
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData(), pageIndex);
     }
 
     @Override

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
@@ -37,10 +37,10 @@ import java.util.Date;
  */
 public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
 
+  private final String DATE_FORMAT = "yyyy-MM-dd";
   private Context context;
   private ArrayList<PeopleKnowForData> peopleKnowForData;
   private StoreClickListener storeClickListener;
-  private final String DATE_FORMAT = "yyyy-MM-dd";
 
   public PeopleKnowForRecyclerAdapter(Context context, ArrayList<PeopleKnowForData>
       peopleKnowForData, StoreClickListener storeClickListener) {
@@ -138,7 +138,7 @@ public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
    * Helper Method to Load the Image in the View ..
    */
   private void loadImage(PeopleKnowForData item, ImageView imageView) {
-    String image_pref_json = AppSharedPreferences.getInstance(context).getMovieImageConfigData();
+    String image_pref_json = TheMovieDbAppController.getAppInstance().appSharedPreferences.getMovieImageConfigData();
 
     Gson gson = new Gson();
     Type type = new TypeToken<TheMovieDbImagesConfig>() {
@@ -164,6 +164,7 @@ public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
    * Inner People Know For Holder View ..
    */
   class PeopleKnowForHolder extends RecyclerView.ViewHolder {
+    private final String TAG = PeopleKnowForHolder.class.getSimpleName();
     private TextView nameItem;
     private TextView yearItem;
     private ImageView typeItem;
@@ -171,16 +172,15 @@ public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
     private ImageView itemImage;
     private View view;
     private LinearLayout itemContainer;
-    private final String TAG = PeopleKnowForHolder.class.getSimpleName();
 
     public PeopleKnowForHolder(View itemView, Context context) {
       super(itemView);
       this.view = itemView;
-      itemImage = (ImageView) view.findViewById(R.id.recycler_item_image);
-      yearItem = (TextView) view.findViewById(R.id.recycler_item_year);
-      nameItem = (TextView) view.findViewById(R.id.recycler_item_name);
-      typeItem = (ImageView) view.findViewById(R.id.recycler_item_type);
-      itemShare = (FloatingActionButton) view.findViewById(R.id.recycler_item_share);
+      itemImage = view.findViewById(R.id.recycler_item_image);
+      yearItem = view.findViewById(R.id.recycler_item_year);
+      nameItem = view.findViewById(R.id.recycler_item_name);
+      typeItem = view.findViewById(R.id.recycler_item_type);
+      itemShare = view.findViewById(R.id.recycler_item_share);
       if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
         // get rid of margins since shadow area is now the margin
         ViewGroup.MarginLayoutParams p =
@@ -188,7 +188,7 @@ public class PeopleKnowForRecyclerAdapter extends RecyclerView.Adapter {
         p.setMargins(0, 0, AppUiUtils.dpToPx(context, 8), 0);
         itemShare.setLayoutParams(p);
       }
-      itemContainer = (LinearLayout) view.findViewById(R.id.recycler_item_container);
+      itemContainer = view.findViewById(R.id.recycler_item_container);
     }
   }
 }

@@ -2,7 +2,7 @@ package com.ran.themoviedb.presenters;
 
 import android.content.Context;
 
-import com.ran.themoviedb.db.AppSharedPreferences;
+import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 import com.ran.themoviedb.model.server.response.MovieDetailResponse;
@@ -24,7 +24,7 @@ public class MovieDescriptionPresenter extends BasePresenter {
     public MovieDescriptionPresenter(Context context, MovieDescriptionView movieDescriptionView, int movieId) {
         super();
         this.movieDescriptionView = movieDescriptionView;
-        this.movieLang = AppSharedPreferences.getInstance(context).getAppLanguageData();
+        this.movieLang = TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData();
 
         service = new MovieDescriptionServiceImpl(movieId, movieLang);
     }

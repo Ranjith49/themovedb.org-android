@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import com.ran.themoviedb.entities.LanguageType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 
+import javax.inject.Inject;
+
 /**
  * Created by ranjith.suda on 12/31/2015.
  * <p/>
@@ -13,118 +15,100 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
  */
 public class AppSharedPreferences {
 
-  private static AppSharedPreferences instance = null;
-  private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
-  /**
-   * To get Single Instance holding all the App Shared Preferences
-   *
-   * @param context -- Context of the App
-   * @return -- Single Instance
-   */
-  public static AppSharedPreferences getInstance(Context context) {
-    if (instance == null) {
-      synchronized (AppSharedPreferences.class) {
-        if (instance == null) {
-          instance = new AppSharedPreferences(context);
-        }
-      }
+    @Inject
+    public AppSharedPreferences(Context context) {
+        sharedPreferences = context.getSharedPreferences(AppSharedPreferenceKeys.APP_SHARED_PREF, Context.MODE_PRIVATE);
     }
-    return instance;
-  }
 
-  private AppSharedPreferences(Context context) {
-    sharedPreferences = context.getSharedPreferences(AppSharedPreferenceKeys.APP_SHARED_PREF,
-        Context.MODE_PRIVATE);
-  }
+    /**
+     * Method to return the Current Shared Preference of APp
+     *
+     * @return -- SharedPreferences Obj.
+     */
+    public SharedPreferences getSharedPrefApp() {
+        return sharedPreferences;
+    }
 
-  /**
-   * Method to return the Current Shared Preference of APp
-   *
-   * @return -- SharedPreferences Obj.
-   */
-  public SharedPreferences getSharedPrefApp() {
-    return sharedPreferences;
-  }
+    /**
+     * Get the Genre List data of Model {@Link com.ran.themoviedb.model.server.response.AllMovieGenreListResponse}
+     *
+     * @return -- Json data
+     */
+    public String getGenreListData() {
+        return sharedPreferences.getString(AppSharedPreferenceKeys.MOVIE_GENRE_LIST_KEY,
+                TheMovieDbConstants.EMPTY_STRING);
+    }
 
-  /**
-   * Set the All Genre Data retrieved from the Rest API {@Link com.ran.themoviedb.model.server.api.AllGenreListAPI}
-   *
-   * @param data -- String Json
-   */
-  public void setGenreListData(String data) {
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putString(AppSharedPreferenceKeys.MOVIE_GENRE_LIST_KEY, data);
-    editor.commit();
-  }
+    /**
+     * Set the All Genre Data retrieved from the Rest API {@Link com.ran.themoviedb.model.server.api.AllGenreListAPI}
+     *
+     * @param data -- String Json
+     */
+    public void setGenreListData(String data) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(AppSharedPreferenceKeys.MOVIE_GENRE_LIST_KEY, data);
+        editor.commit();
+    }
 
-  /**
-   * Set Part (a) of the Config data from Rest API {@Link com.ran.themoviedb.model.server.api.TheMovieDbConfigAPI}
-   *
-   * @param data -- String Json
-   */
-  public void setMovieImageConfigData(String data) {
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putString(AppSharedPreferenceKeys.MOVIE_CONFIG_IMAGES_KEY, data);
-    editor.commit();
-  }
+    /**
+     * Get the Image Config data of Model {@Link com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig}
+     *
+     * @return -- Json Data
+     */
+    public String getMovieImageConfigData() {
+        return sharedPreferences.getString(AppSharedPreferenceKeys.MOVIE_CONFIG_IMAGES_KEY,
+                TheMovieDbConstants.EMPTY_STRING);
+    }
 
-  /**
-   * Get the Genre List data of Model {@Link com.ran.themoviedb.model.server.response.AllMovieGenreListResponse}
-   *
-   * @return -- Json data
-   */
-  public String getGenreListData() {
-    return sharedPreferences.getString(AppSharedPreferenceKeys.MOVIE_GENRE_LIST_KEY,
-        TheMovieDbConstants.EMPTY_STRING);
-  }
+    /**
+     * Set Part (a) of the Config data from Rest API {@Link com.ran.themoviedb.model.server.api.TheMovieDbConfigAPI}
+     *
+     * @param data -- String Json
+     */
+    public void setMovieImageConfigData(String data) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(AppSharedPreferenceKeys.MOVIE_CONFIG_IMAGES_KEY, data);
+        editor.commit();
+    }
 
-  /**
-   * Get the Image Config data of Model {@Link com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig}
-   *
-   * @return -- Json Data
-   */
-  public String getMovieImageConfigData() {
-    return sharedPreferences.getString(AppSharedPreferenceKeys.MOVIE_CONFIG_IMAGES_KEY,
-        TheMovieDbConstants.EMPTY_STRING);
-  }
+    /**
+     * Get the App Language String Code
+     *
+     * @return -- String Code for App Language
+     */
+    public String getAppLanguageData() {
+        return sharedPreferences.getString(AppSharedPreferenceKeys.APP_LANG_KEY, LanguageType
+                .getLangString(LanguageType.ENGLISH));
+    }
 
-  /**
-   * Set the App Language String code
-   *
-   * @param langCode -- language Code
-   */
-  public void setAppLanguageData(String langCode) {
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putString(AppSharedPreferenceKeys.APP_LANG_KEY, langCode);
-    editor.commit();
-  }
+    /**
+     * Set the App Language String code
+     *
+     * @param langCode -- language Code
+     */
+    public void setAppLanguageData(String langCode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(AppSharedPreferenceKeys.APP_LANG_KEY, langCode);
+        editor.commit();
+    }
 
-  /**
-   * Get the App Language String Code
-   *
-   * @return -- String Code for App Language
-   */
-  public String getAppLanguageData() {
-    return sharedPreferences.getString(AppSharedPreferenceKeys.APP_LANG_KEY, LanguageType
-        .getLangString(LanguageType.ENGLISH));
-  }
+    /**
+     * Method to check whether it is first launch or not
+     *
+     * @return -- state of launch
+     */
+    public boolean isAppFirstLaunch() {
+        return sharedPreferences.getBoolean(AppSharedPreferenceKeys.APP_FIRST_LAUNCH_KEY, true);
+    }
 
-  /**
-   * Method to check whether it is first launch or not
-   *
-   * @return -- state of launch
-   */
-  public boolean isAppFirstLaunch() {
-    return sharedPreferences.getBoolean(AppSharedPreferenceKeys.APP_FIRST_LAUNCH_KEY, true);
-  }
-
-  /**
-   * Method to Disable App First Launch or not..
-   */
-  public void disableAppFirstLaunch() {
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putBoolean(AppSharedPreferenceKeys.APP_FIRST_LAUNCH_KEY, false);
-    editor.commit();
-  }
+    /**
+     * Method to Disable App First Launch or not..
+     */
+    public void disableAppFirstLaunch() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(AppSharedPreferenceKeys.APP_FIRST_LAUNCH_KEY, false);
+        editor.commit();
+    }
 }
