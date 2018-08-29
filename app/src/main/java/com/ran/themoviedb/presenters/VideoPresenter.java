@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.ran.themoviedb.db.AppSharedPreferences;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.entities.VideoDetails;
 import com.ran.themoviedb.model.server.response.VideoDetailResponse;
 import com.ran.themoviedb.model.server.service.VideoServiceImpl;
@@ -21,15 +20,13 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class VideoPresenter extends BasePresenter {
 
-    private VideoDisplayView videoDisplayView;
     private final VideoServiceImpl service;
-    private final DisplayStoreType storeType;
     private final String KEY_FILTER_YOUTUBE = "YouTube";
+    private VideoDisplayView videoDisplayView;
 
     public VideoPresenter(Context context, VideoDisplayView videoDisplayView, int id, DisplayStoreType storeType) {
         super();
         this.videoDisplayView = videoDisplayView;
-        this.storeType = storeType;
         service = new VideoServiceImpl(id, storeType, AppSharedPreferences.getInstance(context).getAppLanguageData());
     }
 

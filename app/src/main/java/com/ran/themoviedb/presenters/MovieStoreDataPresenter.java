@@ -21,8 +21,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MovieStoreDataPresenter extends BasePresenter {
 
-    private final Context context;
-    private final MovieStoreType movieStoreType;
     private final MovieStoreView movieStoreView;
     private final int pageIndex;
     private final MovieStoreServiceImpl movieService;
@@ -30,8 +28,6 @@ public class MovieStoreDataPresenter extends BasePresenter {
     public MovieStoreDataPresenter(Context context, MovieStoreType movieStoreType, int pageIndex,
                                    MovieStoreView movieStoreView) {
         super();
-        this.context = context;
-        this.movieStoreType = movieStoreType;
         this.movieStoreView = movieStoreView;
         this.pageIndex = pageIndex;
         movieService = new MovieStoreServiceImpl(movieStoreType, pageIndex, AppSharedPreferences.getInstance(context).getAppLanguageData());

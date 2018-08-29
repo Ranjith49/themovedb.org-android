@@ -21,10 +21,10 @@ import java.util.ArrayList;
  */
 public class PeopleSearchRecyclerAdapter extends CustomRecyclerView.Adapter<PeopleSearchResponse> {
 
-    private ArrayList<PeopleSearchResults> peopleSearchResults = new ArrayList<>();
     private final PeopleSearchView peopleSearchView;
     private final String query;
     private final int INVALID_NEXT_PAGE_INDEX = -1;
+    private ArrayList<PeopleSearchResults> peopleSearchResults = new ArrayList<>();
     private PeopleSearchDataPresenter peopleSearchDataPresenter;
     private Context context;
     private StoreClickListener storeClickListener;
@@ -69,14 +69,14 @@ public class PeopleSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Peop
         notifyDataSetChanged();
 
         //Start the Presenter , for First Page
-        peopleSearchDataPresenter = new PeopleSearchDataPresenter(context, firstPageIndex, query, peopleSearchView);
+        peopleSearchDataPresenter = new PeopleSearchDataPresenter(firstPageIndex, query, peopleSearchView);
         peopleSearchDataPresenter.start();
     }
 
     @Override
     public void loadNextPageIndex(int nextPageIndex) {
         //Start the Presenter , for Next Page
-        peopleSearchDataPresenter = new PeopleSearchDataPresenter(context, nextPageIndex, query, peopleSearchView);
+        peopleSearchDataPresenter = new PeopleSearchDataPresenter(nextPageIndex, query, peopleSearchView);
         peopleSearchDataPresenter.start();
     }
 

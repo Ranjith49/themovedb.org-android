@@ -21,10 +21,10 @@ import java.util.ArrayList;
  */
 public class MovieSearchRecyclerAdapter extends CustomRecyclerView.Adapter<MovieSearchResponse> {
 
-  private ArrayList<MovieSearchResults> movieSearchResults = new ArrayList<>();
   private final MovieSearchView movieSearchView;
   private final String query;
   private final int INVALID_NEXT_PAGE_INDEX = -1;
+    private ArrayList<MovieSearchResults> movieSearchResults = new ArrayList<>();
   private MovieSearchDataPresenter movieSearchDataPresenter;
   private Context context;
   private StoreClickListener storeClickListener;
@@ -69,14 +69,14 @@ public class MovieSearchRecyclerAdapter extends CustomRecyclerView.Adapter<Movie
     notifyDataSetChanged();
 
     //Start the Presenter , for First Page
-    movieSearchDataPresenter = new MovieSearchDataPresenter(context, firstPageIndex, query, movieSearchView);
+      movieSearchDataPresenter = new MovieSearchDataPresenter(firstPageIndex, query, movieSearchView);
     movieSearchDataPresenter.start();
   }
 
   @Override
   public void loadNextPageIndex(int nextPageIndex) {
     //Start the Presenter , for First Page
-    movieSearchDataPresenter = new MovieSearchDataPresenter(context, nextPageIndex, query, movieSearchView);
+      movieSearchDataPresenter = new MovieSearchDataPresenter(nextPageIndex, query, movieSearchView);
     movieSearchDataPresenter.start();
   }
 

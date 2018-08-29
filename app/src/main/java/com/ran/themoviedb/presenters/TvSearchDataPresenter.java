@@ -1,7 +1,5 @@
 package com.ran.themoviedb.presenters;
 
-import android.content.Context;
-
 import com.ran.themoviedb.fragments.SearchTvFragment;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
@@ -19,19 +17,14 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class TvSearchDataPresenter extends BasePresenter {
 
-    private final Context context;
     private final TvSearchView tvSearchView;
-    private final String query;
     private final int pageIndex;
     private final TvShowSearchServiceImpl serviceImpl;
 
-    public TvSearchDataPresenter(Context context, int pageIndex, String query,
-                                 TvSearchView tvSearchView) {
+    public TvSearchDataPresenter(int pageIndex, String query, TvSearchView tvSearchView) {
         super();
-        this.context = context;
         this.tvSearchView = tvSearchView;
         this.pageIndex = pageIndex;
-        this.query = query;
         serviceImpl = new TvShowSearchServiceImpl(pageIndex, query);
     }
 

@@ -21,10 +21,10 @@ import java.util.ArrayList;
  */
 public class TvSearchRecyclerAdapter extends CustomRecyclerView.Adapter<TvShowSearchResponse> {
 
-    private ArrayList<TvShowSearchResults> tvShowSearchResults = new ArrayList<>();
     private final TvSearchView tvSearchView;
     private final String query;
     private final int INVALID_NEXT_PAGE_INDEX = -1;
+    private ArrayList<TvShowSearchResults> tvShowSearchResults = new ArrayList<>();
     private TvSearchDataPresenter tvSearchDataPresenter;
     private Context context;
     private StoreClickListener storeClickListener;
@@ -69,14 +69,14 @@ public class TvSearchRecyclerAdapter extends CustomRecyclerView.Adapter<TvShowSe
         notifyDataSetChanged();
 
         //Start the Presenter , for First Page
-        tvSearchDataPresenter = new TvSearchDataPresenter(context, firstPageIndex, query, tvSearchView);
+        tvSearchDataPresenter = new TvSearchDataPresenter(firstPageIndex, query, tvSearchView);
         tvSearchDataPresenter.start();
     }
 
     @Override
     public void loadNextPageIndex(int nextPageIndex) {
         //Start the Presenter , for Next Page
-        tvSearchDataPresenter = new TvSearchDataPresenter(context, nextPageIndex, query, tvSearchView);
+        tvSearchDataPresenter = new TvSearchDataPresenter(nextPageIndex, query, tvSearchView);
         tvSearchDataPresenter.start();
     }
 

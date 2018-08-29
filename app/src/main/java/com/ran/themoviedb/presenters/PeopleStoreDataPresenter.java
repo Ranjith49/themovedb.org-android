@@ -21,7 +21,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class PeopleStoreDataPresenter extends BasePresenter {
 
-    private final Context context;
     private final PeopleStoreType peopleStoreType;
     private final PeopleStoreView peopleStoreView;
     private final int pageIndex;
@@ -30,7 +29,6 @@ public class PeopleStoreDataPresenter extends BasePresenter {
     public PeopleStoreDataPresenter(Context context, PeopleStoreType peopleStoreType, int pageIndex,
                                     PeopleStoreView peopleStoreView) {
         super();
-        this.context = context;
         this.peopleStoreType = peopleStoreType;
         this.peopleStoreView = peopleStoreView;
         this.pageIndex = pageIndex;

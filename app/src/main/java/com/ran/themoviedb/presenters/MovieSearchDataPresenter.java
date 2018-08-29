@@ -1,7 +1,5 @@
 package com.ran.themoviedb.presenters;
 
-import android.content.Context;
-
 import com.ran.themoviedb.fragments.MovieStoreFragment;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
@@ -19,19 +17,14 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MovieSearchDataPresenter extends BasePresenter {
 
-    private final Context context;
     private final MovieSearchView movieSearchView;
-    private final String query;
     private final int pageIndex;
     private final MovieSearchServiceImpl movieService;
 
-    public MovieSearchDataPresenter(Context context, int pageIndex, String query,
-                                    MovieSearchView movieSearchView) {
+    public MovieSearchDataPresenter(int pageIndex, String query, MovieSearchView movieSearchView) {
         super();
-        this.context = context;
         this.movieSearchView = movieSearchView;
         this.pageIndex = pageIndex;
-        this.query = query;
         movieService = new MovieSearchServiceImpl(pageIndex, query);
     }
 

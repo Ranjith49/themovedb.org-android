@@ -21,16 +21,12 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class TvStoreDataPresenter extends BasePresenter {
 
-    private final Context context;
-    private final TVShowStoreType tvStoreType;
     private final TvStoreView tvStoreView;
     private final int pageIndex;
     private final TVShowStoreServiceImpl tvService;
 
     public TvStoreDataPresenter(Context context, TVShowStoreType tvStoreType, int pageIndex,
                                 TvStoreView tvStoreView) {
-        this.context = context;
-        this.tvStoreType = tvStoreType;
         this.tvStoreView = tvStoreView;
         this.pageIndex = pageIndex;
         tvService = new TVShowStoreServiceImpl(tvStoreType, pageIndex,
