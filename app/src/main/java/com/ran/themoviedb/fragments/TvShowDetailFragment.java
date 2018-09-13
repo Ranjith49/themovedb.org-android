@@ -1,5 +1,6 @@
 package com.ran.themoviedb.fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,12 +20,10 @@ import com.ran.themoviedb.customviews.GenericErrorBuilder;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
-import com.ran.themoviedb.presenters.TvShowDetailPresenter;
 import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
-import com.ran.themoviedb.view_pres_med.TvShowDetailView;
+import com.ran.themoviedb.viemodels.TvShowDetailViewModel;
 
 import java.lang.reflect.Type;
 
@@ -33,8 +32,7 @@ import java.lang.reflect.Type;
  * <p/>
  * Fragment for Showing the Tv Show Description Details.
  */
-public class TvShowDetailFragment extends Fragment implements GenericErrorBuilder.Handler,
-        TvShowDetailView {
+public class TvShowDetailFragment extends Fragment implements GenericErrorBuilder.Handler {
 
     private View view;
     private ImageView tvPoster;
@@ -53,7 +51,7 @@ public class TvShowDetailFragment extends Fragment implements GenericErrorBuilde
     private ProgressBar tvProgressBar;
 
     private GenericErrorBuilder genericErrorBuilder;
-    private TvShowDetailPresenter presenter;
+    private TvShowDetailViewModel showDetailViewModel;
     private int tvShowId;
 
     @Override
@@ -62,7 +60,7 @@ public class TvShowDetailFragment extends Fragment implements GenericErrorBuilde
         view = inflater.inflate(R.layout.fragment_tv_show_detail, container, false);
         tvShowId = getArguments().getInt(TheMovieDbConstants.TV_SHOW_ID_KEY);
         initView();
-        initializePresenter();
+        initializeViewModel();
         return view;
     }
 
@@ -83,17 +81,28 @@ public class TvShowDetailFragment extends Fragment implements GenericErrorBuilde
         tvExternalUrl = view.findViewById(R.id.overview_url);
     }
 
-    private void initializePresenter() {
-        genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
-                .CENTER, tvErrorLayout, this);
-        presenter = new TvShowDetailPresenter(getActivity(), this, tvShowId);
-        presenter.start();
-    }
-
-    @Override
-    public void onDestroyView() {
-        presenter.stop();
-        super.onDestroyView();
+    private void initializeViewModel() {
+        genericErrorBuilder = new GenericErrorBuilder(getActivity(),
+                GenericUIErrorLayoutType.CENTER, tvErrorLayout, this);
+        showDetailViewModel = ViewModelProviders.of(this).get(TvShowDetailViewModel.class);
+        showDetailViewModel.getProgressBar().observe(this, show -> {
+            if (show == null) {
+                return;
+            }
+            if (show) {
+                tvProgressBar.setVisibility(View.VISIBLE);
+            } else {
+                tvProgressBar.setVisibility(View.GONE);
+            }
+        });
+        showDetailViewModel.getShowDetailError().observe(this, errorType -> {
+            if (errorType == null) {
+                return;
+            }
+            genericErrorBuilder.setUserAPIError(errorType);
+        });
+        showDetailViewModel.getShowDetailResponse().observe(this, this::tvShowResponse);
+        showDetailViewModel.startExecution(tvShowId);
     }
 
     private void processResponse(TvShowDetailResponse response) {
@@ -166,26 +175,13 @@ public class TvShowDetailFragment extends Fragment implements GenericErrorBuilde
 
     @Override
     public void onRefreshClicked() {
-        initializePresenter();
+        initializeViewModel();
     }
 
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            tvProgressBar.setVisibility(View.VISIBLE);
-        } else {
-            tvProgressBar.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void tvShowResponse(TvShowDetailResponse response) {
+    private void tvShowResponse(TvShowDetailResponse response) {
         processResponse(response);
         tvContainer.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void tvShowError(UserAPIErrorType errorType) {
-        genericErrorBuilder.setUserAPIError(errorType);
-    }
+
 }

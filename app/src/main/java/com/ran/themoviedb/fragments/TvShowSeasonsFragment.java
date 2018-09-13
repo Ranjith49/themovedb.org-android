@@ -18,8 +18,6 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TvShowSeasons;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
-import com.ran.themoviedb.presenters.TvShowDetailPresenter;
-import com.ran.themoviedb.view_pres_med.TvShowDetailView;
 
 import java.util.ArrayList;
 import java.util.Collections;
