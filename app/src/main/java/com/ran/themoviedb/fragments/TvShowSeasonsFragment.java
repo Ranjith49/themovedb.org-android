@@ -1,6 +1,9 @@
 package com.ran.themoviedb.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +21,7 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TvShowSeasons;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TvShowDetailResponse;
+import com.ran.themoviedb.viemodels.TvShowDetailViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,15 +30,14 @@ import java.util.Comparator;
 /**
  * Created by ranjith.suda on 2/29/2016.
  */
-public class TvShowSeasonsFragment extends Fragment
-        implements GenericErrorBuilder.Handler, TvShowDetailView {
+public class TvShowSeasonsFragment extends Fragment implements GenericErrorBuilder.Handler {
 
     private RecyclerView tvRecyclerView;
     private LinearLayout tvErrorLayout;
     private ProgressBar tvProgressBar;
     private View view;
     private GenericErrorBuilder genericErrorBuilder;
-    private TvShowDetailPresenter presenter;
+    private TvShowDetailViewModel detailViewModel;
     private int tvShowId;
 
 
@@ -55,17 +58,32 @@ public class TvShowSeasonsFragment extends Fragment
     }
 
     private void initializePresenter() {
-        genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
-                .CENTER, tvErrorLayout, this);
-        presenter = new TvShowDetailPresenter(getActivity(), this, tvShowId);
-        presenter.start();
+        genericErrorBuilder = new GenericErrorBuilder(getActivity(),
+                GenericUIErrorLayoutType.CENTER, tvErrorLayout, this);
+        detailViewModel = ViewModelProviders.of(this).get(TvShowDetailViewModel.class);
+        detailViewModel.getShowDetailResponse().observe(this, this::tvShowResponse);
+        detailViewModel.getShowDetailError().observe(this, new Observer<UserAPIErrorType>() {
+            @Override
+            public void onChanged(@Nullable UserAPIErrorType errorType) {
+                if (null == errorType) {
+                    return;
+                }
+                genericErrorBuilder.setUserAPIError(errorType);
+            }
+        });
+        detailViewModel.getProgressBar().observe(this, show -> {
+            if (show == null) {
+                return;
+            }
+            if (show) {
+                tvProgressBar.setVisibility(View.VISIBLE);
+            } else {
+                tvProgressBar.setVisibility(View.GONE);
+            }
+        });
+        detailViewModel.startExecution(tvShowId);
     }
 
-    @Override
-    public void onDestroyView() {
-        presenter.stop();
-        super.onDestroyView();
-    }
 
     private void processResponse(ArrayList<TvShowSeasons> tvShowSeasons) {
         //Sort for the Order of the Seasons..
@@ -89,26 +107,12 @@ public class TvShowSeasonsFragment extends Fragment
         initializePresenter();
     }
 
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            tvProgressBar.setVisibility(View.VISIBLE);
-        } else {
-            tvProgressBar.setVisibility(View.GONE);
-        }
-    }
 
-    @Override
-    public void tvShowResponse(TvShowDetailResponse response) {
+    private void tvShowResponse(TvShowDetailResponse response) {
         if (response.getSeasons() != null && response.getSeasons().size() > 0) {
             processResponse(response.getSeasons());
         } else {
             genericErrorBuilder.setUserAPIError(UserAPIErrorType.NOCONTENT_ERROR);
         }
-    }
-
-    @Override
-    public void tvShowError(UserAPIErrorType errorType) {
-        genericErrorBuilder.setUserAPIError(errorType);
     }
 }
