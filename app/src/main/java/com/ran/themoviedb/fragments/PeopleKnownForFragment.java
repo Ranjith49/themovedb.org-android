@@ -1,7 +1,7 @@
 package com.ran.themoviedb.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,15 +38,13 @@ public class PeopleKnownForFragment extends Fragment
 
 
   private final String TAG = PeopleKnownForFragment.class.getSimpleName();
-
+  RecyclerView recyclerView;
+  ProgressBar progressBar;
+  LinearLayout errorLayoutHolder;
   private View view;
   private PeopleKnowForRecyclerAdapter peopleKnowForRecyclerAdapter;
   private PeopleKnowForPresenter peopleKnowForPresenter;
   private GenericErrorBuilder genericErrorBuilder;
-
-  RecyclerView recyclerView;
-  ProgressBar progressBar;
-  LinearLayout errorLayoutHolder;
   private int peopleId;
   private ArrayList<PeopleKnowForData> peopleKnowForData;
 

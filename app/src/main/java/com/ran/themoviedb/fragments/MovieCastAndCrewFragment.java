@@ -1,5 +1,6 @@
 package com.ran.themoviedb.fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,17 +24,15 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.CastCrewDetailResponse;
-import com.ran.themoviedb.presenters.MovieCastCrewPresenter;
 import com.ran.themoviedb.utils.Navigator;
-import com.ran.themoviedb.view_pres_med.MovieCastCrewView;
+import com.ran.themoviedb.viemodels.MovieCastCrewViewModel;
 
 import java.lang.reflect.Type;
 
 /**
  * Created by ranjith.suda on 1/12/2016.
  */
-public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBuilder.Handler,
-        MovieCastCrewView, CastCrewListener {
+public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBuilder.Handler, CastCrewListener {
 
 
     private final int CAST_CREW_PROFILE_INDEX = 1; //Todo [ranjith ,do better logic]
@@ -47,7 +46,9 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
     private GenericErrorBuilder genericErrorBuilder;
     private LinearLayout errorLayoutHolder;
     private int movieId;
-    private MovieCastCrewPresenter castCrewPresenter;
+
+    private MovieCastCrewViewModel castCrewViewModel;
+
     private MovieGenericCastCrewAdapter castAdapter;
     private MovieGenericCastCrewAdapter crewAdapter;
 
@@ -68,20 +69,32 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
         genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
                 .CENTER, errorLayoutHolder, this);
 
-        initializePresenter();
+        initializeViewModel();
 
         return view;
     }
 
-    private void initializePresenter() {
-        castCrewPresenter = new MovieCastCrewPresenter(getActivity(), this, movieId);
-        castCrewPresenter.start();
-    }
+    private void initializeViewModel() {
+        castCrewViewModel = ViewModelProviders.of(this).get(MovieCastCrewViewModel.class);
+        castCrewViewModel.getCastCrewError().observe(this, errorType -> {
+            if (errorType == null) {
+                return;
+            }
+            genericErrorBuilder.setUserAPIError(errorType);
+        });
+        castCrewViewModel.getProgressBar().observe(this, show -> {
+            if (show == null) {
+                return;
+            }
 
-    @Override
-    public void onDestroyView() {
-        castCrewPresenter.stop();
-        super.onDestroyView();
+            if (show) {
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+        castCrewViewModel.getCastCrewResponse().observe(this, this::movieCastCrewData);
+        castCrewViewModel.startExecution(movieId);
     }
 
     private String generateImageBaseUrl() {
@@ -107,20 +120,10 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
     @Override
     public void onRefreshClicked() {
         cast_crew_container.setVisibility(View.GONE);
-        initializePresenter();
+        initializeViewModel();
     }
 
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void movieCastCrewData(CastCrewDetailResponse response) {
+    private void movieCastCrewData(CastCrewDetailResponse response) {
         boolean isCastDataAvailable = false;
         boolean isCrewDataAvailable = false;
 
@@ -151,10 +154,5 @@ public class MovieCastAndCrewFragment extends Fragment implements GenericErrorBu
         } else {
             genericErrorBuilder.setUserAPIError(UserAPIErrorType.NOCONTENT_ERROR);
         }
-    }
-
-    @Override
-    public void movieCastCrewAPIError(UserAPIErrorType errorType) {
-        genericErrorBuilder.setUserAPIError(errorType);
     }
 }

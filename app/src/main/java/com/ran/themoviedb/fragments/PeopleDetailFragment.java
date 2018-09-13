@@ -1,9 +1,10 @@
 package com.ran.themoviedb.fragments;
 
-import android.app.Fragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,11 @@ import com.ran.themoviedb.customviews.GenericErrorBuilder;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.PeopleDetailResponse;
-import com.ran.themoviedb.presenters.PeopleDetailPresenter;
 import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.ImageDownloadUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
-import com.ran.themoviedb.view_pres_med.PeopleDetailView;
+import com.ran.themoviedb.viemodels.PeopleDetailViewModel;
 
 import java.lang.reflect.Type;
 
@@ -36,8 +35,7 @@ import java.lang.reflect.Type;
  * <p/>
  * People Detail Fragment ..
  */
-public class PeopleDetailFragment extends Fragment
-        implements PeopleDetailView, GenericErrorBuilder.Handler {
+public class PeopleDetailFragment extends Fragment implements GenericErrorBuilder.Handler {
 
     private View view;
     private ImageView peoplePoster;
@@ -55,7 +53,7 @@ public class PeopleDetailFragment extends Fragment
     private FloatingActionButton imageDownload;
 
     private GenericErrorBuilder genericErrorBuilder;
-    private PeopleDetailPresenter presenter;
+    private PeopleDetailViewModel peopleDetailViewModel;
     private int peopleId;
 
     @Override
@@ -64,7 +62,7 @@ public class PeopleDetailFragment extends Fragment
         view = inflater.inflate(R.layout.fragment_people_detail, container, false);
         peopleId = getArguments().getInt(TheMovieDbConstants.PEOPLE_ID_KEY);
         initView();
-        initializePresenter();
+        initializeViewModel();
         return view;
     }
 
@@ -92,18 +90,31 @@ public class PeopleDetailFragment extends Fragment
         }
     }
 
-    private void initializePresenter() {
-        genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
-                .CENTER, peopleErrorLayout, this);
-        presenter = new PeopleDetailPresenter(getActivity(), this, peopleId);
-        presenter.start();
+    private void initializeViewModel() {
+        genericErrorBuilder = new GenericErrorBuilder(getActivity(),
+                GenericUIErrorLayoutType.CENTER, peopleErrorLayout, this);
+        peopleDetailViewModel = ViewModelProviders.of(this).get(PeopleDetailViewModel.class);
+
+        peopleDetailViewModel.getPeopleDetailError().observe(this, errorType -> {
+            if (errorType == null) {
+                return;
+            }
+            genericErrorBuilder.setUserAPIError(errorType);
+        });
+        peopleDetailViewModel.getProgressBar().observe(this, show -> {
+            if (show == null) {
+                return;
+            }
+            if (show) {
+                peopleProgressBar.setVisibility(View.VISIBLE);
+            } else {
+                peopleProgressBar.setVisibility(View.GONE);
+            }
+        });
+        peopleDetailViewModel.getPeopleDetailResponse().observe(this, this::onPeopleDetailResponse);
+        peopleDetailViewModel.startExecution(peopleId);
     }
 
-    @Override
-    public void onDestroyView() {
-        presenter.stop();
-        super.onDestroyView();
-    }
 
     private void processResponse(final PeopleDetailResponse response) {
         //Top View  ..
@@ -121,14 +132,11 @@ public class PeopleDetailFragment extends Fragment
         loadProfileImage(response.getProfile_path());
 
         //Image Download View ..
-        imageDownload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String baseUrl = ImageLoaderUtils.generateOrgImageBaseUrl(getActivity(),
-                        TheMovieDbConstants.IMAGE_PERSON_TYPE);
-                ImageDownloadUtils.startDownload(
-                        ImageLoaderUtils.buildImageUrl(baseUrl, response.getProfile_path()));
-            }
+        imageDownload.setOnClickListener(v -> {
+            String baseUrl = ImageLoaderUtils.generateOrgImageBaseUrl(getActivity(),
+                    TheMovieDbConstants.IMAGE_PERSON_TYPE);
+            ImageDownloadUtils.startDownload(
+                    ImageLoaderUtils.buildImageUrl(baseUrl, response.getProfile_path()));
         });
         //Over View Container
         if (!AppUiUtils.isStringEmpty(response.getBiography())) {
@@ -172,27 +180,12 @@ public class PeopleDetailFragment extends Fragment
 
     @Override
     public void onRefreshClicked() {
-        initializePresenter();
+        initializeViewModel();
     }
 
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            peopleProgressBar.setVisibility(View.VISIBLE);
-        } else {
-            peopleProgressBar.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onPeopleDetailResponse(PeopleDetailResponse response) {
+    private void onPeopleDetailResponse(PeopleDetailResponse response) {
         processResponse(response);
         peopleContainer.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onPeopleDetailError(UserAPIErrorType errorType) {
-        genericErrorBuilder.setUserAPIError(errorType);
     }
 }
 

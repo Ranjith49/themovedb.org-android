@@ -1,5 +1,6 @@
 package com.ran.themoviedb.fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,12 +24,10 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.MovieGenre;
 import com.ran.themoviedb.model.server.entities.ProductionCompany;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieDetailResponse;
-import com.ran.themoviedb.presenters.MovieDescriptionPresenter;
 import com.ran.themoviedb.utils.AppUiUtils;
 import com.ran.themoviedb.utils.ImageLoaderUtils;
-import com.ran.themoviedb.view_pres_med.MovieDescriptionView;
+import com.ran.themoviedb.viemodels.MovieDescriptionViewModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,8 +37,7 @@ import java.util.ArrayList;
  * <p/>
  * Created by ranjith.suda on 1/9/2016.
  */
-public class MovieDescriptionFragment extends Fragment implements GenericErrorBuilder.Handler,
-        MovieDescriptionView {
+public class MovieDescriptionFragment extends Fragment implements GenericErrorBuilder.Handler {
 
     private final String TAG = MovieDescriptionFragment.class.getSimpleName();
     private View view;
@@ -63,7 +61,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     private LinearLayout movie_production_container;
 
     private GenericErrorBuilder genericErrorBuilder;
-    private MovieDescriptionPresenter presenter;
+    private MovieDescriptionViewModel descriptionViewModel;
     private int movieId;
 
     @Override
@@ -72,7 +70,7 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
         view = inflater.inflate(R.layout.fragment_movie_description, container, false);
         movieId = getArguments().getInt(TheMovieDbConstants.MOVIE_ID_KEY);
         initView();
-        initializePresenter();
+        initializeViewModel();
         return view;
     }
 
@@ -97,17 +95,30 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
         movie_production_container = view.findViewById(R.id.production_list);
     }
 
-    private void initializePresenter() {
-        genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
-                .CENTER, movieErrorLayout, this);
-        presenter = new MovieDescriptionPresenter(getActivity(), this, movieId);
-        presenter.start();
-    }
+    private void initializeViewModel() {
+        genericErrorBuilder = new GenericErrorBuilder(getActivity(),
+                GenericUIErrorLayoutType.CENTER, movieErrorLayout, this);
+        descriptionViewModel = ViewModelProviders.of(this).get(MovieDescriptionViewModel.class);
 
-    @Override
-    public void onDestroyView() {
-        presenter.stop();
-        super.onDestroyView();
+        descriptionViewModel.getDetailError().observe(this, errorType -> {
+            if (errorType == null) {
+                return;
+            }
+            genericErrorBuilder.setUserAPIError(errorType);
+        });
+        descriptionViewModel.getProgressBar().observe(this, show -> {
+            if (show == null) {
+                return;
+            }
+            if (show) {
+                movieFetchProgressBar.setVisibility(View.VISIBLE);
+            } else {
+                movieFetchProgressBar.setVisibility(View.GONE);
+            }
+        });
+        descriptionViewModel.getDetailResponse().observe(this, this::movieResponse);
+
+        descriptionViewModel.startExecution(movieId);
     }
 
     private void processResponse(MovieDetailResponse response) {
@@ -261,26 +272,11 @@ public class MovieDescriptionFragment extends Fragment implements GenericErrorBu
     // -- Call Backs from various Interfaces .. ---
     @Override
     public void onRefreshClicked() {
-        initializePresenter();
+        initializeViewModel();
     }
 
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            movieFetchProgressBar.setVisibility(View.VISIBLE);
-        } else {
-            movieFetchProgressBar.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void movieResponse(MovieDetailResponse response) {
+    private void movieResponse(MovieDetailResponse response) {
         processResponse(response);
         movieContainer.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void movieError(UserAPIErrorType errorType) {
-        genericErrorBuilder.setUserAPIError(errorType);
     }
 }
