@@ -1,13 +1,12 @@
-package com.ran.themoviedb.presenters;
+package com.ran.themoviedb.viemodels;
 
-import android.content.Context;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.response.AllMovieGenreListResponse;
 import com.ran.themoviedb.model.server.service.AllMoviesGenreServiceImpl;
-import com.ran.themoviedb.view_pres_med.AllMovieGenreView;
 
 import java.lang.reflect.Type;
 
@@ -15,48 +14,50 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by ranjith.suda on 12/30/2015.
- * <p>
- * Presenter for AllMovieGenreList from {@Link AllMoviesGenreServiceImpl} , propagate to UI
+ * View Model for AllMovieGenreList from {@link com.ran.themoviedb.model.server.service.AllMoviesGenreServiceImpl} && propagate to UI.
+ *
+ * @author ranjithsuda
  */
-public class AllMovieGenreListPresenter extends BasePresenter {
 
-    private Context context;
-    private AllMovieGenreView allMovieGenreView;
+public class AllMovieGenreListViewModel extends BaseViewModel<Void> {
+
+    private MutableLiveData<Boolean> responseLiveData;
     private AllMoviesGenreServiceImpl service;
 
-
-    public AllMovieGenreListPresenter(Context context, AllMovieGenreView allMovieGenreView) {
+    public AllMovieGenreListViewModel() {
         super();
-        this.context = context;
-        this.allMovieGenreView = allMovieGenreView;
+        initialiseViewModel();
+    }
+
+    @Override
+    public void initialiseViewModel() {
+        responseLiveData = new MutableLiveData<>();
         service = new AllMoviesGenreServiceImpl();
     }
 
     @Override
-    public void start() {
+    public void startExecution(Void empty) {
         disposable.add(service.requestData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onAllMovieGenreListRetrieved, this::onAllMovieGenreAPIError));
     }
 
-    @Override
-    public void stop() {
-        cancelReq();
-    }
-
-
     private void onAllMovieGenreListRetrieved(AllMovieGenreListResponse response) {
         Gson gson = new Gson();
         Type type = new TypeToken<AllMovieGenreListResponse>() {
         }.getType();
         TheMovieDbAppController.getAppInstance().appSharedPreferences.setGenreListData(gson.toJson(response, type));
-        allMovieGenreView.isMovieGenreResponseRetrieval(true);
+        responseLiveData.setValue(true);
     }
 
 
     private void onAllMovieGenreAPIError(Throwable error) {
-        allMovieGenreView.isMovieGenreResponseRetrieval(false);
+        responseLiveData.setValue(false);
+    }
+
+
+    public MutableLiveData<Boolean> getResponseLiveData() {
+        return responseLiveData;
     }
 }

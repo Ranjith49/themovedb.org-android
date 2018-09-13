@@ -1,6 +1,5 @@
 package com.ran.themoviedb.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,10 +24,10 @@ import com.ran.themoviedb.model.share.ShareContentHelper;
  */
 public class TvShowDetailActivity extends AppCompatActivity {
 
-  private ViewPager viewPager;
-  private TvShowDetailPagerAdapter movieDetailPagerAdapter;
   private final int TV_DEFAULT_INVALID_INDEX = -1;
   int tvShowId = TV_DEFAULT_INVALID_INDEX;
+  private ViewPager viewPager;
+  private TvShowDetailPagerAdapter movieDetailPagerAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class TvShowDetailActivity extends AppCompatActivity {
 
     if (tvShowId != TV_DEFAULT_INVALID_INDEX) {
       viewPager = (ViewPager) findViewById(R.id.movie_viewpager);
-      movieDetailPagerAdapter = new TvShowDetailPagerAdapter(this, getFragmentManager(), tvShowId);
+      movieDetailPagerAdapter = new TvShowDetailPagerAdapter(this, getSupportFragmentManager(), tvShowId);
       viewPager.setAdapter(movieDetailPagerAdapter);
 
       //Try to show Interstitial AD

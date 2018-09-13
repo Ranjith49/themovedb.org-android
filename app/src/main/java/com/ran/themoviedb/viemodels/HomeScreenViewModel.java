@@ -1,20 +1,18 @@
-package com.ran.themoviedb.presenters;
+package com.ran.themoviedb.viemodels;
 
-import android.content.Context;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.ran.themoviedb.TheMovieDbAppController;
 import com.ran.themoviedb.model.server.entities.MovieStoreResults;
-import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.PeopleStoreResults;
-import com.ran.themoviedb.model.server.entities.PeopleStoreType;
-import com.ran.themoviedb.model.server.entities.TVShowStoreType;
 import com.ran.themoviedb.model.server.entities.TvShowStoreResults;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.exception.UserAPIErrorException;
 import com.ran.themoviedb.model.server.service.MovieStoreServiceImpl;
 import com.ran.themoviedb.model.server.service.PeopleStoreServiceImpl;
 import com.ran.themoviedb.model.server.service.TVShowStoreServiceImpl;
-import com.ran.themoviedb.view_pres_med.HomeScreenView;
+import com.ran.themoviedb.viemodels.model.HomeScreenInputData;
+import com.ran.themoviedb.viemodels.model.HomeScreenOutPutData;
 
 import java.util.ArrayList;
 
@@ -23,47 +21,54 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by ranjith.suda on 1/1/2016.
- * <p>
- * Home Screen Presenter ,for handling Movies and TV of type {@link com.ran.themoviedb
- * .customviews.HomeBannerView} and People of type {@link com.ran.themoviedb.customviews.HomePosterView}
+ * View Model for Home Screen
+ * Resolves Data from Movie,TvShow and people Store API and aggregate it.
+ *
+ * @author ranjithsuda
  */
-public class HomeScreenDataPresenter extends BasePresenter {
 
-    private final int PAGE_INDEX = 1;
-    private HomeScreenView homeScreenView;
+public class HomeScreenViewModel extends BaseViewModel<HomeScreenInputData> {
+
+    private static final int PAGE_INDEX = 1;
+
     private MovieStoreServiceImpl movieService;
     private TVShowStoreServiceImpl tvService;
     private PeopleStoreServiceImpl peopleService;
+
+    private MutableLiveData<Boolean> progressBar;
+    private MutableLiveData<UserAPIErrorType> apiError;
+    private MutableLiveData<HomeScreenOutPutData> apiSuccess;
+
     private ArrayList<String> movieBannerUrls;
     private ArrayList<String> tvBannerUrls;
     private ArrayList<String> peoplePosterUrls;
 
-
-    public HomeScreenDataPresenter(Context context, HomeScreenView homeScreenView,
-                                   MovieStoreType movieStoreType,
-                                   TVShowStoreType tvShowStoreType,
-                                   PeopleStoreType peopleStoreType) {
+    public HomeScreenViewModel() {
         super();
-        this.homeScreenView = homeScreenView;
-
-        movieService = new MovieStoreServiceImpl(movieStoreType, PAGE_INDEX,
-                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
-        peopleService = new PeopleStoreServiceImpl(peopleStoreType, PAGE_INDEX,
-                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
-        tvService = new TVShowStoreServiceImpl(tvShowStoreType, PAGE_INDEX,
-                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
-
+        initialiseViewModel();
     }
 
     @Override
-    public void start() {
-        homeScreenView.showProgressBar(true);
+    public void initialiseViewModel() {
+        progressBar = new MutableLiveData<>();
+        apiError = new MutableLiveData<>();
+        apiSuccess = new MutableLiveData<>();
 
         movieBannerUrls = new ArrayList<>();
         tvBannerUrls = new ArrayList<>();
         peoplePosterUrls = new ArrayList<>();
+    }
 
+    @Override
+    public void startExecution(HomeScreenInputData inputData) {
+        movieService = new MovieStoreServiceImpl(inputData.movieStoreType(), PAGE_INDEX,
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
+        peopleService = new PeopleStoreServiceImpl(inputData.peopleStoreType(), PAGE_INDEX,
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
+        tvService = new TVShowStoreServiceImpl(inputData.tvShowStoreType(), PAGE_INDEX,
+                TheMovieDbAppController.getAppInstance().appSharedPreferences.getAppLanguageData());
+
+        progressBar.setValue(true);
         disposable.add(Observable.zip(movieService.requestData(), tvService.requestData(), peopleService.requestData(),
                 (movieStoreResponse, tvShowStoreResponse, peopleStoreResponse) -> {
                     for (MovieStoreResults movieStoreResults : movieStoreResponse.getResults()) {
@@ -83,39 +88,39 @@ public class HomeScreenDataPresenter extends BasePresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::postHomeScreenData, this::onHomeScreenAPIError));
+
     }
 
-    @Override
-    public void stop() {
-        cancelPendingServiceRequests();
-        homeScreenView.showProgressBar(false);
-    }
-
-    /**
-     * Utility to Cancel Any Pending Requests on
-     * a) Stop Presenter
-     * b) Any Service Impl retrieves Error ..
-     */
-    private void cancelPendingServiceRequests() {
-        homeScreenView.showProgressBar(false);
-        cancelReq();
-    }
-
-    /**
-     * Utility to make sure the all Three Service APIs returned Data , send to UI
-     */
     private void postHomeScreenData(Boolean state) {
-        homeScreenView.showProgressBar(false);
-        homeScreenView.homeScreenData(movieBannerUrls, tvBannerUrls, peoplePosterUrls);
+        progressBar.setValue(false);
+        HomeScreenOutPutData outPutData = HomeScreenOutPutData
+                .builder()
+                .movieUrls(movieBannerUrls)
+                .tvUrls(tvBannerUrls)
+                .peopleUrls(peoplePosterUrls)
+                .build();
+        apiSuccess.setValue(outPutData);
     }
 
 
     private void onHomeScreenAPIError(Throwable errorType) {
+        progressBar.setValue(false);
         if (errorType instanceof UserAPIErrorException) {
-            homeScreenView.homeScreenError(((UserAPIErrorException) errorType).getApiErrorType());
+            apiError.setValue(((UserAPIErrorException) errorType).getApiErrorType());
         } else {
-            homeScreenView.homeScreenError(UserAPIErrorType.UNEXPECTED_ERROR);
+            apiError.setValue(UserAPIErrorType.UNEXPECTED_ERROR);
         }
-        cancelPendingServiceRequests();
+    }
+
+    public MutableLiveData<Boolean> getProgressBar() {
+        return progressBar;
+    }
+
+    public MutableLiveData<UserAPIErrorType> getApiError() {
+        return apiError;
+    }
+
+    public MutableLiveData<HomeScreenOutPutData> getApiSuccess() {
+        return apiSuccess;
     }
 }

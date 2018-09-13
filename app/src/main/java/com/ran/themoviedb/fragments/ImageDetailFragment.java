@@ -1,12 +1,14 @@
 package com.ran.themoviedb.fragments;
 
-import android.app.Fragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,13 +31,10 @@ import com.ran.themoviedb.model.TheMovieDbConstants;
 import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.ImageDetails;
 import com.ran.themoviedb.model.server.entities.TheMovieDbImagesConfig;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.entities.VideoDetails;
-import com.ran.themoviedb.presenters.ImagePresenter;
-import com.ran.themoviedb.presenters.VideoPresenter;
 import com.ran.themoviedb.utils.VideoPopupCreator;
-import com.ran.themoviedb.view_pres_med.ImageDisplayView;
-import com.ran.themoviedb.view_pres_med.VideoDisplayView;
+import com.ran.themoviedb.viemodels.ImageViewModel;
+import com.ran.themoviedb.viemodels.VideoViewModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -43,9 +42,7 @@ import java.util.ArrayList;
 /**
  * Created by ranjith.suda on 1/17/2016.
  */
-public class ImageDetailFragment extends Fragment
-        implements ImageDisplayView, VideoDisplayView, GenericErrorBuilder.Handler,
-        VideoPopupClickListener {
+public class ImageDetailFragment extends Fragment implements GenericErrorBuilder.Handler, VideoPopupClickListener {
 
     private final String TAG = ImageDetailFragment.class.getSimpleName();
     private View view;
@@ -61,8 +58,9 @@ public class ImageDetailFragment extends Fragment
     private LinearLayout errorLayoutHolder;
     private int id;
 
-    private ImagePresenter imagePresenter;
-    private VideoPresenter videoPresenter;
+    private ImageViewModel imageViewModel;
+    private VideoViewModel videoViewModel;
+
     private ImageDetailAdapter imagePosterAdapter;
     private ImageDetailAdapter imageBannerAdapter;
     private DisplayStoreType displayStoreType;
@@ -100,23 +98,43 @@ public class ImageDetailFragment extends Fragment
         genericErrorBuilder = new GenericErrorBuilder(getActivity(), GenericUIErrorLayoutType
                 .CENTER, errorLayoutHolder, this);
 
-        initializePresenter();
+        initializeViewModels();
         return view;
     }
 
 
-    private void initializePresenter() {
-        imagePresenter = new ImagePresenter(getActivity(), this, id, displayStoreType);
-        imagePresenter.start();
-        videoPresenter = new VideoPresenter(getActivity(), this, id, displayStoreType);
-        videoPresenter.start();
-    }
+    private void initializeViewModels() {
+        imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
+        videoViewModel = ViewModelProviders.of(this).get(VideoViewModel.class);
 
-    @Override
-    public void onDestroyView() {
-        videoPresenter.stop();
-        imagePresenter.stop();
-        super.onDestroyView();
+        imageViewModel.getProgressBar().observe(this, show -> {
+            if (show == null) {
+                return;
+            }
+
+            if (show) {
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+        imageViewModel.getApiError().observe(this, userAPIErrorType -> {
+            if (userAPIErrorType == null) {
+                return;
+            }
+            genericErrorBuilder.setUserAPIError(userAPIErrorType);
+        });
+        imageViewModel.getApiSuccess().observe(this, this::imageResponse);
+        videoViewModel.getVideoDetailsList().observe(this, details -> {
+            if (details == null) {
+                return;
+            }
+            videoDetails = details;
+            setHasOptionsMenu(true);
+        });
+        imageViewModel.startExecution(new Pair<>(id, displayStoreType));
+        videoViewModel.startExecution(new Pair<>(id, displayStoreType));
+
     }
 
     private String generateImagePosterBaseUrl() {
@@ -170,56 +188,39 @@ public class ImageDetailFragment extends Fragment
     @Override
     public void onRefreshClicked() {
         image_container.setVisibility(View.GONE);
-        initializePresenter();
+        initializeViewModels();
     }
 
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.GONE);
+    private void imageResponse(Pair<ArrayList<ImageDetails>, ArrayList<ImageDetails>> response) {
+        if (response == null) {
+            return;
         }
-    }
 
-    @Override
-    public void imageResponse(ArrayList<ImageDetails> backdrops, ArrayList<ImageDetails> posters) {
-        if (backdrops.size() > 0) {
-            imageBannerAdapter = new ImageDetailAdapter(false, backdrops, getActivity(),
+        if (response.first.size() > 0) {
+            imageBannerAdapter = new ImageDetailAdapter(false, response.first, getActivity(),
                     generateImageBannerBaseUrl());
             image_banner_recycler.setLayoutManager(new LinearLayoutManager(getActivity(),
                     LinearLayoutManager.VERTICAL, false));
             String count = String.format(getActivity().getResources().
-                    getString(R.string.image_banner_title), String.valueOf(backdrops.size()));
+                    getString(R.string.image_banner_title), String.valueOf(response.first.size()));
             image_banner_count.setText(count);
             image_banner_recycler.setAdapter(imageBannerAdapter);
             image_banner_container.setVisibility(View.VISIBLE);
         }
 
-        if (posters.size() > 0) {
-            imagePosterAdapter = new ImageDetailAdapter(true, posters, getActivity(),
+        if (response.second.size() > 0) {
+            imagePosterAdapter = new ImageDetailAdapter(true, response.second, getActivity(),
                     generateImagePosterBaseUrl());
             image_poster_recycler.setLayoutManager(new LinearLayoutManager(getActivity(),
                     LinearLayoutManager.HORIZONTAL, false));
             String count = String.format(getActivity().getResources().
-                    getString(R.string.image_poster_title), String.valueOf(posters.size()));
+                    getString(R.string.image_poster_title), String.valueOf(response.second.size()));
             image_poster_count.setText(count);
             image_poster_recycler.setAdapter(imagePosterAdapter);
             image_poster_container.setVisibility(View.VISIBLE);
         }
         //Total Response container here ..
         image_container.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void imageError(UserAPIErrorType errorType) {
-        genericErrorBuilder.setUserAPIError(errorType);
-    }
-
-    @Override
-    public void onVideoResponse(ArrayList<VideoDetails> videoDetails) {
-        this.videoDetails = videoDetails;
-        setHasOptionsMenu(true);
     }
 
     @Override

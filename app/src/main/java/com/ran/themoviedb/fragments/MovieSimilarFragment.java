@@ -1,7 +1,7 @@
 package com.ran.themoviedb.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +14,10 @@ import com.ran.themoviedb.R;
 import com.ran.themoviedb.adapters.MovieSimilarRecyclerAdapter;
 import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.MovieSimilarDetailsResponse;
 import com.ran.themoviedb.model.share.ShareContent;
@@ -34,17 +34,15 @@ import com.ran.themoviedb.view_pres_med.MovieSimilarView;
 public class MovieSimilarFragment extends Fragment
     implements MovieSimilarView, GenericErrorBuilder.Handler, StoreClickListener {
 
-  private final String TAG = MovieStoreFragment.class.getSimpleName();
   public static final int FIRST_PAGE_INDEX = 1;
-
+  private final String TAG = MovieStoreFragment.class.getSimpleName();
+  CustomRecyclerView customRecyclerView;
+  ProgressBar progressBar;
+  LinearLayout errorLayoutHolder;
   private View view;
   private MovieSimilarRecyclerAdapter movieSimilarRecyclerAdapter;
   private GenericErrorBuilder genericErrorBuilder;
   private int movieId;
-
-  CustomRecyclerView customRecyclerView;
-  ProgressBar progressBar;
-  LinearLayout errorLayoutHolder;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,

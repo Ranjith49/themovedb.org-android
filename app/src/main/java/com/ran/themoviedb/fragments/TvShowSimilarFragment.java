@@ -1,7 +1,7 @@
 package com.ran.themoviedb.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,19 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.ran.themoviedb.R;
-import com.ran.themoviedb.ad.inmobi.InMobiAdTypes;
-import com.ran.themoviedb.ad.inmobi.InMobiWrapper;
 import com.ran.themoviedb.adapters.TvShowSimilarRecyclerAdapter;
 import com.ran.themoviedb.customviews.CustomRecyclerView;
 import com.ran.themoviedb.customviews.GenericErrorBuilder;
-import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.entities.GenericUIErrorLayoutType;
 import com.ran.themoviedb.listeners.StoreClickListener;
 import com.ran.themoviedb.model.TheMovieDbConstants;
+import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
 import com.ran.themoviedb.model.server.response.TvShowSimilarDetailsResponse;
 import com.ran.themoviedb.model.share.ShareContent;
@@ -38,17 +34,15 @@ import com.ran.themoviedb.view_pres_med.TvShowSimilarView;
 public class TvShowSimilarFragment extends Fragment
     implements TvShowSimilarView, GenericErrorBuilder.Handler, StoreClickListener {
 
-  private final String TAG = MovieStoreFragment.class.getSimpleName();
   public static final int FIRST_PAGE_INDEX = 1;
-
+  private final String TAG = MovieStoreFragment.class.getSimpleName();
+  CustomRecyclerView customRecyclerView;
+  ProgressBar progressBar;
+  LinearLayout errorLayoutHolder;
   private View view;
   private TvShowSimilarRecyclerAdapter tvShowSimilarRecyclerAdapter;
   private GenericErrorBuilder genericErrorBuilder;
   private int tvShowId;
-
-  CustomRecyclerView customRecyclerView;
-  ProgressBar progressBar;
-  LinearLayout errorLayoutHolder;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,

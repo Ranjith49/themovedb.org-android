@@ -1,60 +1,60 @@
 buildscript {
-  repositories {
-    maven { url 'https://maven.fabric.io/public' }
-  }
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
 
-  dependencies {
-    classpath 'io.fabric.tools:gradle:1.+'
-  }
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
-  maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 
 android {
-  compileSdkVersion 27
-  buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "25.0.2"
 
-  defaultConfig {
-    applicationId "com.ran.themoviedb"
-    minSdkVersion 15
-    targetSdkVersion 26
-    versionCode 1
-    versionName "1.0"
-  }
-  buildTypes {
-    debug {
-      minifyEnabled false
-      shrinkResources false
-      multiDexEnabled true
-      proguardFile '../app/proguard/proguard-square-rules.pro'
-      proguardFile '../app/proguard/proguard-glide-rules.pro'
-      proguardFile '../app/proguard/proguard-ads-rules.pro'
-      proguardFile '../app/proguard/proguard-gson-rules.pro'
-      proguardFile '../app/proguard/proguard-kyro-rules.pro'
-      proguardFile '../app/proguard/proguard-exceptions-rules.pro'
+    defaultConfig {
+        applicationId "com.ran.themoviedb"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
     }
-    release {
-      minifyEnabled true
-      shrinkResources true
-      multiDexEnabled true
-      proguardFile '../app/proguard/proguard-square-rules.pro'
-      proguardFile '../app/proguard/proguard-glide-rules.pro'
-      proguardFile '../app/proguard/proguard-ads-rules.pro'
-      proguardFile '../app/proguard/proguard-gson-rules.pro'
-      proguardFile '../app/proguard/proguard-kyro-rules.pro'
-      proguardFile '../app/proguard/proguard-exceptions-rules.pro'
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            multiDexEnabled true
+            proguardFile '../app/proguard/proguard-square-rules.pro'
+            proguardFile '../app/proguard/proguard-glide-rules.pro'
+            proguardFile '../app/proguard/proguard-ads-rules.pro'
+            proguardFile '../app/proguard/proguard-gson-rules.pro'
+            proguardFile '../app/proguard/proguard-kyro-rules.pro'
+            proguardFile '../app/proguard/proguard-exceptions-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            multiDexEnabled true
+            proguardFile '../app/proguard/proguard-square-rules.pro'
+            proguardFile '../app/proguard/proguard-glide-rules.pro'
+            proguardFile '../app/proguard/proguard-ads-rules.pro'
+            proguardFile '../app/proguard/proguard-gson-rules.pro'
+            proguardFile '../app/proguard/proguard-kyro-rules.pro'
+            proguardFile '../app/proguard/proguard-exceptions-rules.pro'
+        }
     }
-  }
 
-  dexOptions {
-    jumboMode = true
-    javaMaxHeapSize "4g"
-  }
+    dexOptions {
+        jumboMode = true
+        javaMaxHeapSize "4g"
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -85,5 +85,11 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
     }
+
+    api "com.google.auto.value:auto-value-annotations:1.6.2"
+    annotationProcessor "com.google.auto.value:auto-value:1.6.2"
+
     testCompile 'junit:junit:4.12'
+
+    implementation "android.arch.lifecycle:extensions:1.1.1"
 }

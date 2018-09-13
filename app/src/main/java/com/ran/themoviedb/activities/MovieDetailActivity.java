@@ -19,10 +19,10 @@ import com.ran.themoviedb.model.share.ShareContentHelper;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-  private ViewPager viewPager;
-  private MovieDetailPagerAdapter movieDetailPagerAdapter;
   private final int MOVIE_DEFAULT_INVALID_INDEX = -1;
   int movieId = MOVIE_DEFAULT_INVALID_INDEX;
+  private ViewPager viewPager;
+  private MovieDetailPagerAdapter movieDetailPagerAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     if (movieId != MOVIE_DEFAULT_INVALID_INDEX) {
       viewPager = (ViewPager) findViewById(R.id.movie_viewpager);
-      movieDetailPagerAdapter = new MovieDetailPagerAdapter(this, getFragmentManager(), movieId);
+      movieDetailPagerAdapter = new MovieDetailPagerAdapter(this, getSupportFragmentManager(), movieId);
       viewPager.setAdapter(movieDetailPagerAdapter);
 
       //Try to show Interstitial AD

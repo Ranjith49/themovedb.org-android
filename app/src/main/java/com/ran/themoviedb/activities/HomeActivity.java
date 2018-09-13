@@ -1,8 +1,10 @@
 package com.ran.themoviedb.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,33 +25,28 @@ import com.ran.themoviedb.model.server.entities.DisplayStoreType;
 import com.ran.themoviedb.model.server.entities.MovieStoreType;
 import com.ran.themoviedb.model.server.entities.PeopleStoreType;
 import com.ran.themoviedb.model.server.entities.TVShowStoreType;
-import com.ran.themoviedb.model.server.entities.UserAPIErrorType;
-import com.ran.themoviedb.presenters.HomeScreenDataPresenter;
 import com.ran.themoviedb.utils.Navigator;
-import com.ran.themoviedb.view_pres_med.HomeScreenView;
-
-import java.util.ArrayList;
+import com.ran.themoviedb.viemodels.HomeScreenViewModel;
+import com.ran.themoviedb.viemodels.model.HomeScreenInputData;
+import com.ran.themoviedb.viemodels.model.HomeScreenOutPutData;
 
 /**
  * Home Activity of the App, Giving different options possible through the App
  * i.e Movies , Tv Store , People Store
  */
-public class HomeActivity extends AppCompatActivity
-        implements HomeScreenView, GenericErrorBuilder.Handler, View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements GenericErrorBuilder.Handler, View.OnClickListener {
 
     private final String TAG = HomeActivity.class.getSimpleName();
-    private Context context;
     LinearLayout errorLayout;
     ProgressBar progressBar;
     LinearLayout contentLayout;
-
-    HomeScreenDataPresenter dataPresenter;
-    private GenericErrorBuilder genericErrorBuilder;
-    private long mBackPressedTime;
-
+    HomeScreenViewModel homeScreenViewModel;
     HomeBannerView movieBannerView;
     HomeBannerView tvBannerView;
     HomePosterView peoplePosterView;
+    private Context context;
+    private GenericErrorBuilder genericErrorBuilder;
+    private long mBackPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +66,8 @@ public class HomeActivity extends AppCompatActivity
         progressBar.setVisibility(View.GONE);
         contentLayout = (LinearLayout) findViewById(R.id.home_screen_content);
         contentLayout.setVisibility(View.GONE);
-        dataPresenter = new HomeScreenDataPresenter(HomeActivity.this, this,
-                MovieStoreType.MOVIE_POPULAR,
-                TVShowStoreType.TV_POPULAR,
-                PeopleStoreType.PEOPLE_POPULAR);
-        genericErrorBuilder = new GenericErrorBuilder(HomeActivity.this, GenericUIErrorLayoutType
-                .CENTER, errorLayout, this);
+        genericErrorBuilder = new GenericErrorBuilder(HomeActivity.this,
+                GenericUIErrorLayoutType.CENTER, errorLayout, this);
 
         movieBannerView = (HomeBannerView) findViewById(R.id.home_movie_banner);
         movieBannerView.resetHandler();
@@ -86,7 +79,33 @@ public class HomeActivity extends AppCompatActivity
         peoplePosterView.resetHandler();
         peoplePosterView.setOnClickListener(this);
 
-        dataPresenter.start();
+        initialiseViewModel();
+        homeScreenViewModel.startExecution(HomeScreenInputData.builder()
+                .movieStoreType(MovieStoreType.MOVIE_POPULAR)
+                .tvShowStoreType(TVShowStoreType.TV_POPULAR)
+                .peopleStoreType(PeopleStoreType.PEOPLE_POPULAR)
+                .build());
+    }
+
+    private void initialiseViewModel() {
+        homeScreenViewModel = ViewModelProviders.of(this).get(HomeScreenViewModel.class);
+        homeScreenViewModel.getProgressBar().observe(this, show -> {
+            if (show == null) {
+                return;
+            }
+            if (show) {
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+        homeScreenViewModel.getApiError().observe(this, userAPIErrorType -> {
+            if (userAPIErrorType == null) {
+                return;
+            }
+            genericErrorBuilder.setUserAPIError(userAPIErrorType);
+        });
+        homeScreenViewModel.getApiSuccess().observe(this, this::homeScreenData);
     }
 
     @Override
@@ -139,23 +158,14 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-        dataPresenter.stop();
         super.onDestroy();
     }
 
-    // -- Call backs from Presenter and the Generic Error handling UI -- //
-    @Override
-    public void showProgressBar(boolean show) {
-        if (show) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.GONE);
-        }
-    }
 
-    @Override
-    public void homeScreenData(ArrayList<String> movieBanners, ArrayList<String> tvBanners,
-                               ArrayList<String> peoplePosters) {
+    private void homeScreenData(@Nullable HomeScreenOutPutData outPutData) {
+        if (outPutData == null) {
+            return;
+        }
         Log.d(TAG, "Content is retrieved");
         contentLayout.setVisibility(View.VISIBLE);
 
@@ -164,22 +174,21 @@ public class HomeActivity extends AppCompatActivity
         peoplePosterView.setBottomText(getResources().getString(R.string.home_people_store_name));
 
         //Set Banners ..
-        movieBannerView.setBannerUrls(movieBanners);
-        tvBannerView.setBannerUrls(tvBanners);
+        movieBannerView.setBannerUrls(outPutData.movieUrls());
+        tvBannerView.setBannerUrls(outPutData.tvUrls());
 
         //Set Posters ..
-        peoplePosterView.setPosterUrls(peoplePosters);
-    }
-
-    @Override
-    public void homeScreenError(UserAPIErrorType errorType) {
-        genericErrorBuilder.setUserAPIError(errorType);
+        peoplePosterView.setPosterUrls(outPutData.peopleUrls());
     }
 
     @Override
     public void onRefreshClicked() {
         Log.d(TAG, "error Handling Refresh click");
-        dataPresenter.start();
+        homeScreenViewModel.startExecution(HomeScreenInputData.builder()
+                .movieStoreType(MovieStoreType.MOVIE_POPULAR)
+                .tvShowStoreType(TVShowStoreType.TV_POPULAR)
+                .peopleStoreType(PeopleStoreType.PEOPLE_POPULAR)
+                .build());
     }
 
     @Override
